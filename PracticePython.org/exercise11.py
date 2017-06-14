@@ -21,8 +21,3 @@ def prime_checker(query_number):
             break
 
 prime_checker(numero)
-
-#prime_checker(15)
-
-#for d in range(1, 1000):
-#    prime_checker(d)
