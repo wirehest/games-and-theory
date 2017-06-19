@@ -13,25 +13,27 @@ class Password(object):
         pass
 
     def create_pass(self):
-        level = int(input("Pick a password strength: 1, 2, or 3 (increasing strength)\n> "))
+        raw_password = None
+        print("Pick a password strength: 1, 2, or 3 (increasing strength)")
 
-        if level == 1:
-            raw_password = Gen().random_words(2)
+        while True:
+            try:
+                level = int(input("> "))
 
-        elif level == 2:
-            raw_password = Gen().random_words(3)
-            raw_password = Gen().case(raw_password)
+                if level == 1:
+                    raw_password = Gen().random_words(2)
 
-        elif level == 3:
-            raw_password = Gen().random_words(3)
-            raw_password = Gen().case(raw_password)
-            raw_password = Gen().substitution(raw_password)
+                elif level == 2:
+                    raw_password = Gen().case(Gen().random_words(3))
 
-        else:
-            pass # change to return error
+                elif level == 3:
+                    raw_password = Gen().substitution(Gen().case(Gen().random_words(3)))
 
+                print(f"Your new password is: {''.join(raw_password)}")
+                break
 
-        print(f"Your new password is: {''.join(raw_password)}")
+            except TypeError:
+                print("Input 1, 2, or 3.")
 
 class Gen(object):
 
