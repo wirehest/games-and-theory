@@ -53,11 +53,11 @@ class ManageGuesses(object):
                 guess_count += 1
                 print(f"\nCows: {cows_and_bulls['cows']}, Bulls: {cows_and_bulls['bulls']}")
                 guess = input("Guess again.\n>>> ")
+                continue
 
-            else:
-                print(f"You guessed my number, {self.numstring}.")
-                print(f"You took {guess_count} guesses.")
-                break
+            print(f"You guessed my number, {self.numstring}.")
+            print(f"You took {guess_count} guesses.")
+            break
 
     def check_guess(self, gamenum, guess):
         """ Logic to assess guess. First identifies cows and discards, then identifies bulls """
