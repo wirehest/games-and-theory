@@ -1,7 +1,6 @@
 #! python3
 
 import logging
-import math
 
 from pathlib import Path
 
@@ -94,5 +93,3 @@ def part1(filepath):
     print(f"tally: {tally}")
 
 part1('day07input.txt')
-
-    

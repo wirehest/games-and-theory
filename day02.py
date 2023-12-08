@@ -117,3 +117,5 @@ def part_2():
 
 print(f"Part 1: {part_1()}")
 print(f"Part 2: {part_2()}")
+
+puzzle_input.close()

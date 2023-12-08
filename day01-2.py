@@ -3,8 +3,6 @@
 import re
 import logging
 
-from pathlib import Path
-
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
 #logging.disable(logging.CRITICAL)
 
@@ -48,9 +46,6 @@ for line in puzzle_input:
         logging.info(stringholder)
     raw_numbers_list.append(stringholder)
 
-#for i, line in enumerate(raw_numbers_list):
-#    raw_numbers_list[i] = alpha_strip.sub('', line)
-
 for line in raw_numbers_list:
     cleaned_numbers_list.append(line[0] + line[-1])
 
@@ -58,3 +53,4 @@ for line in cleaned_numbers_list:
     tally += int(line)
 
 print(tally)
+puzzle_input.close()

@@ -21,3 +21,4 @@ for line in cleaned_numbers_list:
     tally += int(line)
 
 print(tally)
+puzzle_input.close()
