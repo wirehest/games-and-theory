@@ -50,12 +50,12 @@ def order_hand(hand):
 
     card_counts = ''.join(sorted(card_counts))
     hand_score = hands[card_counts]
-    hand_score = order_hand2b(hand, hand_score)
+    hand_score = order_hand2(hand, hand_score)
 
     logging.info(f"{hand}: {hand_score}")    
     return hand_score
 
-def order_hand2b(hand, hand_score):
+def order_hand2(hand, hand_score):
     """Second ordering rule by card strength."""
     cards = ('A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2')
     card_ranks = {}
@@ -91,5 +91,9 @@ def part1(filepath):
 
     tally = scorer(hands, hands_dict)
     print(f"tally: {tally}")
+
+def part2(filepath):
+    """ """
+    pass
 
 part1('day07input.txt')
