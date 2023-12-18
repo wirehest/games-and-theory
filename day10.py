@@ -5,7 +5,6 @@
 import logging
 
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
 
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
