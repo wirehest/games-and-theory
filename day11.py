@@ -43,66 +43,64 @@ def find_empties(puzzle_map):
         (sorted(empty_cols, reverse=True))]
 
 
-def expand(puzzle_map, empties, part):
-    """Expands the universe."""
-    factor = 1 if part == 1 else 1_000_000 - 1
-    p = puzzle_map[:]
-    row_len = len(p[0])
-    for empty_row in empties[0]:
-        factor_loop = factor
-        while factor_loop > 0:
-            p.insert(empty_row, '.' * row_len)
-            factor_loop -= 1
-
-    for empty_col in empties[1]:
-        for i, row in enumerate(p):
-            p[i] = row[:empty_col] + ('.' * factor) + row[empty_col:]
-
-    return p
-
-
-def find_paths(puzzle_map):
+def measure_paths(puzzle_map, empties, part_two=False):
     """Creates galaxy combinations and finds all distances."""
     counter = 1
     galaxies = {}
     paths = []
+    factor = 1 if part_two == False else 1_000_000 - 1
+
+    # Builds galaxies dict with each galaxy's coordinates.
     for x, row in enumerate(puzzle_map):
         for y, char in enumerate(row):
             if char == '#':
                 galaxies[counter] = (x, y) 
                 counter += 1
     
+    # Combinations of galaxies.
     combos = combinations(galaxies.keys(), 2)
     logging.info(f"galaxies: {galaxies}")
 
     for pair in combos:
-        logging.info(f"pair: {pair}")
-        a = pair[0]
-        b = pair[1]
+        a, b = pair[0], pair[1]
+        x_adjust, y_adjust = 0, 0   # Path length adjustment vars.
+
         logging.info(f"pair: {pair}")
         logging.info(f"a: {galaxies[a]} b: {galaxies[b]}")
-        path = (abs(galaxies[a][0] - galaxies[b][0]) +
-            abs(galaxies[a][1] - galaxies[b][1]))
+        logging.info(f"empties: {empties}")
+        
+        # Counts number of expanding rows between galaxies a and b.
+        for empty_row in empties[0]:
+            if (galaxies[a][0] < empty_row < galaxies[b][0]
+                    or galaxies[b][0] < empty_row < galaxies[a][0]):
+                x_adjust += 1
+
+        # Counts number of expanding columns between galaxies a and b.
+        for empty_col in empties[1]:
+            if (galaxies[a][1] < empty_col < galaxies[b][1]
+                    or galaxies[b][1] < empty_col < galaxies[a][1]):
+                y_adjust += 1
+
+        path = (
+            abs(galaxies[a][0] - galaxies[b][0])
+            + abs(galaxies[a][1] - galaxies[b][1])
+            + factor * (x_adjust + y_adjust)
+            )
         paths.append(path)
 
     logging.info(paths)
     return(sum(paths))
+
 
 def main_loop(filepath):
     """Main loop to call sub-functions."""
     puzzle_input = load_puzzle_input(filepath)
     puzzle_map = make_puzzle_vars(puzzle_input)
     empties = find_empties(puzzle_map)
-    
-    logging.info(f"empties: {empties}")
 
-    puzzle_map1 = expand(puzzle_map, empties, 1)
-    #puzzle_map2 = expand(puzzle_map, empties, 2)
-    tally1 = find_paths(puzzle_map1)
-    #tally2 = find_paths(puzzle_map2)
-    print(f"Part 1: {tally1}")
-
-    
+    tally1 = measure_paths(puzzle_map, empties, part_two=False)
+    tally2 = measure_paths(puzzle_map, empties, part_two=True)
+    print(f"Part 1: {tally1}, Part 2: {tally2}")
 
 
 main_loop('day11input.txt')
