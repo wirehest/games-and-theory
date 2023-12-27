@@ -1,131 +1,81 @@
 #! python3
 
+"""Advent of Code 2023: Day 3."""
+
 import logging
-import copy
+import math
+import re
 
 from pathlib import Path
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
-#logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
-def make_puzzle_data(filepath):
-    """Loads puzzle input and makes puzzle_data."""
-    path = Path(filepath)
-    puzzle_input = path.read_text()
-    puzzle_data = []
-    symbols_str = identify_symbols(puzzle_input)
 
-    for line in puzzle_input.splitlines():
-        line_str = ''
+def make_puzzle_input(filepath):
+    """Makes workable puzzle input."""
+    p_input = Path(filepath).read_text().splitlines()
+    logging.info(f"p_input:\n\n{Path(filepath).read_text()}\n")
 
-        for char in line:
-            if char in symbols_str:
-                line_str += 'S'
-            else:
-                line_str += char
+    return p_input, len(p_input[0]), len(p_input)    
 
-        puzzle_data.append(list(line_str))
 
-    return puzzle_data
+def make_sym_dict(p_input, width, height, part_two):
+    """Makes dict. with symbol positions only."""
+    symbols = '#-%=*$+/&@' if part_two == False else '*'
 
-def identify_symbols(puzzle_input):
-    """Identifies which symbols are used in puzzle_input."""
-    symbols_str = ''
+    return {(r, c): [] for r in range(height) for c in range(width) 
+        if p_input[r][c] in symbols
+        }
 
-    for char in puzzle_input:
-        if not (char == '.' or char.isalnum() or char in symbols_str):
-            symbols_str += char
-        else:
-            continue
 
-    return symbols_str
+def find_parts(p_input, sym):
+    """Finds parts by: 
+    1) making dict. of numbers and edges; 
+    2) finding the intersection of the number dict. with the sym. dict.;
+    3) where there's an intersection, all coordinates from the numbers
+    dict. are appended to the symbols dict.
+    """
+    for r, row in enumerate(p_input):
+            # Matches numbers in puzzle input.
+            for num in re.finditer(r'\d+', row):
+                logging.info(f"sym: {sym}")
+                logging.info(f"matches: {num}")
+                
+                # Dict. of numbers and edges.
+                edge = {(r, c) for r in (r - 1, r, r + 1) 
+                    for c in range(num.start() - 1, num.end() + 1)
+                    }
+                
+                logging.info(f"edge:\n{edge}\n")
+                logging.info(f"type(edge): {type(edge)} "
+                    f" type(sym.keys()): {type(sym.keys())}")
 
-def identify_parts(puzzle_data):
-    """ """
-    nums = '0123456789'
-    parts_positions = copy.deepcopy(puzzle_data)
-    len_y = len(puzzle_data)
-    len_x = len(puzzle_data[0])
-    coords = [(y, x) for y in range(len_y) for x in range(len_x)] 
-    pos_iter = [(n, m) for n in (-1, 0, 1) for m in (-1, 0, 1)]
-    counter = 0
+                # "&" returns intersection (not bitwise &) between
+                # edge+numbers and symbols.
+                for o in edge & sym.keys():
+                    logging.info(f"num.group(): {num.group()}")
+                    
+                    # group() method appends matched numbers to symbol dict.
+                    sym[o].append(int(num.group()))
 
-    for y, x in coords:
-        if puzzle_data[y][x] in nums:
-            for n, m in pos_iter:
-                try:
-                    puzzle_data[y + n][x + m]
-                except IndexError:
-                    continue
 
-                if puzzle_data[y + n][x + m] == 'S':
-                    parts_positions[y][x] = 'P'
-
-    def check_adjacents():
-        """ """
-        for y, x in coords:
-            if puzzle_data[y][x] in nums:            
-                for i in (-1, 1):
-                    try:
-                        parts_positions[y][x + i]
-                    except IndexError:
-                        continue
-
-                    if parts_positions[y][x + i] == 'P':
-                        parts_positions[y][x] = 'P' 
-
-    while counter < 3:
-        check_adjacents()
-        counter += 1
-
-    return parts_positions
-
-def collector(puzzle_data, parts_positions):
-    len_y = len(puzzle_data)
-    len_x = len(puzzle_data[0])
-    coords = [(y, x) for y in range(len_y) for x in range(len_x)] 
-    parts_list = []
-    num_str = ''
-
-    for y, x in coords:
-        try:
-            parts_positions[y][x - 1]
-        except IndexError:
-            continue
-
-        if parts_positions[y][x] == 'P':
-            #logging.info(f"{parts_positions[y][x]} {puzzle_data[y][x]}")
-            num_str += puzzle_data[y][x]
-
-        else:
-            parts_list.append(num_str)
-            num_str = ''
-            continue
-
-        logging.info(f"num_str: {num_str}")
-        #parts_list.append(num_str)
-        #num_str = ''
-
-    return parts_list
-
-def tally(parts_list):
+def main_loop(filepath, part_two):
+    """Calls sub-functions."""
+    p_input, width, height = make_puzzle_input(filepath)
+    sym = make_sym_dict(p_input, width, height, part_two)
+    find_parts(p_input, sym)
+    
+    game_part = '1' if part_two == False else '2'
     tally = 0
-    for val in parts_list:
-        try:
-            tally += int(val)
-        except ValueError:
-            continue
 
-    print(f"tally: {tally}")
+    if part_two == False:
+        tally = sum(sum(n) for n in sym.values())
+    else:
+        tally = sum(math.prod(n) for n in sym.values() if len(n) == 2)
 
-
-puzzle_data = make_puzzle_data('day03input.txt')
-parts_positions = identify_parts(puzzle_data)
-parts_list = collector(puzzle_data, parts_positions)
+    print(f"Part {game_part}: {tally}")
 
 
-#logging.info(f"puzzle_data: {puzzle_data[2]}")
-#logging.info(f"parts_positions: {parts_positions[2]}")
-logging.info(f"parts_list: {parts_list}")
-
-tally(parts_list)
+main_loop('day03input.txt', part_two=False)  # Part 1
+main_loop('day03input.txt', part_two=True)   # Part 2
