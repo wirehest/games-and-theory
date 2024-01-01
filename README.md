@@ -1,2 +1,2 @@
 # pcc3e
-Python Crash Course 3E Exercises
+Python Crash Course 3E exercises.
