@@ -11,8 +11,11 @@ def test_employee():
 
 def test_give_default_raise(test_employee):
     """Tests give_raise method with default amount."""
+    
+    # Unnecessary after adding fixture.
     #first_name, last_name = 'able', 'baker'
     #test_employee = Employee(first_name, last_name)
+    
     assert test_employee.annual_salary == 30_000
     test_employee.give_raise()
     assert test_employee.annual_salary == 35_000
@@ -20,6 +23,8 @@ def test_give_default_raise(test_employee):
 
 def test_give_custom_raise(test_employee):
     """Tests give_raise method with custom amount."""
+    
+    # Unnecessary after adding fixture.
     #first_name, last_name = 'able', 'baker'
     #test_employee = Employee(first_name, last_name)
     assert test_employee.annual_salary == 30_000
