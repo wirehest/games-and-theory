@@ -27,6 +27,7 @@ def test_give_custom_raise(test_employee):
     # Unnecessary after adding fixture.
     #first_name, last_name = 'able', 'baker'
     #test_employee = Employee(first_name, last_name)
+    
     assert test_employee.annual_salary == 30_000
     test_employee.give_raise(1_000)
     assert test_employee.annual_salary == 31_000

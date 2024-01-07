@@ -14,12 +14,3 @@ class Employee:
     def give_raise(self, amount=5_000):
         """Gives employee a raise."""
         self.annual_salary += amount
-
-"""chuck_taylor = Employee('chuck', 'taylor', 20000)
-print(chuck_taylor.annual_salary)   # Check single instance var.
-chuck_taylor.about_employee()
-chuck_taylor.give_raise(1000)  # Input value.
-chuck_taylor.about_employee()
-chuck_taylor.give_raise()       # Default value.
-chuck_taylor.about_employee()
-"""
