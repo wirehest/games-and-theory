@@ -69,11 +69,12 @@ def ex5_2():
     print("Skipped. Done for exercise 5-1.")
 
 # 5-3. Alien Colors #1: Imagine an alien was just shot down in a game. 
-# Create a variable called alien_color and assign it a value of 'green', 
-# 'yellow', or 'red'. Write an if statement to test whether the alien’s 
-# color is green. If it is, print a message that the player just earned 
-# 5 points. Write one version of this program that passes the if test 
-# and another that fails. (The version that fails will have no output.)
+# Create a variable called alien_color and assign it a value of 
+# 'green', 'yellow', or 'red'. Write an if statement to test whether 
+# the alien’s color is green. If it is, print a message that the player 
+# just earned 5 points. Write one version of this program that passes 
+# the if test and another that fails. (The version that fails will have 
+# no output.)
 def ex5_3():
     alien_color = 'red'
 
@@ -116,7 +117,8 @@ def ex5_4():
 # points. 
 # If the alien is yellow, print a message that the player earned 10 
 # points. 
-# If the alien is red, print a message that the player earned 15 points. 
+# If the alien is red, print a message that the player earned 15 
+# points. 
 # Write three versions of this program, making sure each message is 
 # printed for the appropriate color alien. 
 def ex5_5():
@@ -142,8 +144,8 @@ def ex5_5():
 # person’s stage of life. Set a value for the variable age, and then:
 # If the person is less than 2 years old, print a message that the 
 # person is a baby.
-# If the person is at least 2 years old but less than 4, print a message 
-# that the person is a toddler. 
+# If the person is at least 2 years old but less than 4, print a 
+# message that the person is a toddler. 
 # If the person is at least 4 years old but less than 13, print a 
 # message that the person is a kid.
 # If the person is at least 13 years old but less than 20, print a 
@@ -197,13 +199,13 @@ def ex5_7():
         if fruit in favorite_fruits:
             print(f"You really like {fruit}!")
 
-# 5-8. Hello Admin: Make a list of five or more usernames, including the 
-# name 'admin'. Imagine you are writing code that will print a greeting 
-# to each user after they log in to a website. Loop through the list, 
-# and print a greeting to each user. If the username is 'admin', print a 
-# special greeting, such as Hello admin, would you like to see a status 
-# report? Otherwise, print a generic greeting, such as Hello Jaden, 
-# thank you for logging in again. 
+# 5-8. Hello Admin: Make a list of five or more usernames, including 
+# the name 'admin'. Imagine you are writing code that will print a 
+# greeting to each user after they log in to a website. Loop through 
+# the list, and print a greeting to each user. If the username is 
+# 'admin', print a special greeting, such as Hello admin, would you 
+# like to see a status report? Otherwise, print a generic greeting, 
+# such as Hello Jaden, thank you for logging in again. 
 def ex5_8():
     usernames = ['admin', 'god', 'abaker', 'cdog', 'efox', 'ghow', 'ijig']
 
@@ -216,9 +218,9 @@ def ex5_8():
             print(f"Hello {user.title()}, welcome back.")
 
 # 5-9. No Users: Add an if test to hello_admin.py to make sure the list 
-# of users is not empty. If the list is empty, print the message We need 
-# to find some users! Remove all of the usernames from your list, and 
-# make sure the correct message is printed. 
+# of users is not empty. If the list is empty, print the message We 
+# need to find some users! Remove all of the usernames from your list, 
+# and make sure the correct message is printed. 
 def ex5_9():
     usernames = []
 
@@ -241,8 +243,8 @@ def ex5_9():
 # of the new usernames are also in the current_users list.Loop through 
 # the new_users list to see if each new username has already been used. 
 # If it has, print a message that the person will need to enter a new 
-# username. If a username has not been used, print a message saying that 
-# the username is available. Make sure your comparison is case 
+# username. If a username has not been used, print a message saying 
+# that the username is available. Make sure your comparison is case 
 # insensitive. If 'John' has been used, 'JOHN' should not be accepted. 
 # (To do this, you’ll need to make a copy of current_users containing 
 # the lowercase versions of all existing users.) 
@@ -268,11 +270,12 @@ def ex5_10():
             print(f"{new_user_formatted} is available.")
 
 # 5-11. Ordinal Numbers: Ordinal numbers indicate their position in a 
-# list, such as 1st or 2nd. Most ordinal numbers end in th, except 1, 2, 
-# and 3. Store the numbers 1 through 9 in a list. Loop through the list. 
-# Use an if-elif-else chain inside the loop to print the proper ordinal 
-# ending for each number. Your output should read "1st 2nd 3rd 4th 5th 
-# 6th 7th 8th 9th", and each result should be on a separate line. 
+# list, such as 1st or 2nd. Most ordinal numbers end in th, except 1, 
+# 2, and 3. Store the numbers 1 through 9 in a list. Loop through the 
+# list. Use an if-elif-else chain inside the loop to print the proper 
+# ordinal ending for each number. Your output should read "1st 2nd 3rd 
+# 4th 5th 6th 7th 8th 9th", and each result should be on a separate 
+# line. 
 def ex5_11():
     numbers = list(range(1, 10))
 
@@ -294,7 +297,8 @@ def ex5_11():
         print(f"{number}{suffix}")
 
 # 5-12. Styling if Statements: Review the programs you wrote in this 
-# chapter, and make sure you styled your conditional tests appropriately. 
+# chapter, and make sure you styled your conditional tests 
+# appropriately. 
 def ex5_12():
     print("The only recommendation PEP 8 provides for styling\n"
         "conditional tests is to use a single space around\n"
@@ -302,10 +306,10 @@ def ex5_12():
         "For example: if age < 4:\n"
         "is better than: if age<4:")
 
-# 5-13. Your Ideas: At this point, you’re a more capable programmer than 
-# you were when you started this book. Now that you have a better sense 
-# of how real-world situations are modeled in programs, you might be 
-# thinking of some problems you could solve with your own programs. 
+# 5-13. Your Ideas: At this point, you’re a more capable programmer 
+# than you were when you started this book. Now that you have a better 
+# sense of how real-world situations are modeled in programs, you might 
+# be thinking of some problems you could solve with your own programs. 
 # Record any new ideas you have about problems you might want to solve 
 # as your programming skills continue to improve. Consider games you 
 # might want to write, datasets you might want to explore, and web 

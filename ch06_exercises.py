@@ -21,11 +21,11 @@ def ex6_1():
         print(f"{key}: {str(value).title()}")
 
 # 6-2. Favorite Numbers: Use a dictionary to store people’s favorite 
-# numbers. Think of five names, and use them as keys in your dictionary. 
-# Think of a favorite number for each person, and store each as a value 
-# in your dictionary. Print each person’s name and their favorite 
-# number. For even more fun, poll a few friends and get some actual data 
-# for your program. 
+# numbers. Think of five names, and use them as keys in your 
+# dictionary. Think of a favorite number for each person, and store 
+# each as a value in your dictionary. Print each person’s name and 
+# their favorite number. For even more fun, poll a few friends and get 
+# some actual data for your program. 
 def ex6_2():
     favorite_numbers = {
         'able': 1,
@@ -95,10 +95,12 @@ def ex6_4():
 # 6-5. Rivers: Make a dictionary containing three major rivers and the 
 # country each river runsthrough. One key-value pair might be 
 # 'nile': 'egypt'. 
-# Use a loop to print a sentence about each river, such as The Nile runs 
-# through Egypt. 
-# Use a loop to print the name of each river included in the dictionary. 
-# Use a loop to print the name of each country included in the dictionary. 
+# Use a loop to print a sentence about each river, such as The Nile 
+# runs through Egypt. 
+# Use a loop to print the name of each river included in the 
+# dictionary. 
+# Use a loop to print the name of each country included in the 
+# dictionary. 
 def ex6_5():
     major_rivers = {
         'mississippi': 'united states',
@@ -145,9 +147,9 @@ def ex6_6():
 
 # 6-7. People: Start with the program you wrote for Exercise 6-1 
 # (page 98). Make two new dictionaries representing different people, 
-# and store all three dictionaries in a list called people. Loop through 
-# your list of people. As you loop through the list, print everything 
-# you know about each person. 
+# and store all three dictionaries in a list called people. Loop 
+# through your list of people. As you loop through the list, print 
+# everything you know about each person. 
 def ex6_7():
     people = [{
         'first_name': 'able', 
@@ -173,11 +175,11 @@ def ex6_7():
             print(f"{key}: {str(value).title()}")
         print()
         
-# 6-8. Pets: Make several dictionaries, where each dictionary represents 
-# a different pet. In each dictionary, include the kind of animal and 
-# the owner’s name. Store these dictionaries in a list called pets. 
-# Next, loop through your list and as you do, print everything you know 
-# about each pet. 
+# 6-8. Pets: Make several dictionaries, where each dictionary 
+# represents a different pet. In each dictionary, include the kind of 
+# animal and the owner’s name. Store these dictionaries in a list 
+# called pets. Next, loop through your list and as you do, print 
+# everything you know about each pet. 
 def ex6_8():
     pets = [{
         'name': 'pooch',
@@ -270,23 +272,30 @@ def ex6_10():
 # have stored about it. 
 def ex6_11():
     cities = {
-        'tokyo': {'country': 'japan', 'pop': '+14M', 'fact': "Originally known as Edo before the Meiji Restoration, during which the city's name was changed to Tokyo.",},
-        'sydney': {'country': 'australia', 'pop': '+5.2M', 'fact': "Sydney's original inhabitants were Aboriginal Australians who had migrated from southeast Asia.",},
-        'lisbon': {'country': 'portugal', 'pop': '+540k' , 'fact': "Lisbon is one of the oldest cities in the world, and the second-oldest European capital city (after Athens).",},
+        'tokyo': {'country': 'japan', 'pop': '+14M', 
+            'fact': "Originally known as Edo before the Meiji Restoration, "
+            "during which the city's name was changed to Tokyo.",},
+        'sydney': {'country': 'australia', 'pop': '+5.2M', 
+            'fact': "Sydney's original inhabitants were Aboriginal "
+            "Australians who had migrated from southeast Asia.",},
+        'lisbon': {'country': 'portugal', 'pop': '+540k' , 
+            'fact': "Lisbon is one of the oldest cities in the world, and the "
+            "second-oldest European capital city (after Athens).",},
         }
 
     for city in cities:
         print(f"\n{city.title()}:")
-        print(f"* {city.title()} is located in {cities[city]['country'].title()}.")
+        print(f"* {city.title()} is located in "
+            "{cities[city]['country'].title()}.")
         print(f"* {city.title()}'s approximate population is: "
             f"{cities[city]['pop']}.")
         print(f"* One fact about {city.title()}:\n{cities[city]['fact']}")
 
 # 6-12. Extensions: We’re now working with examples that are complex 
-# enough that they can be extended in any number of ways. Use one of the 
-# example programs from this chapter, and extend it by adding new keys 
-# and values, changing the context of the program, or improving the 
-# formatting of the output.
+# enough that they can be extended in any number of ways. Use one of 
+# the example programs from this chapter, and extend it by adding new 
+# keys and values, changing the context of the program, or improving 
+# the formatting of the output.
 def ex6_12(): 
     pass    # Skipped.
 

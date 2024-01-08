@@ -76,7 +76,9 @@ def ex8_5():
 # the values that are returned. 
 def ex8_6():
     def city_country(city, country):
-        """Takes acity and country and return a string formatted like: 'City, Country.'"""
+        """Takes acity and country and return a string formatted 
+        like: 'City, Country.'
+        """
         return f"{city.title()}, {country.title()}."
 
     city = city_country('Singapore', 'Singapore')
@@ -175,7 +177,9 @@ def ex8_10():
     sent_messages = []
 
     def send_messages(message_list):
-        """Prints all messages in a list while moving the messages to another list."""
+        """Prints all messages in a list while moving the messages to 
+        another list.
+        """
         for i in range(len(message_list)):
             current_message = message_list.pop()
             print(current_message)
@@ -199,7 +203,9 @@ def ex8_11():
     sent_messages = []
 
     def send_messages(message_list_copy):
-        """Prints all messages in a list while moving the messages to another list."""
+        """Prints all messages in a list while moving the messages to 
+        another list.
+        """
         for i in range(len(message_list_copy)):
             current_message = message_list_copy.pop()
             print(current_message)

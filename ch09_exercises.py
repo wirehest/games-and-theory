@@ -3,9 +3,9 @@
 import logging
 import random           # Import for ex9-13.
 
-import restaurant                       # Import custom module for ex9-10.
-import user_classes_complete as ucc     # Import custom module for ex9-11.
-import admin_privileges as ap           # Import custom module for ex9-12.
+import restaurant                     # Import custom module for ex9-10.
+import user_classes_complete as ucc   # Import custom module for ex9-11.
+import admin_privileges as ap         # Import custom module for ex9-12.
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 logging.disable(logging.CRITICAL)
