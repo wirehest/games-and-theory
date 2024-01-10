@@ -1,9 +1,12 @@
 #! python3
 
 import matplotlib.pyplot as plt
+import plotly.express as px
 
+from die import Die
 from random_walk import RandomWalk
 from random_walk_refactored import RandomWalk as RaWaRefac
+
 
 # 15-1. Cubes: A number raised to the third power is a cube. Plot 
 # the first five cubic numbers, and then plot the first 5,000 cubic 
@@ -88,33 +91,104 @@ def ex15_5():
 
     plt.show()
 
+
 # 15-6. Two D8s: Create a simulation showing what happens when you roll 
 # two eight-sided dice 1,000 times. Try to picture what you think the 
 # visualization will look like before you run the simulation, then see 
 # if your intuition was correct. Gradually increase the number of rolls 
 # until you start to see the limits of your system’s capabilities.
+def ex15_6():
+    "Rolls two D8s."
+    die_1, die_2 = Die(8), Die(8)
+    poss_results = range(2, die_1.num_sides + die_2.num_sides + 1)
+
+    results = []
+    for i in range(500_000):
+        results.append(die_1.roll() + die_2.roll())
+
+    frequencies = []
+    for s in poss_results:
+        frequencies.append(results.count(s))
+
+    # Plotly.
+    title = f"D{die_1.num_sides} & D{die_2.num_sides} dice roll results."
+    labels = {'x': 'Result', 'y': 'Frequency'}
+    fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels,
+        template='plotly_dark')
+    fig.update_layout(xaxis_dtick=1)
+    fig.show()
 
 
 # 15-7. Three Dice: When you roll three D6 dice, the smallest number 
 # you can roll is 3 and the largest number is 18. Create a 
 # visualization that shows what happens when you roll three D6 dice.
+def ex15_7():
+    """Roll three D6s."""
+    die_1, die_2, die_3 = Die(6), Die(6), Die(6)
+    max_sum = die_1.num_sides + die_2.num_sides + die_3.num_sides
+    poss_results = range(2, max_sum + 1)
+
+    results = []
+    for i in range(10_000):
+        results.append(die_1.roll() + die_2.roll() + die_3.roll())
+
+    frequencies = []
+    for s in poss_results:
+        frequencies.append(results.count(s))
+
+    # Plotly.
+    title = (f"D{die_1.num_sides}, D{die_2.num_sides}, D{die_2.num_sides}"
+         " dice roll results.")
+    labels = {'x': 'Result', 'y': 'Frequency'}
+    fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels,
+        template='plotly_dark')
+    fig.update_layout(xaxis_dtick=1)
+    fig.show()
 
 
 # 15-8. Multiplication: When you roll two dice, you usually add the two 
 # numbers together to get the result. Create a visualization that shows 
 # what happens if you multiply these numbers by each other instead.
+def ex15_8():
+    """Finds the product of two die."""
+    die_1, die_2 = Die(6), Die(6)
+    max_product = die_1.num_sides * die_2.num_sides + 1
+    poss_results = range(1, max_product)
+
+    results = []
+    for i in range(100_000):
+        results.append(die_1.roll() * die_2.roll())
+
+    frequencies = []
+    for p in poss_results:
+        frequencies.append(results.count(p))
+
+    # Plotly.
+    title = f"D{die_1.num_sides} & D{die_2.num_sides} roll product results."
+    labels = {'x': 'Product', 'y': 'Frequency'}
+    fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels,
+        template='plotly_dark')
+    fig.update_layout(xaxis_dtick=1)
+    fig.show()
 
 
 # 15-9. Die Comprehensions: For clarity, the listings in this section 
 # use the long form of for loops. If you’re comfortable using list 
 # comprehensions, try writing a comprehension for one or both of the 
 # loops in each of these programs.
+def ex15_9():
+    """"""
+    pass
 
 
 # 15-10. Practicing with Both Libraries: Try using Matplotlib to make a 
 # die-rolling visualization, and use Plotly to make the visualization 
 # for a random walk. (You’ll need to consult the documentation for each 
 # library to complete this exercise.)
+def ex15_10():
+    """"""
+    pass
+
 
 while True:
     chapter = 15
@@ -129,3 +203,5 @@ while True:
         print(f"\nInvalid input. Enter a valid exercise number or Q to quit.")
     else:
         print()
+
+#ex15_8()
