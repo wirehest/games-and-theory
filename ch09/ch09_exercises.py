@@ -326,7 +326,7 @@ def ex9_7():
 # Admin and use your method to show its privileges. 
 def ex9_8():
     class Privileges:
-        """Representation of priviliges."""
+        """Representation of privileges."""
         def __init__(self):
             """Initialize list of privileges."""
             self.privileges = [
