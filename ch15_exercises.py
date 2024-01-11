@@ -15,9 +15,9 @@ def ex15_1():
     """Create plot for cubes."""
     x_vals = range(5_000)
     y_vals = [x**3 for x in x_vals] 
+
     fig, ax = plt.subplots()
     ax.scatter(x_vals, y_vals)
-
     plt.show()
 
 
@@ -26,9 +26,9 @@ def ex15_2():
     """Applies cmap to cubes plot."""
     x_vals = range(5_000)
     y_vals = [x**3 for x in x_vals] 
+
     fig, ax = plt.subplots()
     ax.scatter(x_vals, y_vals, c=y_vals, cmap=plt.cm.RdPu)
-
     plt.show()
 
 
@@ -41,12 +41,10 @@ def ex15_3():
     """Simulates pollen on water."""
     rw = RandomWalk(5_000)
     rw.fill_walk()
-    point_numbers = range(rw.num_points)
 
     fig, ax = plt.subplots()
     ax.plot(rw.x_values, rw.y_values, linewidth=2)
     ax.set_aspect('equal')
-
     plt.show()
 
 
@@ -88,7 +86,6 @@ def ex15_5():
     fig, ax = plt.subplots()
     ax.plot(rw.x_values, rw.y_values, linewidth=2)
     ax.set_aspect('equal')
-
     plt.show()
 
 
@@ -152,8 +149,8 @@ def ex15_7():
 def ex15_8():
     """Finds the product of two die."""
     die_1, die_2 = Die(6), Die(6)
-    max_product = die_1.num_sides * die_2.num_sides + 1
-    poss_results = range(1, max_product)
+    max_product = die_1.num_sides * die_2.num_sides
+    poss_results = range(1, max_product + 1)
 
     results = []
     for i in range(100_000):
@@ -177,8 +174,20 @@ def ex15_8():
 # comprehensions, try writing a comprehension for one or both of the 
 # loops in each of these programs.
 def ex15_9():
-    """"""
-    pass
+    """Replaces for loops with list comps."""
+    die_1, die_2 = Die(6), Die(6)
+    max_sum = die_1.num_sides + die_2.num_sides
+    poss_results = range(2, max_sum + 1)
+
+    results = [die_1.roll() + die_2.roll() for i in range(100_000)]
+    frequencies = [results.count(r) for r in results_range]
+
+    title = "Dice Rolls via List Comprehension"
+    labels = {'x': 'Sum', 'y': 'Frequency'}
+    fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels,
+        template='plotly_dark')
+    fig.update_layout(xaxis_dtick=1)
+    fig.show()
 
 
 # 15-10. Practicing with Both Libraries: Try using Matplotlib to make a 
@@ -186,9 +195,49 @@ def ex15_9():
 # for a random walk. (You’ll need to consult the documentation for each 
 # library to complete this exercise.)
 def ex15_10():
-    """"""
-    pass
+    """Creates a die-rolling visualization with Matplotlib and a
+    random walk visualization with Plotly.
+    """
+    
+    def ex15_10_die_roll():
+        """Visualizes die roll results with Matplotlib."""
+        die_1, die_2 = Die(6), Die(6)
+        max_sum = die_1.num_sides + die_2.num_sides
+        poss_results = range(2, max_sum + 1)
 
+        results = [die_1.roll() + die_2.roll() for i in range(100_000)]
+        frequencies = [results.count(p) for p in poss_results]
+        
+        fig, ax = plt.subplots()
+        ax.bar(x=poss_results, height=frequencies)
+        plt.show()
+
+    def ex15_10_random_walk():
+        """Visualizes random walk with Plotly."""
+        walk = RandomWalk(50)
+        walk.fill_walk()
+        
+        fig = px.line(x=walk.x_values, y=walk.y_values)
+        fig.update_yaxes(scaleanchor = 'x', scaleratio = 1,)
+        fig.show()
+
+    while True:
+        pick = input(f"Select visualization to run. B to go back.\n"
+            "1. Die Roll with Matplotlib\n"
+            "2. Random Walk with Plotly\n\n"
+            "> ")
+
+        if pick.lower() == 'b':
+            break
+
+        elif pick not in ('1', '2'):
+            print("Invalid selection. Try again.\n")
+
+        elif pick == '1':
+            ex15_10_die_roll()
+        
+        else:
+            ex15_10_random_walk()
 
 while True:
     chapter = 15
@@ -203,5 +252,3 @@ while True:
         print(f"\nInvalid input. Enter a valid exercise number or Q to quit.")
     else:
         print()
-
-#ex15_8()
