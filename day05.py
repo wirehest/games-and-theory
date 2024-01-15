@@ -64,8 +64,8 @@ def make_puzzle_vars(puzzle_input, part=1):
     temp_to_humid = final_maps[5]
     humid_to_loc = final_maps[6]
     
-    return seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
-        light_to_temp, temp_to_humid, humid_to_loc
+    return (seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+        light_to_temp, temp_to_humid, humid_to_loc)
 
 def make_maps(mapping):
     """Makes variables for 'maps,' specifically."""
