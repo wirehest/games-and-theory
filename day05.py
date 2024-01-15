@@ -44,7 +44,8 @@ def make_puzzle_vars(puzzle_input, part=1):
     temp_to_humid = puzzle_split[7]
     humid_to_loc = puzzle_split[8]
 
-    mappings = (seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc)
+    mappings = (seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+            light_to_temp, temp_to_humid, humid_to_loc)
     final_maps = []
 
     for mapping in mappings:
@@ -55,12 +56,16 @@ def make_puzzle_vars(puzzle_input, part=1):
         map_dict = make_maps(mapping)
         final_maps.append(map_dict)
 
-    seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc = final_maps
-
-    #logging.info(f"seed_to_soil: {seed_to_soil}\nlen:{len(seed_to_soil)}")
-    #input()
+    seed_to_soil = final_maps[0]
+    soil_to_fert = final_maps[1] 
+    fert_to_water = final_maps[2]
+    water_to_light = final_maps[3]
+    light_to_temp = final_maps[4]
+    temp_to_humid = final_maps[5]
+    humid_to_loc = final_maps[6]
     
-    return seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc
+    return seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+        light_to_temp, temp_to_humid, humid_to_loc
 
 def make_maps(mapping):
     """Makes variables for 'maps,' specifically."""
@@ -74,9 +79,11 @@ def make_maps(mapping):
     
     return map_dict
 
-def follow_maps(seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc):
+def follow_maps(seeds, seed_to_soil, soil_to_fert, fert_to_water, 
+        water_to_light, light_to_temp, temp_to_humid, humid_to_loc):
     """Follows numbers through mappings, from seed to location."""
-    mappings = (seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc)
+    mappings = (seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+            light_to_temp, temp_to_humid, humid_to_loc)
     locations = []
 
     for seed in seeds:
@@ -84,11 +91,6 @@ def follow_maps(seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light
             logging.info(f"\nseed: {seed}\nmapping: {mapping}")
             for key in mapping.keys():
                 delta = abs(key - seed)
-                #key_smol = round(key / 100_000_000, 3)
-                #key_end_smol = round((key + mapping[key][1]) / 100_000_000, 3)
-                #logging.info(f"key: {round(seed / 100_000_000, 3)} "
-                #    f"range: {key_smol}-{key_end_smol}")
-                #input()
                 if seed in range(key, key + mapping[key][1]):
                     key = key + mapping[key][0] + delta
                     logging.info(f"Match found. New key: {key}")
@@ -99,33 +101,12 @@ def follow_maps(seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light
         locations.append(key)
     return locations
 
-"""seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc = make_puzzle_vars(load_puzzle_input(filepath))
-
-locations = follow_maps(seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc)
-logging.info(f"seeds: {len(seeds)}\n{seeds}")
-logging.info(f"locations:{len(locations)}\n{locations}")
-"""
-
 puzzle_input = load_puzzle_input(filepath)
-seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc = make_puzzle_vars(puzzle_input, 2)
+seeds, seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+light_to_temp, temp_to_humid, humid_to_loc = make_puzzle_vars(puzzle_input, 2)
 
-"""logging.info(f"seeds:\n{seeds}")
-input()
-logging.info(f"seed_to_soil:\n{seed_to_soil}")
-input()
-logging.info(f"soil_to_fert:\n{soil_to_fert}")
-input()
-logging.info(f"fert_to_water:\n{fert_to_water}")
-input()
-logging.info(f"water_to_light:\n{water_to_light}")
-input()
-logging.info(f"light_to_temp:\n{light_to_temp}")
-input()
-logging.info(f"temp_to_humid:\n{temp_to_humid}")
-input()
-logging.info(f"humid_to_loc:\n{humid_to_loc}")"""
-
-mappings = seed_to_soil, soil_to_fert, fert_to_water, water_to_light, light_to_temp, temp_to_humid, humid_to_loc
+mappings = seed_to_soil, soil_to_fert, fert_to_water, water_to_light, 
+    light_to_temp, temp_to_humid, humid_to_loc
 
 locations = []
 for seed in seeds:
@@ -145,12 +126,10 @@ for seed in seeds:
                     logging.info(f"delta: {delta}, {dst} + {delta}"
                         f" -> {dst + delta}")
                     x = dst + delta
-                    #input()
                     break
                 else:
                     logging.info(f"x: {x}, range({src}, {src + r}) X")
                     continue
-
 
             if i + 1 == len(mappings):
                 locations.append(x)
@@ -158,6 +137,5 @@ for seed in seeds:
                 break
         break
     logging.info("while loop end")
-    #input()
 
 print(f"min. loc.: {min(locations)}")

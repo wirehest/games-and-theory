@@ -5,7 +5,6 @@
 import logging
 
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
 
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
@@ -30,9 +29,9 @@ def hash_algo(char, value):
     value = (17 * (value + ord(char))) % 256
     return value
 
-def main_loop():
+def main_loop(filepath):
     """Main loop."""
-    puzzle_input = load_puzzle_input('day15input.txt')
+    puzzle_input = load_puzzle_input(filepath)
     init_list = make_puzzle_vars(puzzle_input)
     hashed_list = []
 
@@ -51,4 +50,4 @@ def main_loop():
     print(f"part 1, tally: {tally}")
 
 
-main_loop()
+main_loop('day15input.txt')
