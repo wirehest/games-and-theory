@@ -25,8 +25,8 @@ def ex16_1():
     #    'dv': 'death_valley_2021_full.csv'}
 
     #for k in locs.keys():
-    with open('weather_data/sitka_weather_2021_full.csv', 'r') as loc:
-        reader = csv.reader(loc)
+    with open('weather_data/sitka_weather_2021_full.csv', 'r') as data:
+        reader = csv.reader(data)
         header_row = next(reader)
         
         for row in reader:
@@ -40,8 +40,8 @@ def ex16_1():
                 prcps_sitka.append(prcp)
 
     # TODO refactor
-    with open('weather_data/death_valley_2021_full.csv', 'r') as loc:
-        reader = csv.reader(loc)
+    with open('weather_data/death_valley_2021_full.csv', 'r') as data:
+        reader = csv.reader(data)
         header_row = next(reader)
         
         for row in reader:
@@ -78,10 +78,41 @@ def ex16_1():
 def ex16_2():
     """"""
 
+
 # 16-3. San Francisco: Are temperatures in San Francisco more like 
 # temperatures in Sitka or temperatures in Death Valley? Download some 
 # data for San Francisco, and generate a high-low temperature plot for 
 # San Francisco to make a comparison.
+def ex16_3():
+    """Plots 2023 high-low temp. data for San Francisco."""
+    with open('weather_data/san_francisco_weather_2023.csv', 'r') as data:
+        reader = csv.reader(data)
+        header = next(reader)
+        dates, highs, lows = [], [], []
+
+        for row in reader:
+            current_date = datetime.strptime(row[2], '%Y-%m-%d')
+            try:
+                high = int(row[4])
+                low = int(row[5])
+            except ValueError:
+                print(f"Missing data for {current_date}")
+            else:
+                dates.append(current_date)
+                highs.append(high)
+                lows.append(low)
+
+    fig, ax = plt.subplots()
+    ax.plot(dates, highs, color='red', alpha=0.5, label='Highs')
+    ax.plot(dates, lows, color='blue', alpha=0.5, label='Lows')
+    ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
+    ax.legend()
+    ax.set_title('San Francisco Highs & Lows')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Temp. (F)')
+    fig.autofmt_xdate
+
+    plt.show()
 
 
 # 16-4. Automatic Indexes: In this section, we hardcoded the indexes 
@@ -89,14 +120,55 @@ def ex16_2():
 # determine the indexes for these values, so your program can work for 
 # Sitka or Death Valley. Use the station name to automatically generate 
 # an appropriate title for your graph as well.
+def ex16_4():
+    """Uses index variables instead of hardcoded ones to access data."""
+    with open('weather_data/san_francisco_weather_2023.csv', 'r') as data:
+        reader = csv.reader(data)
+        header = next(reader)
+        
+        date_index = header.index('DATE')
+        tmax_index = header.index('TMAX')
+        tmin_index = header.index('TMIN')
+        stn_index = header.index('NAME')
+
+        dates, highs, lows, station_name = [], [], [], ''
+        for i, row in enumerate(reader):
+            current_date = datetime.strptime(row[date_index], '%Y-%m-%d')
+            if i == 1:
+                station_name = row[stn_index]
+            try:
+                high = int(row[tmax_index])
+                low = int(row[tmin_index])
+            except ValueError:
+                print(f"Missing data for {current_date}")
+            else:
+                dates.append(current_date)
+                highs.append(high)
+                lows.append(low)
+
+    fig, ax = plt.subplots()
+    plt.grid(visible=True, alpha=0.3)
+    fig.autofmt_xdate()
+    ax.plot(dates, highs, color='red', alpha=0.5, label='Highs')
+    ax.plot(dates, lows, color='blue', alpha=0.5, label='Lows')
+    ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
+    ax.legend()
+    ax.set_title(f'{station_name}:\nTemperature Highs & Lows')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Temp. (F)')
+    ax.tick_params(labelsize=12)
+
+    plt.show()
 
 
 # 16-5. Explore: Generate a few more visualizations that examine any 
 # other weather aspect you’re interested in for any locations you’re 
 # curious about.
+def ex16_5():
+    """"""
 
 
-"""while True:
+while True:
     chapter = 16
     exercises = '1-15'
     print(f"Ch. {chapter} exercises {exercises}. Q to quit.")
@@ -109,4 +181,3 @@ def ex16_2():
         print(f"\nInvalid input. Enter a valid exercise number or Q to quit.")
     else:
         print()
-"""
