@@ -1,8 +1,5 @@
 #! python3
 
-"""
-"""
-
 
 def array_diff(a, b):
     """Removes elements from list a that are also in list b.

@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
-
 
 def spin_words(sentence):
     """"""

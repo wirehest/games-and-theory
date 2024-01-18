@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
-
 
 def narcissistic(value):
     """Checks if value is a Narcissistic Number (Armstrong Number): 
