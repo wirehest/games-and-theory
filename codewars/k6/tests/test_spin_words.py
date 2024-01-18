@@ -1,4 +1,4 @@
-from ..spin_words import spin_words
+from ..stop_gninnips_my_sdrow import spin_words
 
 
 def test_spin_words_one():
