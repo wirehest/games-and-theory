@@ -1,4 +1,4 @@
-from ..duplicate_count import duplicate_count
+from ..counting_duplicates import duplicate_count
 
 
 def test_duplicate_count_basic():
