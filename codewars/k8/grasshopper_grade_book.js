@@ -1,3 +1,4 @@
+/** Calculates an average grade and returns the letter grade equivalent. */
 function getGrade(s1, s2, s3) {
   let grades = [s1, s2, s3];
 
