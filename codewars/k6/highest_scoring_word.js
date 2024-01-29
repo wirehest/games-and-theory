@@ -1,4 +1,5 @@
-/** Returns the highest-scoring word in the input string based on each 
+/** 
+ * Returns the highest-scoring word in the input string based on each 
  * letter's position in the alphabet.
  */
 function high(x) {
