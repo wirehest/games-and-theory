@@ -1,0 +1,28 @@
+body {
+  font-family: "Helvetica", sans-serif;
+  background-color: lightslategray;
+}
+h1 {
+  color: lightyellow;
+  font-style: italic;
+}
+
+#main-heading {
+  font-size: 48px;
+}
+
+strong {
+  color: lightskyblue;
+}
+
+p strong {
+  font-size: 24px;
+}
+
+.highlight {
+  background-color: aliceblue;
+}
+
+.highlight strong {
+  background-color: slateblue;
+}
