@@ -1,6 +1,9 @@
 'use strict';
 
-/** Returns input str stripped any text following specified comment markers. */
+/**
+ * Returns the input str stripped of any text following the specified comment
+ * markers.
+ */
 function solution(text, markers) {
   const specials = '^$.*+?=:|\\/()[]{}';
   if (markers.length) {
