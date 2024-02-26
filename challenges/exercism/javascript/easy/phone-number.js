@@ -1,0 +1,57 @@
+/** Returns phone numbers in a standard format */
+export const clean = (num) => {
+  const pattern =
+    /(?:.)?(?<cc>.)?(?:..)?(?<ar>.{3})(?:..)?(?<loc>.{3})(?:.)?(?<sub>.{3,})/iu;
+  let match = num.match(pattern).slice(0, 5);
+  console.log(match);
+
+  if ([...num].some((x) => x.charCodeAt() >= 65 && x.charCodeAt() <= 122)) {
+    throw new Error('Letters not permitted');
+  }
+  // if (/(?:.)?(.)?(?:..)?(.){3}(?:..)?(.){3}(?:.)(.){4}/iu.test(num)) {
+  //   throw new Error('Punctuations not permitted');
+  // }
+
+  const twoToNine = '23456789';
+  const numToText = {
+    0: 'zero',
+    1: 'one',
+  };
+
+  let digitsOnly = num.match(/\d/giu).join('');
+  if (digitsOnly.length < 10) {
+    throw new Error('Incorrect number of digits');
+  }
+  if (digitsOnly.length > 11) {
+    throw new Error('More than 11 digits');
+  }
+  if (digitsOnly.length === 11) {
+    if (digitsOnly[0] !== '1') throw new Error('11 digits must start with 1');
+    digitsOnly = digitsOnly.slice(-10);
+  }
+  if (!twoToNine.includes(digitsOnly[0])) {
+    throw new Error(`Area code cannot start with ${numToText[digitsOnly[0]]}`);
+  }
+  if (!twoToNine.includes(digitsOnly[3])) {
+    throw new Error(
+      `Exchange code cannot start with ${numToText[digitsOnly[3]]}`
+    );
+  }
+  return digitsOnly;
+};
+
+console.assert(clean('(223) 456-7890') === '2234567890', '1');
+console.assert(clean('223.456.7890') === '2234567890', '2');
+console.assert(clean('223 456   7890   ') === '2234567890', '3');
+console.assert(clean('(223) 456-7890') === '2234567890', '4');
+console.assert(clean('+1 (223) 456-7890') === '2234567890', '5');
+console.assert(clean('12234567890') === '2234567890', '6');
+
+// clean('123-@:!-7890') new Error('Punctuations not permitted')
+// clean('123-abc-7890') new Error('Letters not permitted')
+
+// clean('32 123 456 7890') new Error('More than 11 digits')
+// clean('(123) 456-7890') new Error('Area code cannot start with one')
+// clean('(023) 456-7890') new Error('Area code cannot start with zero')
+// clean('1 (223) 056-7890') new Error('Exchange code cannot start with zero')
+// clean('1 (223) 156-7890') new Error('Exchange code cannot start with one')
