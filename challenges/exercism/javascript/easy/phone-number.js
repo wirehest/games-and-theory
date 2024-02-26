@@ -1,43 +1,35 @@
 /** Returns phone numbers in a standard format */
 export const clean = (num) => {
-  const pattern =
-    /(?:.)?(?<cc>.)?(?:..)?(?<ar>.{3})(?:..)?(?<loc>.{3})(?:.)?(?<sub>.{3,})/iu;
-  let match = num.match(pattern).slice(0, 5);
-  console.log(match);
-
-  if ([...num].some((x) => x.charCodeAt() >= 65 && x.charCodeAt() <= 122)) {
-    throw new Error('Letters not permitted');
-  }
-  // if (/(?:.)?(.)?(?:..)?(.){3}(?:..)?(.){3}(?:.)(.){4}/iu.test(num)) {
-  //   throw new Error('Punctuations not permitted');
-  // }
-
+  const noSpacers = [...num].filter((x) => !' -().+'.includes(x));
   const twoToNine = '23456789';
   const numToText = {
     0: 'zero',
     1: 'one',
   };
 
-  let digitsOnly = num.match(/\d/giu).join('');
-  if (digitsOnly.length < 10) {
-    throw new Error('Incorrect number of digits');
+  if ([...num].some((x) => x.charCodeAt() >= 65 && x.charCodeAt() <= 122)) {
+    throw new Error('Letters not permitted');
   }
-  if (digitsOnly.length > 11) {
-    throw new Error('More than 11 digits');
+  if (noSpacers.some((x) => '@:!'.includes(x))) {
+    throw new Error('Punctuations not permitted');
   }
-  if (digitsOnly.length === 11) {
-    if (digitsOnly[0] !== '1') throw new Error('11 digits must start with 1');
-    digitsOnly = digitsOnly.slice(-10);
+  if (noSpacers.length < 10) throw new Error('Incorrect number of digits');
+  if (noSpacers.length > 11) throw new Error('More than 11 digits');
+
+  if (noSpacers.length === 11) {
+    if (noSpacers[0] !== '1') throw new Error('11 digits must start with 1');
   }
-  if (!twoToNine.includes(digitsOnly[0])) {
-    throw new Error(`Area code cannot start with ${numToText[digitsOnly[0]]}`);
+
+  const noCountry = noSpacers.slice(-10);
+  if (!twoToNine.includes(noCountry[0])) {
+    throw new Error(`Area code cannot start with ${numToText[noCountry[0]]}`);
   }
-  if (!twoToNine.includes(digitsOnly[3])) {
+  if (!twoToNine.includes(noCountry[3])) {
     throw new Error(
-      `Exchange code cannot start with ${numToText[digitsOnly[3]]}`
+      `Exchange code cannot start with ${numToText[noCountry[3]]}`
     );
   }
-  return digitsOnly;
+  return noCountry.join('');
 };
 
 console.assert(clean('(223) 456-7890') === '2234567890', '1');
@@ -47,8 +39,20 @@ console.assert(clean('(223) 456-7890') === '2234567890', '4');
 console.assert(clean('+1 (223) 456-7890') === '2234567890', '5');
 console.assert(clean('12234567890') === '2234567890', '6');
 
-// clean('123-@:!-7890') new Error('Punctuations not permitted')
-// clean('123-abc-7890') new Error('Letters not permitted')
+console.assert(
+  (() => {
+    try {
+      clean('123-abc-7890');
+      return false;
+    } catch (error) {
+      return (
+        error instanceof Error &&
+        error.message.includes('Letters not permitted')
+      );
+    }
+  })(),
+  'Incorrect error.'
+);
 
 // clean('32 123 456 7890') new Error('More than 11 digits')
 // clean('(123) 456-7890') new Error('Area code cannot start with one')
