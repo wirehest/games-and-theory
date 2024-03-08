@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create new Calculator</title>
+  </head>
+  <body>
+    <script>
+      function Calculator() {
+        this.read = () => {
+          ['a', 'b'].forEach(
+            (operand) => (this[operand] = +prompt(`${operand}: `, 0))
+          );
+        };
+
+        this.sum = () => {
+          return this.a + this.b;
+        };
+        this.mul = () => {
+          return this.a * this.b;
+        };
+      }
+
+      let calculator = new Calculator();
+      calculator.read();
+
+      // alert('a: ' + calculator.a);
+      // alert('b: ' + calculator.b);
+
+      alert('Sum: ' + calculator.sum());
+      alert('Mul: ' + calculator.mul());
+    </script>
+  </body>
+</html>

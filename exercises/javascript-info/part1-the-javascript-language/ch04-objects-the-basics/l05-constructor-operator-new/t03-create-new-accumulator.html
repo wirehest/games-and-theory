@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create new Accumulator</title>
+  </head>
+  <body>
+    <script>
+      function Accumulator(startValue) {
+        this.value = startValue;
+        this.read = function () {
+          // Separate variable unnecessary.
+          // let inputValue = prompt('Enter a value');
+          // this.value += +inputValue;
+
+          this.value += prompt('Enter number to add', 0);
+        };
+      }
+      let accumulator = new Accumulator(1);
+
+      accumulator.read(); // adds the user-entered value
+      accumulator.read(); // adds the user-entered value
+
+      alert(accumulator.value); // shows the sum of these values
+    </script>
+  </body>
+</html>
