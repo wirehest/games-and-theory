@@ -1,10 +1,10 @@
-'use strict';
-
-/** Converts num to words. */
+/** Converts a number to words. */
 function number2words(num) {
-  let numberWords = [];
+  if (num === 0) return 'zero';
+  if (num < 0 || num > 999999999999)
+    throw new Error('Number must be between 0 and 999,999,999,999.');
+
   const numWords = {
-    0: '',
     1: 'one',
     2: 'two',
     3: 'three',
@@ -34,43 +34,48 @@ function number2words(num) {
     90: 'ninety',
   };
 
-  /** Converts the input to a padded string and returns two substrings. */
-  function getNumArray(num) {
-    const numArray = (num + '').padStart(6, 0);
-    return [numArray.slice(0, 3), numArray.slice(3, 6)];
+  /** Returns num in chunks of thousands. */
+  function getChunks(num, chunkLength = 3) {
+    let numCopy = [...(num + '')];
+    let chunks = [];
+    while (numCopy.length > 0) {
+      chunks.push(+numCopy.slice(-chunkLength).join(''));
+      numCopy.length = Math.max(numCopy.length - chunkLength, 0);
+    }
+    return chunks.reverse();
   }
 
-  /** Parses substrings of the input number. */
-  function parser(numArray) {
-    let parsed = [];
-
-    if (numArray === '000') return;
-    if (!(numArray[0] === '0')) {
-      parsed.push(numWords[numArray[0]], 'hundred');
-    }
-    if (!+numArray.slice(1, 3)) return parsed;
-
-    if (numWords[+numArray.slice(1, 3)] === undefined) {
-      parsed.push(
-        numWords[numArray[1] + '0'] + ('-' + numWords[numArray[2]] || '')
-      );
+  /** Converts chunks to words. */
+  function getWords(num) {
+    let words = [];
+    if (num > 99) words.push(`${numWords[Math.floor(num / 100)]} hundred`);
+    num %= 100;
+    if (!num) return words;
+    if (numWords[num]) {
+      words.push(numWords[num]);
     } else {
-      parsed.push(numWords[+numArray.slice(1, 3)]);
+      words.push(
+        `${numWords[Math.floor(num / 10) * 10]}-${numWords[num % 10]}`
+      );
     }
-
-    return parsed;
+    return words.join(' ');
   }
 
-  if (num === 0) return 'zero';
-  if (Object.keys(numWords).includes(num)) return numWords[num];
+  /** Inserts numerical scales between chunks. */
+  function insertScale(chunks) {
+    if (chunks.length === 1) return chunks;
+    const scales = ['thousand', 'million', 'billion', 'trillion'];
+    for (let i = chunks.length - 2, j = 0; i >= 0; i--, j++) {
+      if (chunks[i] === 0) continue;
+      chunks.splice(i + 1, 0, scales[j]);
+    }
+    return chunks;
+  }
 
-  const numArray = getNumArray(num);
-  const firstHalf = parser(numArray[0]);
-  const secondHalf = parser(numArray[1]);
-
-  numberWords = firstHalf
-    ? firstHalf.concat('thousand', secondHalf)
-    : secondHalf;
-
-  return numberWords.join(' ').trim();
+  let chunks = insertScale(getChunks(num));
+  let inWords = chunks
+    .filter((x) => x !== 0)
+    .map((x) => (isFinite(x) ? getWords(x) : x))
+    .join(' ');
+  return inWords;
 }
