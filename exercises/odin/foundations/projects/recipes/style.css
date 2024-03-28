@@ -1,0 +1,33 @@
+body {
+  background-color: lightyellow;
+  font-family: Georgia, Garamond, serif;
+  font-size: 20px;
+}
+
+h1,
+h2,
+h3,
+title {
+  font-size: 40px;
+  font-weight: 800;
+  color: rgb(155, 0, 64);
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 25px;
+}
+
+h1,
+.ingredients,
+.steps {
+  background-color: rgba(255, 228, 161, 0.87);
+}
+
+.image {
+  height: 180px;
+  width: auto;
+}
