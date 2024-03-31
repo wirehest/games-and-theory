@@ -1,33 +1,83 @@
+/* Common reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
-  background-color: lightyellow;
+  background-color: #c6ba94;
+  color: #46392d;
   font-family: Georgia, Garamond, serif;
   font-size: 20px;
+  padding: 10px;
+  width: 60%;
+  margin: 0 auto;
 }
 
-h1,
-h2,
-h3,
-title {
-  font-size: 40px;
-  font-weight: 800;
-  color: rgb(155, 0, 64);
-}
-
-h2 {
-  font-size: 30px;
-}
-
-h3 {
-  font-size: 25px;
+.div-recipe-list,
+.div-description-and-image,
+.div-ingredients-and-steps {
+  background-color: #eedecb;
+  padding: 25px;
+  margin: 15px 0 15px;
 }
 
 h1,
 .ingredients,
 .steps {
   background-color: rgba(255, 228, 161, 0.87);
+  padding: 20px;
+  font-size: 20px;
+}
+
+.ingredients,
+.steps {
+  padding: 20px 50px;
+  border: solid;
+  border-width: 4px;
+  border-color: #746c6c5b;
+}
+
+.steps-title {
+  margin-top: 20px;
+}
+
+h1,
+h3,
+title {
+  font-size: 40px;
+  font-weight: 800;
+  color: rgb(136, 27, 0);
+}
+
+.div-recipe-list {
+  padding-left: 45px;
+}
+
+.div-recipe-list,
+h3 {
+  font-size: 25px;
 }
 
 .image {
   height: 180px;
   width: auto;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 25px;
+}
+
+.footer-nav {
+  text-align: center;
 }
