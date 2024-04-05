@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>enter a number</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * The code below tells the browser to ask you for a number
+     * then if that number is `6`, it returns `true` otherwise it returns `false`
+     *
+     * Change this code so it returns `true` when the number is greater than or
+     * equal to 10, and false if it is less than 10
+     */
+
+    number = Number(prompt('enter a number'));
+
+    function numberChecker() {
+      // Original code
+      // if (number === 6) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+
+      if (number >= 10) return true;
+      return false;
+    }
+
+    alert(numberChecker())  // Added to show output in browser
+
+  </script>
+</body>
+
+</html>
