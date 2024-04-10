@@ -1,50 +1,45 @@
-// let computerSelection = getComputerChoice();
-// let playerSelection =
-
 function playGame() {
-  const computerSelection = getComputerChoice();
-  const playerSelection = getPlayerChoice();
-  console.log(playRound(playerSelection, computerSelection));
+  let playButtons = document.querySelector('.buttons');
+  let playResult = document.querySelector('.result');
+  let playerScore = document.querySelector('.player-score');
+  let computerScore = document.querySelector('.computer-score');
+
+  // playerScore.textContent = 0;
+  // computerScore.textContent = 0;
+
+  playButtons.addEventListener('click', (event) => {
+    let playerSelection = event.target.textContent.toLowerCase();
+    playResult.textContent = playRound(playerSelection, getComputerChoice());
+  });
 
   function getComputerChoice() {
     let roll = Math.floor(Math.random() * 3);
     return roll === 0 ? 'rock' : roll === 1 ? 'paper' : 'scissors';
   }
 
-  function getPlayerChoice() {
-    let shapes = ['rock', 'paper', 'scissors'];
-    let playerChoice = prompt(
-      'Make your selection (Rock, Paper, or Scissors).'
-    ).toLowerCase();
-    while (!shapes.includes(playerChoice)) {
-      playerChoice = prompt(
-        'Try again. Options are Rock, Paper, or Scissors.'
-      ).toLowerCase();
-    }
-    return playerChoice;
-  }
-
   function playRound(playerSelection, computerSelection) {
-    let wins = { rock: 'scissors', paper: 'rock', scissors: 'paper' };
-
-    if (playerSelection === computerSelection) {
-      return `You tied. You both played ${titleCase(playerSelection)}.`;
+    const WINS = { rock: 'scissors', paper: 'rock', scissors: 'paper' };
+    if (computerScore.textContent === '5' || playerScore.textContent === '5') {
+      playerScore.textContent = computerScore.textContent = 0;
     }
-    if (wins[playerSelection] === computerSelection) {
-      return `You won! ${titleCase(playerSelection)} beats ${titleCase(
+    if (playerSelection === computerSelection) {
+      return `Round tied. You both played ${toTitleCase(playerSelection)}.`;
+    }
+    if (WINS[playerSelection] === computerSelection) {
+      if (++playerScore.textContent === 5) return 'You won the game!';
+      return `Round won! ${toTitleCase(playerSelection)} beats ${toTitleCase(
         computerSelection
       )}!`;
     }
-    return `You lost! ${titleCase(computerSelection)} beats ${titleCase(
+    if (++computerScore.textContent === 5) return 'The computer won the game!';
+    return `Round lost! ${toTitleCase(computerSelection)} beats ${toTitleCase(
       playerSelection
     )}.`;
   }
 
-  function titleCase(shape) {
+  function toTitleCase(shape) {
     return shape[0].toUpperCase() + shape.slice(1);
   }
 }
 
-for (let i = 0; i < 5; i++) {
-  playGame();
-}
+playGame();

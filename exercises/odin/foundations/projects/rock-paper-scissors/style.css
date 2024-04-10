@@ -1,0 +1,67 @@
+/* RESETS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+  /* border: 1px solid red; */
+}
+
+body {
+  align-items: center;
+  background-color: steelblue;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+button {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.game-space {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+}
+
+.display {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  border: 4px solid darkslategray;
+  display: flex;
+  flex-flow: column;
+  font-size: 25px;
+  gap: 5px;
+  height: 100px;
+  justify-content: center;
+  width: 450px;
+}
+
+.score,
+.player-score,
+.computer-score {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.player-score {
+  color: blue;
+}
+
+.computer-score {
+  color: brown;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
