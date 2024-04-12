@@ -1,0 +1,51 @@
+/* RESETS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+  /* border: 1px solid red; */
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container {
+  align-items: center;
+  background-color: rgba(112, 128, 144, 0.5);
+  display: flex;
+  flex-flow: column;
+  height: 50pc;
+  justify-content: center;
+  margin: 100px;
+  width: 50pc;
+}
+
+.cell {
+  display: flex;
+  height: 20px;
+  width: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* .cells:hover {
+  background-color: black;
+} */
+
+.cell-row {
+  display: flex;
+  width: 50pc;
+  justify-content: center;
+}
+
+.shaded {
+  background-color: black;
+}
