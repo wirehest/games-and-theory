@@ -46,8 +46,10 @@ button {
   background-color: rgba(112, 128, 144, 0.5);
   display: flex;
   flex-flow: column;
+  height: 940px;
   justify-content: center;
   padding: 20px;
+  width: 940px;
 }
 
 .cell {

@@ -1,11 +1,31 @@
 function etchASketch() {
+  let container = document.querySelector('.grid-container');
+  let buttons = document.querySelector('.top-buttons');
+  let coloring = 'black';
+
+  buttons.addEventListener('click', (event) => {
+    let targetName = event.target.name;
+    switch (targetName) {
+      case 'size':
+        setSize();
+        break;
+      case 'clear':
+        clearCells();
+        break;
+      case 'color-black':
+      case 'color-gradient':
+      case 'color-random':
+        [, coloring] = targetName.split('-');
+        addDrawingEvent(coloring);
+        // console.log('coloring: ' + coloring);
+        break;
+    }
+  });
+
   addCells();
-  applyHover();
+  addDrawingEvent(coloring);
 
-  function addCells(width = 100) {
-    // TODO Add variable and way to control CSS for cell size
-    let container = document.querySelector('.grid-container');
-
+  function addCells(width = 50) {
     // TODO refactor to remove nested loops
     for (let i = 0; i < width; i++) {
       let cellRow = document.createElement('div');
@@ -21,35 +41,50 @@ function etchASketch() {
     }
   }
 
-  function applyHover() {
-    let container = document.querySelector('.grid-container');
+  function clearCells() {
+    let cells = document.querySelectorAll('.cell');
+    cells.forEach((cell) => (cell.style['background-color'] = ''));
+  }
+
+  function addDrawingEvent(coloring = 'black') {
+    let cellColor;
     container.addEventListener('mouseover', (event) => {
-      console.log(event.target.className);
       if (event.target.className === 'cell') {
-        event.target.classList.toggle('shaded');
+        if (coloring === 'black') cellColor = 'rgba(0, 0, 0, 1)';
+        if (coloring === 'random') {
+          let rgba = { r: 0, g: 0, b: 0 };
+          for (let channel in rgba) {
+            rgba[channel] = Math.floor(Math.random() * 256);
+          }
+          cellColor = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, 1)`;
+        }
+        event.target.setAttribute('style', `background-color: ${cellColor}`);
+        // event.target.classList.toggle('shaded');
       }
     });
-    // let allCells = document.querySelectorAll('.cells');
-    // allCells.forEach((cell) => {
-    //   cell.addEventListener('mouseenter', console.log(cell.id));
-    // });
   }
+
+  function setSize() {
+    let gridWidth = -Infinity;
+    while (!(gridWidth >= 1 && gridWidth <= 100)) {
+      gridWidth = Math.round(+prompt('Enter grid width (between 1 and 100):'));
+    }
+
+    let cellRows = document.querySelectorAll('.cell-row');
+    cellRows.forEach((cellRow) => cellRow.remove());
+    addCells(gridWidth);
+  }
+
+  // function setColor(color = 'black') {
+  //   switch (color) {
+  //     case 'black':
+  //       break;
+  //     case 'gradient':
+  //       break;
+  //     case 'random':
+  //       break;
+  //   }
+  // }
 }
 
 etchASketch();
-
-// Add a button on the top of the screen that will send the user a popup
-// asking for the number of squares per side for the new grid. Once entered, the
-// existing grid should be removed, and a new grid should be generated in the
-// same total space as before (e.g., 960px wide) so that you’ve got a new sketch pad.
-
-// Tip: Set the limit for the user input to a maximum of 100. A larger number
-// of squares results in more computer resources being used, potentially causing
-// delays, freezing, or crashing that we want to prevent.
-
-// Research button tags in HTML and how you can make a JavaScript function run
-// when one is clicked.
-// Also check out prompts.
-// You should be able to enter 64 and have a brand new 64x64 grid pop up
-// without changing the total amount of pixels used.
-// Push your project to GitHub!
