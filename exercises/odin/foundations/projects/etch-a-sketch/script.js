@@ -2,7 +2,7 @@ function etchASketch() {
   addCells();
   applyHover();
 
-  function addCells(width = 16) {
+  function addCells(width = 100) {
     // TODO Add variable and way to control CSS for cell size
     let container = document.querySelector('.grid-container');
 
@@ -37,9 +37,6 @@ function etchASketch() {
 }
 
 etchASketch();
-
-// Adding a new class to the div.
-// Changing the div’s background color using JavaScript.
 
 // Add a button on the top of the screen that will send the user a popup
 // asking for the number of squares per side for the new grid. Once entered, the
