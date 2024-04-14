@@ -34,11 +34,14 @@ button {
 
 .button-container {
   align-items: center;
+  border: 1px solid rgba(112, 128, 144, 0.5);
+  border-radius: 5px;
   display: flex;
   flex-flow: column;
   font-size: 15px;
   font-weight: 900;
   gap: 2px;
+  padding: 2px;
 }
 
 .grid-container {
@@ -62,8 +65,4 @@ button {
 .cell-row {
   display: flex;
   justify-content: center;
-}
-
-.shaded {
-  background-color: black;
 }
