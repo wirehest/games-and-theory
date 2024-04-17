@@ -14,6 +14,7 @@
 
 body {
   align-items: center;
+  background-color: #c9ada7;
   display: flex;
   height: 75vh;
   justify-content: center;
@@ -23,21 +24,21 @@ body {
 main {
   align-items: center;
   background-color: #1d3557;
+  border: 4px solid #22223b;
   border-radius: 10px;
   display: flex;
   flex-flow: column;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
 }
 
 button {
   border-radius: 8px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 900;
-  height: 75px;
-  margin: 1px;
-  width: 80px;
+  height: 65px;
+  width: 70px;
 }
 
 .btn-red {
@@ -55,13 +56,15 @@ button {
 .display {
   align-items: center;
   background-color: #f1faee;
+  border: 2px solid #22223b;
   border-radius: 5px;
   display: flex;
+  font-family: monospace;
   font-size: 50px;
-  height: 110px;
+  height: 100px;
   justify-content: end;
   padding: 10px;
-  width: 100%;
+  width: 292px;
 }
 
 .container,
@@ -69,6 +72,7 @@ button {
 .column-last,
 .row-main {
   display: flex;
+  gap: 4px;
 }
 
 .column-main,
@@ -77,9 +81,9 @@ button {
 }
 
 .wide-button {
-  width: 162px;
+  width: 144px;
 }
 
 .tall-button {
-  height: 152px;
+  height: 134px;
 }
