@@ -1,0 +1,85 @@
+/* RESETS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Trebuchet, sans-serif;
+  /* border: 1px solid red; */
+}
+
+body {
+  align-items: center;
+  display: flex;
+  height: 75vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+main {
+  align-items: center;
+  background-color: #1d3557;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
+button {
+  border-radius: 8px;
+  font-size: 30px;
+  font-weight: 900;
+  height: 75px;
+  margin: 1px;
+  width: 80px;
+}
+
+.btn-red {
+  background-color: #e63946;
+}
+
+.btn-ltblue {
+  background-color: #a8dadc;
+}
+
+.btn-ruddy {
+  background-color: #457b9d;
+}
+
+.display {
+  align-items: center;
+  background-color: #f1faee;
+  border-radius: 5px;
+  display: flex;
+  font-size: 50px;
+  height: 110px;
+  justify-content: end;
+  padding: 10px;
+  width: 100%;
+}
+
+.container,
+.column-main,
+.column-last,
+.row-main {
+  display: flex;
+}
+
+.column-main,
+.column-last {
+  flex-flow: column;
+}
+
+.wide-button {
+  width: 162px;
+}
+
+.tall-button {
+  height: 152px;
+}
