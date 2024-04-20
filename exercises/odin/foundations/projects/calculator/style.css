@@ -30,10 +30,10 @@ main {
   flex-flow: column;
   gap: 30px;
   justify-content: center;
-  padding: 30px 20px 50px;
+  padding: 40px 20px 50px;
 }
 
-button {
+button[class*='keypad'] {
   border-radius: 8px;
   box-shadow: 0px 0px 10px 0px #000000;
   font-size: 30px;
@@ -42,15 +42,23 @@ button {
   width: 80px;
 }
 
-.btn-red {
+button[class*='wide-button'] {
+  width: 170px;
+}
+
+button[class*='tall-button'] {
+  height: 152px;
+}
+
+.bg-red {
   background-color: #e63946;
 }
 
-.btn-ltblue {
+.bg-ltblue {
   background-color: #a8dadc;
 }
 
-.btn-ruddy {
+.bg-ruddy {
   background-color: #457b9d;
 }
 
@@ -76,6 +84,8 @@ button {
 }
 
 .backspace {
+  background: none;
+  border: none;
   align-items: center;
   display: flex;
   font-size: 25px;
@@ -94,12 +104,4 @@ button {
 .column-last {
   flex-flow: column;
   gap: 12px;
-}
-
-.wide-button {
-  width: 170px;
-}
-
-.tall-button {
-  height: 152px;
 }

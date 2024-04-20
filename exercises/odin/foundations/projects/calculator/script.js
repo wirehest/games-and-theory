@@ -1,37 +1,47 @@
 function mainLoop() {
+  const NUMS = '.0123456789';
+  const OPERS = '/*-+';
   let display = document.querySelector('.display');
-  let main = document.querySelector('main');
   let [operator, num1, num2] = [null, null, null];
   let maxDigits = 9;
 
   let clearOnNumber = false;
   let clearDisplay = () => (display.textContent = '');
 
-  main.addEventListener('click', (event) => {
+  document.addEventListener('keydown', (event) => {
     if (
-      !(
-        event.target.nodeName === 'BUTTON' ||
-        event.target.className === 'backspace'
+      [...(NUMS + OPERS), '=', 'Delete', 'Backspace', 'Enter'].includes(
+        event.key
       )
     ) {
-      return;
+      let key = event.key === 'Enter' ? '=' : event.key;
+      console.log(key);
+      let targetButton = document.querySelector(`button[value='${key}']`);
+      targetButton.click();
     }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target.nodeName === 'BUTTON')) return;
 
     let button = event.target.textContent;
-    let buttonIsNumber = '.0123456789'.includes(button);
-    let buttonIsOperator = '/*-+'.includes(button);
+    let buttonIsNumber = NUMS.includes(button);
+    let buttonIsOperator = OPERS.includes(button);
     let buttonIsEquals = button === '=';
     let displayHasNumber = display.textContent !== '';
     let num1AndOperatorNotNull = !(num1 === null) && !(operator === null);
+    let inputExists = false;
 
     if (button === '⌫') {
       let textLength = display.textContent.length;
       display.textContent = display.textContent.slice(0, textLength - 1);
+      inputExists = displayHasNumber ? true : false;
     }
 
     if (button === 'AC') {
       clearDisplay();
       [operator, num1, num2, clearOnNumber] = [null, null, null, true];
+      inputExists = false;
     }
 
     if (buttonIsNumber) {
@@ -50,11 +60,12 @@ function mainLoop() {
         return;
       }
       display.textContent += button;
+      inputExists = true;
     }
 
     if (buttonIsOperator) {
       if (num1AndOperatorNotNull) {
-        if (displayHasNumber) {
+        if (inputExists) {
           clearOnNumber = true;
           num2 = display.textContent;
           num1 = operate({ operator, num1, num2 });
@@ -68,6 +79,7 @@ function mainLoop() {
         if (displayHasNumber) {
           clearOnNumber = true;
           num1 = display.textContent;
+          inputExists = false;
           operator = button;
         }
       }
@@ -91,16 +103,19 @@ function mainLoop() {
       '+': (a, b) => a + b,
       '-': (a, b) => a - b,
       '*': (a, b) => a * b,
-      '/': (a, b) => (b === 0 ? 'ERROR' : a / b),
+      '/': (a, b) => (b === 0 ? 'NaN DUMMY' : a / b),
     };
     let result = operations[operator](+num1, +num2);
+    if (result === 'NaN DUMMY') return result;
 
     let sign = Math.sign(result);
     result = Math.abs(result);
     let [int, dec] = [Math.trunc(result), result % 1];
 
+    console.log(int, dec);
+
     int = int > +'9'.repeat(maxDigits) ? +'9'.repeat(maxDigits) : int;
-    let maxDecimals = maxDigits - String(int).length - 1;
+    let maxDecimals = Math.max(0, maxDigits - String(int).length - 1);
     dec = +dec.toFixed(maxDecimals);
 
     return sign * (int + dec);
@@ -109,4 +124,5 @@ function mainLoop() {
 
 mainLoop();
 
-// Add keyboard support!
+// When entering number, then pressing operator, need to leave the
+// number on-screen but do not allow it to be entered as the next variable ...
