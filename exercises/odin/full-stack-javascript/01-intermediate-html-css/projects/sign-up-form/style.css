@@ -1,0 +1,71 @@
+/* Resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  border: 1px solid red;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  line-height: 1.5;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  7. Avoid text overflows
+*/
+/* p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+} */
+
+[class^='panel'],
+[class*='container'] {
+  display: flex;
+  flex-flow: column;
+  /* justify-content: end; */
+}
+
+.container-upper {
+  height: 60vh;
+  justify-content: end;
+}
+
+/* panel styling */
+.panel-art {
+  /* display: flex; */
+  flex: 1;
+  /* height: 100px; */
+  /* width: 100px; */
+}
+.panel-main {
+  /* display: flex; */
+  width: 60%;
+}
+
+/* section styling*/
+.section-logo {
+  height: 200px;
+}
+
+.section-forms {
+  height: 300px;
+}
+
+.section-forms ul li {
+  list-style-type: none;
+}
