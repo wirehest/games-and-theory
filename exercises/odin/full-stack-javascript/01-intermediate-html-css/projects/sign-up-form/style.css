@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'bebasregular';
+  src: url('./fonts/bebas-regular-webfont.woff2') format('woff2'),
+    url('./fonts/bebas-regular-webfont.woff') format('woff');
+}
+
 /* Resets */
 *,
 *::before,
@@ -6,7 +12,7 @@
 }
 
 * {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
 }
@@ -26,46 +32,146 @@ select {
   font: inherit;
 }
 
-/*
-  7. Avoid text overflows
-*/
-/* p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-} */
+:root {
+  --accent-color: #e053b1;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 14px;
+}
 
 [class^='panel'],
 [class*='container'] {
   display: flex;
   flex-flow: column;
-  /* justify-content: end; */
-}
-
-.container-upper {
-  height: 60vh;
-  justify-content: end;
 }
 
 /* panel styling */
 .panel-art {
-  /* display: flex; */
-  flex: 1;
-  /* height: 100px; */
-  /* width: 100px; */
+  background: url('./fabien-christin-fabienchristin-09.jpg') #ff549b;
+  background-size: cover;
+  background-position: center;
+  width: max(40%, calc(0.4 * 1280px));
+
+  /* flex: 0 1 auto; */
 }
+
 .panel-main {
-  /* display: flex; */
-  width: 60%;
+  background: linear-gradient(#ffd8eb, #fff0f8);
+  flex: none;
+  width: max(60%, calc(0.6 * 1280px));
+}
+
+.panel-art > .container-lower {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: end;
+}
+
+.container-upper {
+  min-height: 35vh;
+  justify-content: end;
 }
 
 /* section styling*/
+[class^='section']:not(.section-logo) {
+  padding: 40px 60px;
+}
+
+.section-credits {
+  color: #fff;
+}
+
+.section-copy {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.8rem;
+  margin-right: 100px;
+}
+
 .section-logo {
+  align-items: center;
+  background-color: #ffffff6e;
+  display: flex;
+  font-family: 'bebasregular', sans-serif;
+  font-size: 6rem;
   height: 200px;
+  justify-content: center;
+  line-height: 0.69;
+  text-transform: uppercase;
 }
 
 .section-forms {
-  height: 300px;
+  background: #fff;
+  box-shadow: 0 10px 5px #0000001e;
+}
+
+.section-forms ul {
+  display: flex;
+  flex-flow: wrap;
+  flex: auto;
+  gap: 20px;
+  max-width: 800px;
 }
 
 .section-forms ul li {
+  display: inline-block;
+  justify-content: space-between;
   list-style-type: none;
+  /* padding: 2rem 0 0 0; */
+  position: relative;
+  width: 350px;
+}
+
+/* form styling */
+input {
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  height: 2.4rem;
+  padding: 0 10px;
+  width: 300px;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0051ff;
+  box-shadow: 2px 2px 5px #00000065;
+}
+
+label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  /* padding: 10px 0 0 0; */
+  /* position: absolute; */
+  /* top: 0.5rem; */
+}
+
+/* button styling */
+[class^='button'] {
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 3px 3px 6px #00000049;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 8px 50px;
+}
+
+/* link styling */
+
+/* other */
+.logo-bulldog {
+  height: 75%;
+}
+
+#login {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+#have-account {
+  font-size: 1.5rem;
+  margin-top: 40px;
 }

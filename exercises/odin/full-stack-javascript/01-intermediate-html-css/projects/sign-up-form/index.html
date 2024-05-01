@@ -6,65 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./style.css" rel="stylesheet">
   <script src="./script.js" defer></script>
-  <title>SecuriCorp</title>
+  <title>PIRANDELLO/KRUGER</title>
 </head>
 
 <body>
   <div class="panel-art">
     <div class="container-upper">
+      <div class="section-logo">
+        <img class="logo-bulldog" src="./PKLogo1024x.webp"
+          alt="Stylized bulldog logo">
+        <div class="logo-name">Pirandello<br>/Kruger</div>
+      </div>
     </div>
     <div class="container-lower">
-      <div class="section-logo">
-        Logo
-      </div>
-      <div>image credits</div>
+      <div class="section-credits">Image by Fabien Christin on Artstation,
+        bulldog logo from Mirror's Edge</div>
     </div>
   </div>
   <div class="panel-main">
     <div class="container-upper">
       <div class="section-copy">
-        Welcome to SecureCorp - Where Peace of Mind Comes Fully Armed!
-        At SecureCorp, we offer top-notch security solutions with a military
-        twist. Our elite team of mercenaries and ex-special forces personnel are
-        here to protect your interests, no questions asked. From securing your
-        assets to enforcing your will, we've got you covered - because when it
-        comes to security, why settle for peace when you can have firepower?
-      </div>
-      <div class="section-forms">
-        <ul>
-          <li>
-            <label for="firstname">First Name</label>
-            <input type="text" id="firstname">
-          </li>
-          <li>
-            <label for="lastname">Last Name</label>
-            <input type="text" id="lastname">
-          </li>
-          <li>
-            <label for="email">Email</label>
-            <input type="email" id="email">
-          </li>
-          <li>
-            <label for="">Phone Number</label>
-            <input type="text" id="phone">
-          </li>
-          <li>
-            <label for="pass">Password</label>
-            <input type="password" id="pass">
-          </li>
-          <li>
-            <label for="confirmpass">Confirm Password</label>
-            <input type="password" id="confirmpass">
-          </li>
-        </ul>
+        Led by Gabriel Kruger, our personnel enforce order on the streets and
+        rooftops of the vast,
+        sprawling cities of Cascadia.
+        <br>
+        Corporate headquarters in Glass.
+        <br><br>
+        Pirandello Kruger—<em>Securing your world.</em>
       </div>
     </div>
     <div class="container-lower">
-      Login
+      <div class="section-forms">
+        <form id="signup" action="#" method="post">
+          <ul>
+            <li>
+              <label for="firstname">First Name</label>
+              <input type="text" id="firstname">
+            </li>
+            <li>
+              <label for="lastname">Last Name</label>
+              <input type="text" id="lastname">
+            </li>
+            <li>
+              <label for="email">Email</label>
+              <input type="email" id="email">
+            </li>
+            <li>
+              <label for="">Phone Number</label>
+              <input type="text" id="phone">
+            </li>
+            <li>
+              <label for="pass">Password</label>
+              <input type="password" id="pass">
+              <span></span>
+            </li>
+            <li>
+              <label for="confirmpass">Confirm Password</label>
+              <input type="password" id="confirmpass">
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="section-create-account">
+        <button class="button-create-account" type="button" form="signup">
+          Create Account
+        </button>
+        <p id="have-account">Already have an account? <a id="login" href="#">Log
+            in</a></p>
+      </div>
     </div>
   </div>
 </body>
 
 </html>
-
-<!-- credit Fabien Christin on Artstation, logo from Mirror's Edge -->
