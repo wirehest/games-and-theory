@@ -19,8 +19,13 @@
       </div>
     </div>
     <div class="container-lower">
-      <div class="section-credits">Image by Fabien Christin on Artstation,
-        bulldog logo from Mirror's Edge</div>
+      <div class="section-credits">Image by <a
+          href="https://www.artstation.com/fabienchristin" target="_blank"
+          rel="noopener noreferrer">Fabien Christin</a>
+        on <a href="https://www.artstation.com/" target="_blank"
+          rel="noopener noreferrer">Artstation</a>,
+        bulldog logo from <span style="font-style: italic;">Mirror's
+          Edge</span></div>
     </div>
   </div>
   <div class="panel-main">
@@ -42,27 +47,32 @@
             <li>
               <label for="firstname">First Name</label>
               <input type="text" id="firstname">
+              <span></span>
             </li>
             <li>
               <label for="lastname">Last Name</label>
               <input type="text" id="lastname">
+              <span></span>
             </li>
             <li>
               <label for="email">Email</label>
               <input type="email" id="email">
+              <span error="* e.g., jane@domain.com"></span>
             </li>
             <li>
               <label for="">Phone Number</label>
               <input type="text" id="phone">
+              <span></span>
             </li>
             <li>
               <label for="pass">Password</label>
               <input type="password" id="pass">
-              <span></span>
+              <span error="* Passwords do not match"></span>
             </li>
             <li>
               <label for="confirmpass">Confirm Password</label>
               <input type="password" id="confirmpass">
+              <span error="* Passwords do not match"></span>
             </li>
           </ul>
         </form>

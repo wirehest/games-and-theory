@@ -1,12 +1,20 @@
 function checkPasswordsMatch() {
-  let password = document.querySelector('#pass').value;
-  let confirmPass = document.querySelector('#confirmpass').value;
+  let password = document.querySelector('#pass');
+  let confirmPass = document.querySelector('#confirmpass');
   let createButton = document.querySelector('.button-create-account');
 
   createButton.addEventListener('click', () => {
-    // console.log(password, confirmPass);
+    if (password.value === '' || confirmPass.value === '') return;
     if (password.value === confirmPass.value) return;
-    // password.setCustomValidity
+
+    let noMatchMessage = 'Passwords do not match.';
+    let passwordFields = [password, confirmPass];
+
+    passwordFields.forEach((field) => {
+      field.setCustomValidity(noMatchMessage);
+      field.reportValidity();
+    });
+    console.log(password, confirmPass);
   });
 }
 

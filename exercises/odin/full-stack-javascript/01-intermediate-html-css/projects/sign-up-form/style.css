@@ -4,7 +4,7 @@
     url('./fonts/bebas-regular-webfont.woff') format('woff');
 }
 
-/* Resets */
+/* resets */
 *,
 *::before,
 *::after {
@@ -32,8 +32,11 @@ select {
   font: inherit;
 }
 
+/* root */
 :root {
-  --accent-color: #e053b1;
+  --accent-color: #d442a4;
+  --shadow-color: #00000041;
+  --form-width: 300px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 14px;
 }
@@ -50,8 +53,6 @@ select {
   background-size: cover;
   background-position: center;
   width: max(40%, calc(0.4 * 1280px));
-
-  /* flex: 0 1 auto; */
 }
 
 .panel-main {
@@ -102,14 +103,14 @@ select {
 
 .section-forms {
   background: #fff;
-  box-shadow: 0 10px 5px #0000001e;
+  box-shadow: 0 10px 5px var(--shadow-color);
 }
 
 .section-forms ul {
   display: flex;
   flex-flow: wrap;
   flex: auto;
-  gap: 20px;
+  gap: 25px;
   max-width: 800px;
 }
 
@@ -117,7 +118,6 @@ select {
   display: inline-block;
   justify-content: space-between;
   list-style-type: none;
-  /* padding: 2rem 0 0 0; */
   position: relative;
   width: 350px;
 }
@@ -129,37 +129,63 @@ input {
   font-size: 1.4rem;
   height: 2.4rem;
   padding: 0 10px;
-  width: 300px;
+  width: var(--form-width);
 }
 
 input:focus {
-  outline: none;
   border: 1px solid #0051ff;
-  box-shadow: 2px 2px 5px #00000065;
+  box-shadow: 3px 3px 5px var(--shadow-color);
+  outline: none;
 }
 
 label {
   display: block;
-  text-transform: uppercase;
   letter-spacing: 0.15rem;
-  /* padding: 10px 0 0 0; */
-  /* position: absolute; */
-  /* top: 0.5rem; */
+  text-transform: uppercase;
 }
 
 /* button styling */
 [class^='button'] {
   background-color: var(--accent-color);
-  border: none;
   border-radius: 10px;
-  box-shadow: 3px 3px 6px #00000049;
+  border: 5px solid #00000000;
+  box-shadow: 4px 6px 5px var(--shadow-color);
   color: #fff;
   font-size: 1.6rem;
   font-weight: 600;
-  padding: 8px 50px;
+  padding: 2px 45px;
+  text-shadow: #000 1px 0 2px;
+}
+
+[class^='button']:active {
+  border: 5px solid #b13083;
 }
 
 /* link styling */
+.panel-art a:link,
+.panel-art a:visited,
+.panel-art a:hover,
+.panel-art a:active {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* validity styling */
+input + span {
+  position: relative;
+}
+
+input:invalid {
+  border: 1px solid #f00;
+}
+
+input:invalid + span::before {
+  color: #f00;
+  content: attr(error);
+  position: absolute;
+  left: calc(var(--form-width) * -1);
+  bottom: -30px;
+}
 
 /* other */
 .logo-bulldog {
