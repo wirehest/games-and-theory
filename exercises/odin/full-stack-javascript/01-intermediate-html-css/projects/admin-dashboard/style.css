@@ -33,7 +33,7 @@ select {
   --icon-size: 30px;
 }
 
-/* CONTAINER */
+/* MAIN CONTAINER */
 .container {
   display: grid;
   grid-template-columns: 320px auto;
@@ -69,25 +69,12 @@ ul.nav-list {
 .nav-list > li {
   align-items: center;
   display: flex;
-  font-size: 1.5rem;
   gap: 20px;
 }
 
 :is(.nav-list, .controls) li {
   list-style-type: none;
 }
-
-/* IMG FILTERS */
-.filter-darkgrey {
-  filter: invert(12%) sepia(12%) saturate(577%) hue-rotate(169deg)
-    brightness(95%) contrast(93%);
-}
-
-.filter-white {
-  filter: invert(100%) sepia(91%) saturate(38%) hue-rotate(321deg)
-    brightness(110%) contrast(110%);
-}
-
 .dash-logo-title {
   align-self: end;
   align-items: center;
@@ -122,20 +109,19 @@ ul.nav-list {
 }
 
 .search-form {
-  display: block;
-  text-align: center;
+  display: flex;
   width: 100%;
+  justify-content: center;
 }
 
-.alerts {
+.search-row > form {
   align-items: center;
   display: flex;
-  gap: 10px;
+  flex-grow: 1;
+  gap: 15px;
+  justify-content: center;
 }
 
-.alerts.username {
-  font-size: 1.3rem;
-}
 #search-bar {
   background: var(--color-bg);
   border-radius: 4rem;
@@ -145,25 +131,18 @@ ul.nav-list {
   width: 80%;
 }
 
-/* #search-bar::before {
-  content: 'X';
-  color: #000;
-  position: absolute;
-  left: -50px;
-  bottom: -50px;
-} */
+.alerts {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
 
 .greeting > p {
   font-size: 1rem;
 }
 
-.greeting > span {
-  font-size: 1.7rem;
-}
-
 .greeting-avatar {
   display: flex;
-  /* flex-wrap: none; */
   justify-content: end;
 }
 
@@ -180,7 +159,6 @@ ul.controls {
   border-radius: 50px;
   color: #fff;
   font-size: 1.1rem;
-  /* font-weight: 900; */
   justify-content: center;
   padding: 6px 20px;
   width: 100px;
@@ -204,16 +182,9 @@ ul.controls {
 
 .projects {
   gap: 25px;
+  grid-auto-rows: min-content;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
 }
-
-/* .projects:first-child::before {
-  content: 'Test test test';
-  position: absolute;
-  top: -5px;
-  z-index: 5;
-} */
 
 /* styling for all cards */
 .card {
@@ -230,15 +201,9 @@ ul.controls {
   height: 250px;
 }
 
-.project > h1 {
-  font-size: 1.3rem;
-}
-
 .project > p {
   color: var(--color-lightgrey);
   flex-grow: 1;
-  font-size: 1.2rem;
-  line-height: 1.2rem;
 }
 
 .project.card .buttons {
@@ -265,22 +230,91 @@ ul.controls {
 }
 
 .trending.card {
-  /* gap: 20px; */
   display: flex;
   justify-content: space-between;
 }
 
 .trending-user {
   display: grid;
+  gap: 15px;
   grid-template-columns: min-content auto;
+  align-items: center;
 }
 
-/* COMMON */
-.bold {
-  font-weight: 900;
+/* IMG FILTERS */
+.filter-darkgrey {
+  filter: invert(12%) sepia(12%) saturate(577%) hue-rotate(169deg)
+    brightness(95%) contrast(93%);
+}
+
+.filter-white {
+  filter: invert(100%) sepia(91%) saturate(38%) hue-rotate(321deg)
+    brightness(110%) contrast(110%);
 }
 
 /* ICON SIZE */
 .nav-list-icon {
   size: var(--icon-size) var(--icon-size);
 }
+
+/* FONTS */
+.bold {
+  font-weight: 900;
+}
+
+.f-lightgrey {
+  color: var(--color-lightgrey);
+}
+.f-largest {
+  font-size: ;
+}
+
+.f-larger {
+  font-size: 1.7rem;
+}
+
+.f-large {
+  font-size: 1.5rem;
+}
+
+.f-regular {
+  font-size: 1.3rem;
+}
+
+.f-small {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.f-smaller {
+  font-size: 1rem;
+}
+
+.f-smallest {
+  font-size: 0.8rem;
+  line-height: 1rem;
+}
+
+/* 
+font sizes:
+largest
+  "Dashboard"
+larger
+  nav buttons
+  "greeting" username
+large
+  new-upload-share buttons
+  project titles
+  main area section titles
+regular
+  alerts username
+small
+  project descriptions
+smaller
+  trending username
+  trending project name
+  announcement titles
+  greeting "hi there"
+smallest
+  announcement text
+*/
