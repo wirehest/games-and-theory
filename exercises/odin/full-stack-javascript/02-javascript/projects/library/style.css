@@ -1,0 +1,73 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  border: 1px solid red;
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+html {
+  background: #f2cc8f;
+}
+
+/*  */
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 20px;
+  justify-content: center;
+}
+
+.bookshelf {
+  background: #f2cc8f;
+  display: grid;
+  gap: 25px;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.book {
+  background: #f4f1de;
+  border-radius: 15px;
+  display: flex;
+}
