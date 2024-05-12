@@ -1,3 +1,4 @@
+/* resets */
 *,
 *::before,
 *::after {
@@ -45,29 +46,52 @@ h6 {
   isolation: isolate;
 }
 
-html {
-  background: #f2cc8f;
+/* end resets */
+:root {
+  --color-offwhite: #f4f1de;
+  --color-sand: #f2cc8f;
+  --color-parchment: #faedcd;
 }
 
-/*  */
+html {
+  background: var(--color-sand);
+}
+
+/* */
 .container {
   align-items: center;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   gap: 20px;
+  height: 100vh;
   justify-content: center;
 }
 
 .bookshelf {
-  background: #f2cc8f;
+  background: var(--color-offwhite);
   display: grid;
   gap: 25px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 300px;
+  grid-template-columns: repeat(5, 200px);
+  justify-content: center;
+  padding: 25px 40px;
+  width: 80%;
 }
 
 .book {
-  background: #f4f1de;
-  border-radius: 15px;
+  background: var(--color-parchment);
+  border-radius: 5px;
   display: flex;
+  flex-direction: column;
+  padding: 50px 10px;
+}
+
+.book > :is(.title, .author) {
+  text-align: center;
+}
+
+/* decorative */
+.shadow {
+  box-shadow: 3px 3px 8px #000;
 }
