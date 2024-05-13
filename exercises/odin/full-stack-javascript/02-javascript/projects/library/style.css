@@ -57,7 +57,7 @@ html {
   background: var(--color-sand);
 }
 
-/* */
+/* main container */
 .container {
   align-items: center;
   display: flex;
@@ -66,8 +66,10 @@ html {
   gap: 20px;
   height: 100vh;
   justify-content: center;
+  /* position: relative; */
 }
 
+/* bookshelf */
 .bookshelf {
   background: var(--color-offwhite);
   display: grid;
@@ -76,22 +78,69 @@ html {
   grid-template-columns: repeat(5, 200px);
   justify-content: center;
   padding: 25px 40px;
-  width: 80%;
+  width: 1200px;
+  /* width: 80%; */
 }
 
+/* books */
 .book {
   background: var(--color-parchment);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   padding: 50px 10px;
+  position: relative;
 }
-
-.book > :is(.title, .author) {
+.book > :is(.title, .author, .pages, .read) {
   text-align: center;
 }
+.author {
+  flex-grow: 1;
+}
+.delete-button {
+  /* text-align: end; */
+  background: none;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.delete
+/* .book::after {
+  content: 'X';
+  position: absolute;
+} */
 
 /* decorative */
 .shadow {
   box-shadow: 3px 3px 8px #000;
 }
+
+/* modal */
+::backdrop {
+  background: #000000ab;
+  /* opacity: 0.75; */
+}
+dialog.add-book-modal {
+  /* 'top layer' used by modal centers itself using margin: auto */
+  margin: auto;
+}
+form.add-book-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* form label {
+  width: 100%;
+} */
+form input {
+  width: 300px;
+}
+.form-buttons {
+  /* justify-content: center; */
+  text-align: center;
+  width: 75%;
+}
+/* form > * {
+  display: inline;
+} */

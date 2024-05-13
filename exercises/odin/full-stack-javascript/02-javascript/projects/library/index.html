@@ -12,17 +12,46 @@
 <body>
   <div class="container">
     <h1>My Bookshelf</h1>
-    <ul>
-      <li>Add Book</li>
+    <ul class="controls">
+      <li class="new-book-button">New Book</li>
     </ul>
     <div class="bookshelf">
       <!-- <div class="book shadow">
         <div class="title">Farewell My Lovely</div>
         <div class="author">Raymond Chandler</div>
+        <div class="pages">295 pages</div>
+        <div class="read">unread</div>
       </div>
       <div class="book shadow"></div> -->
     </div>
+    <dialog class="add-book-modal">
+      <form class="add-book-form" action="" method="dialog">
+        <legend>Add a New Book</legend>
+        <div>
+          <label for="title">Book Title:</label>
+          <input id="title" type="text" required>
+        </div>
+        <div>
+          <label for="author">Author:</label>
+          <input id="author" type="text" required>
+        </div>
+        <div>
+          <label for="pages"># of Pages:</label>
+          <input id="pages" type="text" required>
+        </div>
+        <div>
+          <label for="read">Read/Unread:</label>
+          <input id="read" type="text" required>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="submit-button" autofocus>Submit</button>
+          <button type="button" class="close-button">Cancel</button>
+        </div>
+      </form>
+    </dialog>
   </div>
+
+  <!-- <button>Show the dialog</button> -->
 </body>
 
 </html>
