@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap');
+
 /* resets */
 *,
 *::before,
@@ -6,7 +8,7 @@
 }
 
 * {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: 0;
 }
 
@@ -45,16 +47,22 @@ h6 {
 #__next {
   isolation: isolate;
 }
-
 /* end resets */
+
 :root {
-  --color-offwhite: #f4f1de;
+  --color-bermuda: #81b29a;
+  --color-clay: #e07a5f;
   --color-sand: #f2cc8f;
+  --color-slate: #3d405b;
+  --color-offwhite: #f4f1de;
   --color-parchment: #faedcd;
 }
 
 html {
   background: var(--color-sand);
+  color: var(--color-slate);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
 
 /* main container */
@@ -66,26 +74,56 @@ html {
   gap: 20px;
   height: 100vh;
   justify-content: center;
-  /* position: relative; */
+}
+.container > h1 {
+  font-family: 'Patua One';
+  font-size: 3rem;
+  letter-spacing: 0.1rem;
+  text-shadow: 2px 2px 3px #000;
+}
+.container > ul {
+  margin: 0;
+  padding: 0;
+}
+li.new-book-button {
+  background: var(--color-slate);
+  border: 6px outset var(--color-slate);
+  border-radius: 12px;
+  color: var(--color-offwhite);
+  font-size: 1.2rem;
+  font-weight: 900;
+  list-style: none;
+  margin: 0;
+  padding: 3px 25px;
+  text-shadow: 1px 1px 1px #000;
+}
+li.new-book-button:active {
+  background: var(--color-slate);
+  border: 6px inset var(--color-bermuda);
 }
 
 /* bookshelf */
 .bookshelf {
   background: var(--color-offwhite);
+  border: 6px inset var(--color-clay);
+  border-radius: 15px;
+  box-shadow: 3px 3px 12px #000 inset;
   display: grid;
   gap: 25px;
-  grid-auto-rows: 300px;
-  grid-template-columns: repeat(5, 200px);
+  grid-auto-columns: 200px;
+  grid-auto-flow: column;
   justify-content: center;
+  min-height: 360px;
+  overflow-x: auto;
   padding: 25px 40px;
   width: 1200px;
-  /* width: 80%; */
 }
 
 /* books */
 .book {
   background: var(--color-parchment);
-  border-radius: 5px;
+  border: 2px solid var(--color-slate);
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   padding: 50px 10px;
@@ -98,30 +136,22 @@ html {
   flex-grow: 1;
 }
 .delete-button {
-  /* text-align: end; */
   background: none;
   position: absolute;
   right: 5px;
   top: 5px;
 }
-.delete
-/* .book::after {
-  content: 'X';
-  position: absolute;
-} */
 
 /* decorative */
 .shadow {
-  box-shadow: 3px 3px 8px #000;
+  box-shadow: 3px 3px 12px #000;
 }
 
 /* modal */
 ::backdrop {
   background: #000000ab;
-  /* opacity: 0.75; */
 }
 dialog.add-book-modal {
-  /* 'top layer' used by modal centers itself using margin: auto */
   margin: auto;
 }
 form.add-book-form {
@@ -130,17 +160,10 @@ form.add-book-form {
   flex-direction: column;
   gap: 10px;
 }
-/* form label {
-  width: 100%;
-} */
 form input {
   width: 300px;
 }
 .form-buttons {
-  /* justify-content: center; */
   text-align: center;
   width: 75%;
 }
-/* form > * {
-  display: inline;
-} */
