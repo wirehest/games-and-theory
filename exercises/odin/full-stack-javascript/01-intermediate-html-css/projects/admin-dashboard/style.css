@@ -201,7 +201,7 @@ ul.controls {
 /* PROJECT CARDS */
 .project {
   border-left: 11px solid var(--color-card-highlight);
-  height: 250px;
+  height: 263px;
 }
 
 .project > p {
