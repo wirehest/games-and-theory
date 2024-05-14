@@ -181,13 +181,15 @@ ul.controls {
 }
 
 .projects {
+  align-items: end;
   gap: 25px;
   grid-auto-rows: min-content;
   grid-template-columns: 1fr 1fr;
 }
 
-/* styling for all cards */
+/* ALL CARDS */
 .card {
+  place-self: end;
   background: var(--color-card);
   border-radius: 11px;
   box-shadow: 4px 4px 8px var(--color-shadow);
@@ -196,6 +198,7 @@ ul.controls {
   padding: 25px;
 }
 
+/* PROJECT CARDS */
 .project {
   border-left: 11px solid var(--color-card-highlight);
   height: 250px;
@@ -214,13 +217,14 @@ ul.controls {
   justify-content: end;
 }
 
+/* NOTIFICATION CARDS (announce + trending) */
 .notifications {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-.notifications > div {
+.notifications .card {
   height: 387.5px;
 }
 
@@ -265,9 +269,10 @@ ul.controls {
 .f-lightgrey {
   color: var(--color-lightgrey);
 }
-.f-largest {
+
+/* .f-largest {
   font-size: ;
-}
+} */
 
 .f-larger {
   font-size: 1.7rem;
