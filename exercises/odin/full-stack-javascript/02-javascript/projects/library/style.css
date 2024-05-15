@@ -79,7 +79,7 @@ html {
   font-family: 'Patua One';
   font-size: 3rem;
   letter-spacing: 0.1rem;
-  text-shadow: 2px 2px 3px #000;
+  text-shadow: 2px 2px 1px #00000050;
 }
 .container > ul {
   margin: 0;
@@ -95,7 +95,7 @@ li.new-book-button {
   list-style: none;
   margin: 0;
   padding: 3px 25px;
-  text-shadow: 1px 1px 1px #000;
+  text-shadow: 1px 1px 1px #00000050;
 }
 li.new-book-button:active {
   background: var(--color-slate);
@@ -104,42 +104,70 @@ li.new-book-button:active {
 
 /* bookshelf */
 .bookshelf {
-  background: var(--color-offwhite);
-  border: 6px inset var(--color-clay);
-  border-radius: 15px;
-  box-shadow: 3px 3px 12px #000 inset;
+  background: var(--color-slate);
+  border: 6px inset var(--color-slate);
+  border-radius: 25px;
+  box-shadow: 5px 5px 20px #00000050 inset;
   display: grid;
   gap: 25px;
-  grid-auto-columns: 200px;
+  grid-auto-columns: 265px;
   grid-auto-flow: column;
   justify-content: center;
-  min-height: 360px;
+  min-height: 400px;
   overflow-x: auto;
   padding: 25px 40px;
-  width: 1200px;
+  width: 1400px;
 }
 
 /* books */
 .book {
-  background: var(--color-parchment);
-  border: 2px solid var(--color-slate);
+  align-items: center;
+  background: no-repeat center/contain url('./assets/Red-Book-Texture.jpg');
+  border: 1px solid var(--color-slate);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
-  padding: 50px 10px;
+  height: 400px;
+  padding: 50px 10px 20px;
   position: relative;
 }
 .book > :is(.title, .author, .pages, .read) {
+  color: var(--color-offwhite);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  overflow-wrap: break-word;
   text-align: center;
+  text-shadow: 2px 2px 1px #000, -1px -1px 1px #000;
+}
+.title {
+  flex-grow: 1;
+  font-size: 1.2rem;
+  font-variant-caps: small-caps;
+  font-weight: 900;
 }
 .author {
-  flex-grow: 1;
+  vertical-align: end;
+}
+.read {
+  border: 2px dotted #00000081;
+  border-radius: 10px;
+  margin-top: 5px;
+  width: 35%;
+}
+.read:hover {
+  background: #00ff8891;
+  border: 2px dotted #000;
 }
 .delete-button {
   background: none;
+  border: none;
+  font-size: 1.4rem;
   position: absolute;
   right: 5px;
   top: 5px;
+}
+.delete-button:active {
+  color: #ff0000;
+  text-shadow: 2px 2px 1px #000, -1px -1px 1px #000;
 }
 
 /* decorative */

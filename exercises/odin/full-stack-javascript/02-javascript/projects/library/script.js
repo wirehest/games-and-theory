@@ -51,24 +51,18 @@ function main() {
         detail.classList.toggle(bookDetail);
         detail.textContent = libEntry[bookDetail];
         if (bookDetail === 'pages') detail.textContent += ' pages';
-        // console.log(libEntry[read]);
-        // if (libEntry['read']) read.textContent = 'Unread';
         book.appendChild(detail);
       });
 
-      // console.log(book);
+      // adds toggle functionality to the read status
       let read = document.createElement('div');
-      // let read = book.querySelector('.read');
       read.classList.toggle('read');
       read.textContent = libEntry['read'] ? 'Read' : 'Unread';
       book.appendChild(read);
       book.addEventListener('click', (event) => {
-        // console.log(event.target);
-
         if (event.target.className === 'read') {
           let bookIndex = event.target.parentNode.attributes[1].value;
           myLibrary[bookIndex].read = !myLibrary[bookIndex].read;
-          // myLibrary[+book['data-libindex']]['read'] = !readStatus;
           displayBooks();
         }
       });
@@ -76,44 +70,36 @@ function main() {
     });
   }
 
-  // sets event listeners the 'add new book' modal
+  // sets event listeners related to the 'add new book' modal
   function setModalControls() {
     let modal = document.querySelector('.add-book-modal');
     let form = document.querySelector('.add-book-form');
 
-    let newBookButton = document.querySelector('.new-book-button');
-    newBookButton.addEventListener('click', () => modal.showModal());
+    document.addEventListener('click', (event) => {
+      let button = event.target.className;
+      if (button === 'new-book-button') modal.showModal();
+      if (button === 'close-button') {
+        form.reset();
+        modal.close();
+      }
+    });
 
+    // submit event is triggered by submit buttons when
+    // the associated form method is 'dialog'
     document.addEventListener('submit', (event) => {
-      // console.log(event.submitter.form);
       let title = document.querySelector('#title').value;
       let author = document.querySelector('#author').value;
       let pages = +document.querySelector('#pages').value;
       let read = document.querySelector('#read').checked;
-      // console.log(document.querySelector('#read'));
       addBookToLibrary(title, author, pages, read);
-      // [title, author, pages, read] = [null, null, null, null];
       form.reset();
       displayBooks();
     });
-    modal.addEventListener('click', (event) => {
-      let button = event.target;
-
-      switch (button.className) {
-        case 'close-button':
-          form.reset();
-          modal.close();
-          break;
-      }
-    });
   }
-
-  // addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, false);
-  // addBookToLibrary('The End of Eternity', 'Isaac Asimov', 250, false);
-  // addBookToLibrary('Farewell My Lovely', 'Raymond Chandler', 306, true);
+  // sample book:
+  // addBookToLibrary('The End of Eternity', 'Isaac Asimov', 250, true);
 
   displayBooks();
   setModalControls();
 }
-// console.log(myLibrary);
 main();
