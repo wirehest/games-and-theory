@@ -85,7 +85,8 @@ html {
   margin: 0;
   padding: 0;
 }
-li.new-book-button {
+li.new-book-button,
+.form-buttons > button {
   background: var(--color-slate);
   border: 6px outset var(--color-slate);
   border-radius: 12px;
@@ -97,7 +98,8 @@ li.new-book-button {
   padding: 3px 25px;
   text-shadow: 1px 1px 1px #00000050;
 }
-li.new-book-button:active {
+li.new-book-button:active,
+.form-buttons > button:active {
   background: var(--color-slate);
   border: 6px inset var(--color-bermuda);
 }
@@ -179,19 +181,35 @@ li.new-book-button:active {
 ::backdrop {
   background: #000000ab;
 }
-dialog.add-book-modal {
+.add-book-modal {
+  background: var(--color-parchment);
+  border: 4px outset var(--color-clay);
+  border-radius: 12px;
+  color: var(--color-slate);
+  font-family: 'Patua One';
+  font-size: 1.5rem;
   margin: auto;
+  width: 450px;
 }
-form.add-book-form {
-  align-items: center;
+.add-book-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+form div {
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+}
+form :is(legend, .form-buttons) {
+  align-self: center;
+  text-align: center;
+  width: 250px;
+}
+.form-buttons > button {
+  font-size: 1rem;
+  padding: 2px 15px;
+}
 form input {
   width: 300px;
-}
-.form-buttons {
-  text-align: center;
-  width: 75%;
 }

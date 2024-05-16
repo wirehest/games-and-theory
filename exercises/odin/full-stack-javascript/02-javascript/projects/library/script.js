@@ -38,11 +38,6 @@ function main() {
       delButton.type = 'button';
       delButton.textContent = '✖';
       delButton.classList.toggle('delete-button');
-      delButton.addEventListener('click', () => {
-        book.remove();
-        myLibrary.splice(+book['data-libindex'], 1);
-        displayBooks();
-      });
       book.appendChild(delButton);
 
       // adds title, author, pages, and read details from libEntry to book
@@ -59,15 +54,20 @@ function main() {
       read.classList.toggle('read');
       read.textContent = libEntry['read'] ? 'Read' : 'Unread';
       book.appendChild(read);
+
       book.addEventListener('click', (event) => {
+        let bookIndex = event.target.parentNode.attributes[1].value;
         if (event.target.className === 'read') {
-          let bookIndex = event.target.parentNode.attributes[1].value;
           myLibrary[bookIndex].read = !myLibrary[bookIndex].read;
-          displayBooks();
         }
+        if (event.target.className === 'delete-button') {
+          myLibrary.splice(bookIndex, 1);
+        }
+        displayBooks();
       });
       bookshelf.appendChild(book);
     });
+    console.log(myLibrary);
   }
 
   // sets event listeners related to the 'add new book' modal
