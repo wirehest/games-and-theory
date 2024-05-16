@@ -115,7 +115,7 @@ li.new-book-button:active,
   grid-auto-columns: 265px;
   grid-auto-flow: column;
   justify-content: center;
-  min-height: 400px;
+  min-height: 470px;
   overflow-x: auto;
   padding: 25px 40px;
   width: 1400px;
