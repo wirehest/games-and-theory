@@ -1,8 +1,9 @@
 // TODO render object
 // TODO functions to allow interaction with the DOM (also checks if cell
 // already occupied
-// TODO setup functionality incl. add player names, start/restart, display
+// XXXX setup functionality incl. add player names, start/restart, display
 // game results
+// TODO restart functionality
 // minimize global code
 // use factory functions and IIFEs where necessary
 
@@ -10,8 +11,6 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
-// (function () {
-let rl = readline.createInterface({ input, output });
 let board = (function () {
   let moves = 0;
   let grid = [
@@ -90,18 +89,15 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
 
 function gameController() {
   let gamesPlayed = 0;
-  // let [x, y] = [null, null];
   let players = null;
   let active = true;
 
   let startGame = (name1, mark2, name2) => {
-    // console.log('players: ' + players);
     if (players === null) players = makePlayers(name1, mark2, name2);
     console.log('Enter x and y positions separated by a comma, e.g., "0,1".');
     console.log(
       `Randomly selected ${players.getCurrent().getName()} to start.`
     );
-    // console.log('players: ' + players);
   };
 
   let restartGame = () => {
@@ -110,13 +106,9 @@ function gameController() {
   };
 
   let playTurn = (x, y) => {
-    board.printGrid();
-    // let position = await rl.question(`${players.current.name}, your turn: `);
-    // [x, y] = position.split(',');
-
-    board.printGrid();
     board.markGrid(x, y, players.getCurrent().getMark());
     players.getCurrent().addMove();
+    board.printGrid();
     if (board.checkGrid()) {
       players.getCurrent().addWin();
       console.log(
@@ -153,22 +145,17 @@ function gameController() {
 
 function displayController() {}
 
+// console-only gameloop
+let rl = readline.createInterface({ input, output });
 let game = gameController();
-// console.log(game);
-// let makeplayers = async (name1, mark1, name2) => {
-// let name1 = await rl.question('enter name for player 1: ');
-// let mark1 = await rl.question('player 1, select your mark (x or o): ');
-// let name2 = await rl.question('enter name for player 2: ');
-// let mark2 = mark1 === 'x' ? 'o' : 'x';
-// let players = await gameplayers(name1, mark1, name2, mark2);
-// rl.close();
-// return await gameplayers(name1, mark1, name2, mark2);
-// };
-// players = await makeplayers();
 
-game.startGame('Albus', 'X', 'Brenda');
+let name1 = await rl.question('Enter name for player 1: ');
+let mark1 = await rl.question('Player 1, select your mark (X or O): ');
+let name2 = await rl.question('Enter name for player 2: ');
+
+game.startGame(name1, mark1, name2);
+board.printGrid();
 while (game.getActive()) {
-  board.printGrid();
   let position = await rl.question(
     `${game.getPlayers().getCurrent().getName()}, your turn: `
   );
@@ -176,6 +163,6 @@ while (game.getActive()) {
   game.playTurn(+x, +y);
 }
 game.gamesPlayed++;
-rl.question('wait');
+
 rl.close();
 // })();
