@@ -10,129 +10,172 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
-(function () {
-  let board = (function () {
-    let moves = 0;
-    let grid = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ];
+// (function () {
+let rl = readline.createInterface({ input, output });
+let board = (function () {
+  let moves = 0;
+  let grid = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
 
-    let markGrid = (x, y, mark) => {
-      if (grid[x][y] !== null) throw new Error('cell already marked');
-      grid[x][y] = mark;
-      moves++;
-    };
+  let markGrid = (x, y, mark) => {
+    if (grid[x][y] !== null) throw new Error('cell already marked');
+    grid[x][y] = mark;
+    moves++;
+  };
 
-    let totalMoves = () => moves;
+  let totalMoves = () => moves;
 
-    let checkGrid = () => {
-      let gameWon = false;
+  let checkGrid = () => {
+    let gameWon = false;
+    for (let i of [0, 1, 2]) {
       // check rows
-      [0, 1, 2].forEach((x) => {
-        if (
-          grid[x][0] !== null &&
-          grid[x][0] === grid[x][1] &&
-          grid[x][1] === grid[x][2]
-        ) {
-          gameWon = !gameWon;
-        }
-      });
-
+      if (grid[i][0] !== null && grid[i].every((mark) => mark === grid[i][0])) {
+        gameWon = true;
+        break;
+      }
       // check columns
-      [0, 1, 2].forEach((y) => {
-        if (
-          grid[0][y] !== null &&
-          grid[0][y] === grid[1][y] &&
-          grid[1][y] === grid[2][y]
-        ) {
-          gameWon = !gameWon;
-        }
-      });
-
-      // check diagonals
-      if (grid[1][1] !== null) {
-        if (
-          (grid[1][1] === grid[0][2] && grid[1][1] === grid[2][0]) ||
-          (grid[1][1] === grid[0][0] && grid[1][1] === grid[2][2])
-        ) {
-          gameWon = !gameWon;
-        }
-      }
-
-      return gameWon;
-    };
-    let resetGrid = () => grid.forEach((row) => row.fill(null));
-
-    let printGrid = () => console.log(grid);
-
-    return { markGrid, printGrid, totalMoves, checkGrid, resetGrid };
-  })();
-
-  async function gamePlayers() {
-    function makePlayer(name, mark) {
-      let moves = 0;
-      let wins = 0;
-      const addWin = () => wins++;
-      const winCount = () => wins;
-      const addMove = () => moves++;
-      const moveCount = () => moves;
-      return { name, mark, addWin, winCount, addMove, moveCount };
-    }
-
-    let rl = readline.createInterface({ input, output });
-    let name1 = await rl.question('Enter name for player 1: ');
-    let mark1 = await rl.question('Player 1, select your mark (X or O): ');
-    let name2 = await rl.question('Enter name for player 2: ');
-    let mark2 = mark1 === 'X' ? 'O' : 'X';
-    rl.close();
-
-    return [makePlayer(name1, mark1), makePlayer(name2, mark2)];
-  }
-
-  async function gameController() {
-    let gamesPlayed = 0;
-    let [x, y] = [null, null];
-    let players = await gamePlayers();
-
-    let currentPlayer = players[Math.floor(Math.random() * 2)];
-
-    let rl = readline.createInterface({ input, output });
-    console.log('Enter x and y positions separated by a comma, e.g., "0,1".');
-    console.log(`Randomly selected ${currentPlayer.name} to start.`);
-    while (true) {
-      board.printGrid();
-      let position = await rl.question(`${currentPlayer.name}, your turn: `);
-      [x, y] = position.split(',');
-
-      board.printGrid();
-      board.markGrid(+x, +y, currentPlayer.mark);
-      currentPlayer.addMove();
-      if (board.checkGrid()) {
-        currentPlayer.addWin();
-        console.log(
-          currentPlayer.name +
-            ' won in ' +
-            currentPlayer.moveCount() +
-            ' moves.'
-        );
+      let gC = grid[0];
+      if (gC[i] !== null && gC[i] === grid[1][i] && gC[i] === grid[2][i]) {
+        gameWon = true;
         break;
       }
-      if (board.totalMoves() === 9) {
-        console.log('Game tied!');
-        break;
-      }
-      currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
     }
-    gamesPlayed++;
-    rl.close();
-  }
-  gameController();
-  // game loop
-  // while (true) {
-  //   if (gamesPlayed === 0) setupPlayers();
-  //   gameController();
-  // play again
-  //
+    // check diagonals
+    if (grid[1][1] !== null) {
+      if (
+        (grid[1][1] === grid[0][2] && grid[1][1] === grid[2][0]) ||
+        (grid[1][1] === grid[0][0] && grid[1][1] === grid[2][2])
+      ) {
+        gameWon = true;
+      }
+    }
+    return gameWon;
+  };
+  let resetGrid = () => grid.forEach((row) => row.fill(null));
+
+  let printGrid = () => console.log(grid);
+
+  return { markGrid, printGrid, totalMoves, checkGrid, resetGrid };
 })();
+
+function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
+  let makePlayer = (name, mark) => {
+    let moves = 0;
+    let wins = 0;
+    let getName = () => name;
+    let getMark = () => mark;
+    let addWin = () => wins++;
+    let winCount = () => wins;
+    let addMove = () => moves++;
+    let moveCount = () => moves;
+    return { getName, getMark, addWin, winCount, addMove, moveCount };
+  };
+
+  let m2 = m1 === 'X' ? 'O' : 'X';
+  let player1 = makePlayer(n1, m1);
+  let player2 = makePlayer(n2, m2);
+  let current = (() => {
+    return Math.floor(Math.random() * 2) === 0 ? player1 : player2;
+  })();
+  let getCurrent = () => current;
+  let flipTurn = () => {
+    current = current === player1 ? player2 : player1;
+  };
+
+  return { player1, player2, getCurrent, flipTurn };
+}
+
+function gameController() {
+  let gamesPlayed = 0;
+  // let [x, y] = [null, null];
+  let players = null;
+  let active = true;
+
+  let startGame = (name1, mark2, name2) => {
+    // console.log('players: ' + players);
+    if (players === null) players = makePlayers(name1, mark2, name2);
+    console.log('Enter x and y positions separated by a comma, e.g., "0,1".');
+    console.log(
+      `Randomly selected ${players.getCurrent().getName()} to start.`
+    );
+    // console.log('players: ' + players);
+  };
+
+  let restartGame = () => {
+    board.resetgrid();
+    players = null;
+  };
+
+  let playTurn = (x, y) => {
+    board.printGrid();
+    // let position = await rl.question(`${players.current.name}, your turn: `);
+    // [x, y] = position.split(',');
+
+    board.printGrid();
+    board.markGrid(x, y, players.getCurrent().getMark());
+    players.getCurrent().addMove();
+    if (board.checkGrid()) {
+      players.getCurrent().addWin();
+      console.log(
+        players.getCurrent().getName() +
+          ' won in ' +
+          players.getCurrent().moveCount() +
+          ' moves.'
+      );
+      active = false;
+      return;
+    }
+    if (board.totalMoves() === 9) {
+      console.log('Game tied!');
+      active = false;
+      return;
+    }
+    players.flipTurn();
+  };
+
+  let getActive = () => active;
+  let getPlayers = () => players;
+  let getGamesPlayed = () => gamesPlayed;
+  // gamesPlayed++;
+
+  return {
+    getActive,
+    getPlayers,
+    getGamesPlayed,
+    startGame,
+    restartGame,
+    playTurn,
+  };
+}
+
+function displayController() {}
+
+let game = gameController();
+// console.log(game);
+// let makeplayers = async (name1, mark1, name2) => {
+// let name1 = await rl.question('enter name for player 1: ');
+// let mark1 = await rl.question('player 1, select your mark (x or o): ');
+// let name2 = await rl.question('enter name for player 2: ');
+// let mark2 = mark1 === 'x' ? 'o' : 'x';
+// let players = await gameplayers(name1, mark1, name2, mark2);
+// rl.close();
+// return await gameplayers(name1, mark1, name2, mark2);
+// };
+// players = await makeplayers();
+
+game.startGame('Albus', 'X', 'Brenda');
+while (game.getActive()) {
+  board.printGrid();
+  let position = await rl.question(
+    `${game.getPlayers().getCurrent().getName()}, your turn: `
+  );
+  let [x, y] = position.split(',');
+  game.playTurn(+x, +y);
+}
+game.gamesPlayed++;
+rl.question('wait');
+rl.close();
+// })();
