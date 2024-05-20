@@ -1,16 +1,10 @@
-// TODO store gameboard as array inside Gameboard object
-// TODO store players in objects
-// TODO game flow control via object
 // TODO render object
 // TODO functions to allow interaction with the DOM (also checks if cell
 // already occupied
 // TODO setup functionality incl. add player names, start/restart, display
 // game results
-//
 // minimize global code
 // use factory functions and IIFEs where necessary
-//
-// allow for tie
 
 // readline for user input in console
 import * as readline from 'node:readline/promises';
@@ -18,6 +12,7 @@ import { stdin as input, stdout as output } from 'node:process';
 
 (function () {
   let board = (function () {
+    let moves = 0;
     let grid = [
       [null, null, null],
       [null, null, null],
@@ -27,7 +22,10 @@ import { stdin as input, stdout as output } from 'node:process';
     let markGrid = (x, y, mark) => {
       if (grid[x][y] !== null) throw new Error('cell already marked');
       grid[x][y] = mark;
+      moves++;
     };
+
+    let totalMoves = () => moves;
 
     let checkGrid = () => {
       let gameWon = false;
@@ -65,51 +63,76 @@ import { stdin as input, stdout as output } from 'node:process';
 
       return gameWon;
     };
+    let resetGrid = () => grid.forEach((row) => row.fill(null));
 
     let printGrid = () => console.log(grid);
 
-    return { markGrid, printGrid, checkGrid };
+    return { markGrid, printGrid, totalMoves, checkGrid, resetGrid };
   })();
 
-  function player(name, mark) {
-    let moves = 0;
-    let addMove = () => moves++;
-    let printMoves = () => moves;
-    return { name, mark, addMove, printMoves };
+  async function gamePlayers() {
+    function makePlayer(name, mark) {
+      let moves = 0;
+      let wins = 0;
+      const addWin = () => wins++;
+      const winCount = () => wins;
+      const addMove = () => moves++;
+      const moveCount = () => moves;
+      return { name, mark, addWin, winCount, addMove, moveCount };
+    }
+
+    let rl = readline.createInterface({ input, output });
+    let name1 = await rl.question('Enter name for player 1: ');
+    let mark1 = await rl.question('Player 1, select your mark (X or O): ');
+    let name2 = await rl.question('Enter name for player 2: ');
+    let mark2 = mark1 === 'X' ? 'O' : 'X';
+    rl.close();
+
+    return [makePlayer(name1, mark1), makePlayer(name2, mark2)];
   }
 
   async function gameController() {
-    // TODO add player names
-    // let marks = { X: true, O: true };
-
-    const rl = readline.createInterface({ input, output });
-
-    let player1 = player('Albert', 'X');
-    let player2 = player('Betty', 'O');
-    let position = '';
-    let currentPlayer = player1;
+    let gamesPlayed = 0;
     let [x, y] = [null, null];
+    let players = await gamePlayers();
 
-    console.log(
-      'Enter row and column positions separated by a comma, e.g., "0,1".'
-    );
+    let currentPlayer = players[Math.floor(Math.random() * 2)];
+
+    let rl = readline.createInterface({ input, output });
+    console.log('Enter x and y positions separated by a comma, e.g., "0,1".');
+    console.log(`Randomly selected ${currentPlayer.name} to start.`);
     while (true) {
       board.printGrid();
-      position = await rl.question(`${currentPlayer.name}, your turn: `);
+      let position = await rl.question(`${currentPlayer.name}, your turn: `);
       [x, y] = position.split(',');
+
+      board.printGrid();
       board.markGrid(+x, +y, currentPlayer.mark);
       currentPlayer.addMove();
-      if (board.checkGrid()) break;
-      currentPlayer = currentPlayer === player1 ? player2 : player1;
+      if (board.checkGrid()) {
+        currentPlayer.addWin();
+        console.log(
+          currentPlayer.name +
+            ' won in ' +
+            currentPlayer.moveCount() +
+            ' moves.'
+        );
+        break;
+      }
+      if (board.totalMoves() === 9) {
+        console.log('Game tied!');
+        break;
+      }
+      currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
     }
-
-    board.printGrid();
-    console.log(
-      currentPlayer.name + ' won in ' + currentPlayer.printMoves() + ' moves.'
-    );
+    gamesPlayed++;
     rl.close();
-    // TODO when game end, display results
   }
-
   gameController();
+  // game loop
+  // while (true) {
+  //   if (gamesPlayed === 0) setupPlayers();
+  //   gameController();
+  // play again
+  //
 })();
