@@ -1,28 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Freeman&display=swap');
 
 *::after {
   box-sizing: border-box;
 }
 
 * {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
 }
 
 body {
-  line-height: 1.5;
+  background: #ffc300;
   -webkit-font-smoothing: antialiased;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
+  text-align: center;
 }
 
 input,
@@ -47,53 +40,99 @@ h6 {
   isolation: isolate;
 }
 
-/* styling start */
 :root {
-  font-family: sans-serif;
+  font-family: 'Freeman', sans-serif;
   font-size: 15px;
-}
-
-html {
-  background: linear-gradient(#ffd166, #ffbb00);
 }
 
 .container {
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 5px;
+  grid-template: repeat(2, min-content) 1fr / 200px min-content 200px;
   height: 100vh;
   justify-content: center;
 }
 
+h1 {
+  color: #fff;
+  font-size: 4.2rem;
+  -webkit-text-stroke: 3px #000;
+}
+
+.title {
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 50px 0;
+}
 .gameboard {
+  background: #000;
   display: grid;
-  gap: 15px;
+  gap: 5px;
+  grid-area: 2 / 2 / 3 / 3;
   grid-template-columns: repeat(3, 115px);
   grid-template-rows: repeat(3, 120px);
 }
 
 .cell {
   align-items: center;
-  background: #0000005b;
-  border-radius: 15px;
+  background: #ffc300;
   color: #fff;
   display: flex;
-  /* font-family: 'Finger Paint'; */
   font-family: 'Mochiy Pop One';
   font-size: 5.5rem;
   justify-content: center;
-  padding-bottom: 10px;
+  position: relative;
 }
 
-ul.nav {
+.cell:is(.x, .o)::before {
+  position: absolute;
+  top: -0.6rem;
+  -webkit-text-stroke: 3px #000;
+}
+
+.cell.x::before {
+  color: #383838;
+  content: 'X';
+}
+.cell.o::before {
+  color: #f7fff7;
+  content: 'O';
+}
+
+.nav {
+  align-self: start;
   display: flex;
   flex-direction: row;
+  font-size: 2rem;
   gap: 20px;
+  grid-area: 3 / 2 / 4 / 3;
+  margin-top: 30px;
+  text-transform: uppercase;
+  justify-content: space-around;
 }
 
+.nav > li:hover {
+  text-decoration: underline 4px;
+  text-underline-offset: 5px;
+}
 ul.nav > li {
-  font-size: 1rem;
   list-style-type: none;
   padding: 2px 10px;
+}
+
+.p1 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.p2 {
+  grid-area: 2 / 3 / 3/ 4;
+}
+
+[class$='-name'] {
+  font-size: 2rem;
+}
+
+[class$='-score'] {
+  font-size: 3rem;
+  line-height: 2.5rem;
 }
