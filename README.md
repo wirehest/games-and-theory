@@ -16,3 +16,5 @@
 - #### [Admin Dashboard](https://scoodivity.github.io/games-and-theory/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard/)
 
 - #### [Library](https://scoodivity.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/)
+
+- #### [Tic-Tac-Toe](https://scoodivity.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/)
