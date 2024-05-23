@@ -38,16 +38,6 @@ let board = (function () {
         gameWon = true;
         break;
       }
-      // check columns
-      // let gC = grid[0];
-      // if (
-      //   grid[0] !== null &&
-      //   grid[0] === grid[1][i] &&
-      //   grid[0] === grid[2][i]
-      // ) {
-      //   gameWon = true;
-      //   break;
-      // }
     }
     // check diagonals
     if (grid[1][1] !== null) {
@@ -61,12 +51,22 @@ let board = (function () {
     return gameWon;
   };
 
-  let resetGrid = () => grid.forEach((row) => row.fill(null));
-  // let printGrid = () => console.log(grid);
+  let resetGrid = () => {
+    grid.forEach((row) => row.fill(null));
+    moves = 0;
+  };
+  let getGrid = () => grid;
   let getFlatGrid = () => grid.flat();
   let getTotalMoves = () => moves;
 
-  return { markGrid, checkGrid, resetGrid, getFlatGrid, getTotalMoves };
+  return {
+    markGrid,
+    checkGrid,
+    resetGrid,
+    getGrid,
+    getFlatGrid,
+    getTotalMoves,
+  };
 })();
 
 function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
@@ -78,10 +78,12 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
     let addMove = () => moves++;
     let getWins = () => wins;
     let getMoves = () => moves;
+    let resetMoves = () => (moves = 0);
 
-    return { getName, getMark, addWin, addMove, getWins, getMoves };
+    return { getName, getMark, addWin, addMove, getWins, getMoves, resetMoves };
   };
 
+  // TODO break out random player selector—need to reroll when new game
   let m2 = m1 === 'X' ? 'O' : 'X';
   let player1 = makePlayer(n1, m1);
   let player2 = makePlayer(n2, m2);
@@ -92,41 +94,55 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
   let getCurrent = () => current;
   let flipTurn = () => {
     current = current === player1 ? player2 : player1;
-    console.log('flipTurn' + current.getName());
   };
 
-  return { player1, player2, getCurrent, flipTurn };
+  let resetMoves = () => {
+    [player1, player2].forEach((p) => p.resetMoves());
+  };
+
+  return { player1, player2, resetMoves, getCurrent, flipTurn };
 }
 
 function gameController() {
-  let gamesPlayed = 0;
+  // let gamesPlayed = 0;
   let players = null;
   let state = null;
 
+  // let init = (instruction) => {
+  //   switch (instruction) {
+  //     case 'reset':
+  //       [players, state] = [null, null];
+  //     case 'start':
+  //       if (players === null) {
+  //         players = makePlayers('A', 'X', 'B');
+  //       }
+  //       board.resetGrid();
+  //   }
+  // };
+
   let start = () => {
     if (players === null) {
-      // let name1 = prompt('Enter a name for Player1');
-      // let mark1 = prompt('Enter a mark for Player1 ("X" or "O")');
-      // let name2 = prompt('Enter a name for Player2');
-      // players = makePlayers(name1, mark2, name2);
       players = makePlayers('A', 'X', 'B');
     }
-    // console.log('Enter x and y positions separated by a comma, e.g., "0,1".');
-    // console.log(
-    //   `Randomly selected ${players.getCurrent().getName()} to start.`,
-    // );
+    // TODO reroll current player here
+    board.resetGrid();
+    state = null;
+    players.resetMoves();
+    console.log(board.getGrid());
+    console.log('state' + state);
   };
 
-  let restart = () => {
+  let restart = () => board.resetGrid();
+  let reset = () => {
     board.resetGrid();
-    players = null;
+    [players, state] = [null, null];
   };
 
   let playTurn = (x, y) => {
     board.markGrid(x, y, players.getCurrent().getMark().toLowerCase());
     players.getCurrent().addMove();
-    // board.printGrid();
 
+    console.log(board.getGrid());
     if (board.getTotalMoves() >= 5) {
       if (board.checkGrid()) {
         players.getCurrent().addWin();
@@ -138,28 +154,32 @@ function gameController() {
         return;
       }
     }
+
     players.flipTurn();
   };
 
-  // let getActive = () => active;
   let getState = () => state;
   let getPlayers = () => players;
-  let getGamesPlayed = () => gamesPlayed;
-  // gamesPlayed++;
 
-  return { start, restart, playTurn, getState, getPlayers, getGamesPlayed };
+  return { start, restart, reset, playTurn, getState, getPlayers };
 }
 
 function displayController() {
   let game = gameController();
-  // let players = null;
-
-  let button = document.querySelector('li.cell');
   let container = document.querySelector('.container');
   let domCells = document.querySelectorAll('.gameboard > .cell');
 
+  function clearBoard() {
+    domCells.forEach((domCell) => domCell.classList.remove('x', 'o'));
+  }
+
+  function restart() {}
+
   function updateBoard() {
-    board.getFlatGrid().forEach((cell, i) => domCells[i].classList.add(cell));
+    board.getFlatGrid().forEach((cell, i) => {
+      if (cell === null) return;
+      domCells[i].classList.add(cell);
+    });
     // TODO update scores when game is won or tied
     // TODO highlight winning cells
   }
@@ -174,15 +194,19 @@ function displayController() {
         updateBoard();
 
         if (game.getState() === 'won' || game.getState() === 'tied') {
+          let message = document.querySelector('.modal.result .message');
+
           switch (game.getState()) {
             case 'won':
-              // TODO show win modal + endgame options
+              let winner = game.getPlayers().getCurrent().getName();
+              let moves = game.getPlayers().getCurrent().getMoves();
+              message.textContent = `${winner} won in ${moves} moves!`;
               break;
             case 'tied':
-              // TODO show tied modal + endgame options
+              message.textContent = 'You tied!';
               break;
           }
-          // remove eventListener so players can't mark after game end
+          document.querySelector('.modal.result').showModal();
           container.removeEventListener('click', markListener);
         }
       }
@@ -191,12 +215,30 @@ function displayController() {
   }
 
   function addButtonListener() {
-    let navListener = container.addEventListener('click', (event) => {
+    container.addEventListener('click', (event) => {
       let target = event.target;
 
-      if (target.className === 'new') {
+      if (target.className === 'play') {
+        clearBoard();
         game.start();
         addGameBoardListener();
+      }
+
+      if (target.className === 'play-again') {
+        target.parentElement.parentElement.close();
+        clearBoard();
+        game.start();
+        addGameBoardListener();
+      }
+
+      if (target.className === 'reset') {
+        game.reset();
+        game.start();
+        addGameBoardListener();
+      }
+
+      if (target.className === 'close') {
+        target.parentElement.parentElement.close();
       }
     });
   }

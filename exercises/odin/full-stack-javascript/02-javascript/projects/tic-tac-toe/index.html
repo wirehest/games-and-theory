@@ -1,70 +1,72 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Tic Tac Toe</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="./script.js" defer></script>
-  <link rel="stylesheet" href="./style.css" />
-  <title>Tic Tac Toe</title>
-</head>
-
-<body>
-  <div class="container">
-    <div class="title">
-      <h1>Tic-Tac-Toe</h1>
-    </div>
-    <div class="gameboard">
-      <div class="cell" data-pos="0,0"></div>
-      <div class="cell" data-pos="0,1"></div>
-      <div class="cell" data-pos="0,2"></div>
-      <div class="cell" data-pos="1,0"></div>
-      <div class="cell" data-pos="1,1"></div>
-      <div class="cell" data-pos="1,2"></div>
-      <div class="cell" data-pos="2,0"></div>
-      <div class="cell" data-pos="2,1"></div>
-      <div class="cell" data-pos="2,2"></div>
-    </div>
-    <ul class="nav">
-      <li class="new">New Game</li>
-      <li class="restart">Restart</li>
-    </ul>
-    <div class="p1">
-      <div class="p1-name">Player1</div>
-      <div class="p1-score">99</div>
-    </div>
-    <div class="p2">
-      <div class="p2-name">Player2</div>
-      <div class="p2-score">99</div>
-    </div>
-    <dialog class="modal p1" open>
-      <form method="dialog">
-        <legend>Player 1</legend>
-        <div>
-          <label for="p1-name" placeholder="">Name: </label>
-          <input id="p1-name" type="text" required autofocus>
-        </div>
-        <div>
-          <label for="p1-mark" placeholder="">Mark: </label>
-          <input id="p1-mark" type="text" required>
-        </div>
-      </form>
-    </dialog>
-    <dialog class="modal p2" open>
-      <form method="dialog">
-        <legend>Player 2</legend>
-        <div>
-          <label for="p2-name" placeholder="">Name: </label>
-          <input id="p2-name" type="text" required autofocus>
-        </div>
-      </form>
-    </dialog>
-    <dialog class="modal result" open>
-      <div>
+  <body>
+    <div class="container">
+      <div class="title">
+        <h1>Tic-Tac-Toe</h1>
       </div>
-      </form>
-    </dialog>
-  </div>
-</body>
-
+      <div class="gameboard">
+        <div class="cell" data-pos="0,0"></div>
+        <div class="cell" data-pos="0,1"></div>
+        <div class="cell" data-pos="0,2"></div>
+        <div class="cell" data-pos="1,0"></div>
+        <div class="cell" data-pos="1,1"></div>
+        <div class="cell" data-pos="1,2"></div>
+        <div class="cell" data-pos="2,0"></div>
+        <div class="cell" data-pos="2,1"></div>
+        <div class="cell" data-pos="2,2"></div>
+      </div>
+      <ul class="nav">
+        <!-- <li class="new">New</li> -->
+        <li class="play">Play</li>
+        <li class="reset">Reset</li>
+      </ul>
+      <div class="p1">
+        <div class="p1-name">Player1</div>
+        <div class="p1-score">99</div>
+      </div>
+      <div class="p2">
+        <div class="p2-name">Player2</div>
+        <div class="p2-score">99</div>
+      </div>
+      <dialog class="modal p1">
+        <form method="dialog">
+          <legend>Player 1</legend>
+          <div>
+            <label for="p1-name" placeholder="">Name: </label>
+            <input id="p1-name" type="text" required autofocus />
+          </div>
+          <div>
+            <label for="p1-mark" placeholder="">Mark: </label>
+            <input id="p1-mark" type="text" required />
+          </div>
+        </form>
+      </dialog>
+      <dialog class="modal p2">
+        <form method="dialog">
+          <legend>Player 2</legend>
+          <div>
+            <label for="p2-name" placeholder="">Name: </label>
+            <input id="p2-name" type="text" required autofocus />
+          </div>
+        </form>
+      </dialog>
+      <dialog class="modal result">
+        <div class="message"></div>
+        <div class="buttons">
+          <button type="button" class="play">Play Again</button>
+          <button type="button" class="close">Close</button>
+        </div>
+      </dialog>
+    </div>
+  </body>
 </html>
+
