@@ -1,12 +1,3 @@
-// TODO render object
-// TODO functions to allow interaction with the DOM (also checks if cell
-// already occupied
-// XXXX setup functionality incl. add player names, start/restart, display
-// game results
-// TODO restart functionality
-// minimize global code
-// use factory functions and IIFEs where necessary
-
 // readline for user input in console
 // import * as readline from 'node:readline/promises';
 // import { stdin as input, stdout as output } from 'node:process';
@@ -73,23 +64,24 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
   let makePlayer = (name, mark) => {
     let [moves, wins] = [0, 0];
     let getName = () => name;
-    let getMark = () => mark;
+    let getMark = () => mark.toLowerCase();
     let addWin = () => wins++;
     let addMove = () => moves++;
-    let getWins = () => wins;
+    let getWins = () => String(wins).padStart(3, '0');
     let getMoves = () => moves;
     let resetMoves = () => (moves = 0);
 
     return { getName, getMark, addWin, addMove, getWins, getMoves, resetMoves };
   };
 
-  // TODO break out random player selector—need to reroll when new game
   let m2 = m1 === 'X' ? 'O' : 'X';
   let player1 = makePlayer(n1, m1);
   let player2 = makePlayer(n2, m2);
-  let current = (() => {
-    return Math.floor(Math.random() * 2) === 0 ? player1 : player2;
-  })();
+  let current = null;
+
+  function randomizeStartingPlayer() {
+    current = Math.floor(Math.random() * 2) === 0 ? player1 : player2;
+  }
 
   let getCurrent = () => current;
   let flipTurn = () => {
@@ -100,7 +92,14 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
     [player1, player2].forEach((p) => p.resetMoves());
   };
 
-  return { player1, player2, resetMoves, getCurrent, flipTurn };
+  return {
+    player1,
+    player2,
+    resetMoves,
+    getCurrent,
+    randomizeStartingPlayer,
+    flipTurn,
+  };
 }
 
 function gameController() {
@@ -124,25 +123,23 @@ function gameController() {
     if (players === null) {
       players = makePlayers('A', 'X', 'B');
     }
-    // TODO reroll current player here
+    players.randomizeStartingPlayer();
     board.resetGrid();
     state = null;
     players.resetMoves();
-    console.log(board.getGrid());
-    console.log('state' + state);
   };
 
   let restart = () => board.resetGrid();
   let reset = () => {
     board.resetGrid();
-    [players, state] = [null, null];
+    players = makePlayers();
+    state = null;
   };
 
   let playTurn = (x, y) => {
     board.markGrid(x, y, players.getCurrent().getMark().toLowerCase());
     players.getCurrent().addMove();
 
-    console.log(board.getGrid());
     if (board.getTotalMoves() >= 5) {
       if (board.checkGrid()) {
         players.getCurrent().addWin();
@@ -154,7 +151,6 @@ function gameController() {
         return;
       }
     }
-
     players.flipTurn();
   };
 
@@ -166,22 +162,48 @@ function gameController() {
 
 function displayController() {
   let game = gameController();
+
+  let players = null;
+  let p1 = document.querySelector('.p1');
+  let p2 = document.querySelector('.p2');
   let container = document.querySelector('.container');
   let domCells = document.querySelectorAll('.gameboard > .cell');
 
   function clearBoard() {
     domCells.forEach((domCell) => domCell.classList.remove('x', 'o'));
+    [p1, p2].forEach((player) => player.classList.remove('turn-highlight'));
   }
-
-  function restart() {}
 
   function updateBoard() {
     board.getFlatGrid().forEach((cell, i) => {
       if (cell === null) return;
       domCells[i].classList.add(cell);
     });
-    // TODO update scores when game is won or tied
-    // TODO highlight winning cells
+
+    if (players.getCurrent() === players.player1) {
+      p1.classList.add('turn-highlight');
+      p2.classList.remove('turn-highlight');
+    } else {
+      p2.classList.add('turn-highlight');
+      p1.classList.remove('turn-highlight');
+    }
+  }
+
+  function updatePlayerBoxes() {
+    let [p1Name, p1Mark] = p1.querySelectorAll('.p1-name, .p1-mark');
+    let [p2Name, p2Mark] = p2.querySelectorAll('.p2-name, .p2-mark');
+
+    p1Name.textContent = players.player1.getName();
+    p2Name.textContent = players.player2.getName();
+    p1Mark.classList.add(String(players.player1.getMark()));
+    p2Mark.classList.add(String(players.player2.getMark()));
+  }
+
+  function updateScores() {
+    let p1Score = document.querySelector('.p1-score');
+    let p2Score = document.querySelector('.p2-score');
+    p1Score.textContent = players.player1.getWins();
+    p2Score.textContent = players.player2.getWins();
   }
 
   function addGameBoardListener() {
@@ -198,9 +220,12 @@ function displayController() {
 
           switch (game.getState()) {
             case 'won':
-              let winner = game.getPlayers().getCurrent().getName();
+              let winner = game.getPlayers().getCurrent();
+              let name = game.getPlayers().getCurrent().getName();
               let moves = game.getPlayers().getCurrent().getMoves();
-              message.textContent = `${winner} won in ${moves} moves!`;
+
+              updateScores();
+              message.textContent = `${name} won in ${moves} moves!`;
               break;
             case 'tied':
               message.textContent = 'You tied!';
@@ -214,13 +239,16 @@ function displayController() {
     container.addEventListener('click', markListener);
   }
 
-  function addButtonListener() {
+  (function addButtonListener() {
     container.addEventListener('click', (event) => {
       let target = event.target;
 
       if (target.className === 'play') {
+        // TODO get players names, mark
         clearBoard();
         game.start();
+        players = game.getPlayers();
+        updatePlayerBoxes();
         addGameBoardListener();
       }
 
@@ -228,12 +256,19 @@ function displayController() {
         target.parentElement.parentElement.close();
         clearBoard();
         game.start();
+        game.getPlayers().randomizeStartingPlayer();
+        updatePlayerBoxes();
         addGameBoardListener();
       }
 
       if (target.className === 'reset') {
+        clearBoard();
         game.reset();
         game.start();
+        players = game.getPlayers();
+        game.getPlayers().randomizeStartingPlayer();
+        updateScores();
+        updatePlayerBoxes();
         addGameBoardListener();
       }
 
@@ -241,10 +276,7 @@ function displayController() {
         target.parentElement.parentElement.close();
       }
     });
-  }
-  addButtonListener();
-
-  // while (game.getActive()) {}
+  })();
 }
 displayController();
 

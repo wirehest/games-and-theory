@@ -49,7 +49,7 @@ h6 {
   align-items: center;
   display: grid;
   gap: 5px;
-  grid-template: repeat(2, min-content) 1fr / 200px min-content 200px;
+  grid-template: repeat(2, min-content) 1fr / 150px min-content 150px;
   height: 100vh;
   justify-content: center;
 }
@@ -85,17 +85,17 @@ h1 {
   position: relative;
 }
 
-.cell:is(.x, .o)::before {
+:is(.x, .o)::before {
   position: absolute;
   top: -0.6rem;
   -webkit-text-stroke: 3px #000;
 }
 
-.cell.x::before {
+.x::before {
   color: #383838;
   content: 'X';
 }
-.cell.o::before {
+.o::before {
   color: #f7fff7;
   content: 'O';
 }
@@ -129,6 +129,11 @@ ul.nav > li {
   grid-area: 2 / 3 / 3/ 4;
 }
 
+.turn-highlight {
+  border: 6px solid #d00000;
+  border-radius: 20px;
+}
+
 [class$='-name'] {
   font-size: 2rem;
 }
@@ -138,6 +143,25 @@ ul.nav > li {
   line-height: 2.5rem;
 }
 
+[class*='-mark'] {
+  align-items: center;
+  display: flex;
+  font-family: 'Mochiy Pop One';
+  font-size: 4rem;
+  height: 6rem;
+  justify-content: center;
+  position: relative;
+}
+
 .modal {
-  margin: auto;
+  background: #fcf6bd;
+  border: 4px solid #000;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  margin: 273px auto auto;
+  overflow-wrap: none;
+}
+
+.modal * {
+  margin: 10px 20px;
 }
