@@ -60,7 +60,7 @@ let board = (function () {
   };
 })();
 
-function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
+function makePlayers(n1, n2) {
   let makePlayer = (name, mark) => {
     let [moves, wins] = [0, 0];
     let getName = () => name;
@@ -74,9 +74,9 @@ function makePlayers(n1 = 'Player1', m1 = 'X', n2 = 'Player2') {
     return { getName, getMark, addWin, addMove, getWins, getMoves, resetMoves };
   };
 
-  let m2 = m1 === 'X' ? 'O' : 'X';
-  let player1 = makePlayer(n1, m1);
-  let player2 = makePlayer(n2, m2);
+  // let m2 = m1 === 'X' ? 'O' : 'X';
+  let player1 = makePlayer(n1, 'x');
+  let player2 = makePlayer(n2, 'o');
   let current = null;
 
   function randomizeStartingPlayer() {
@@ -119,9 +119,9 @@ function gameController() {
   //   }
   // };
 
-  let start = () => {
+  let start = (p1Name, p2Name) => {
     if (players === null) {
-      players = makePlayers('A', 'X', 'B');
+      players = makePlayers(p1Name, p2Name);
     }
     players.randomizeStartingPlayer();
     board.resetGrid();
@@ -162,8 +162,8 @@ function gameController() {
 
 function displayController() {
   let game = gameController();
+  let players = game.getPlayers();
 
-  let players = null;
   let p1 = document.querySelector('.p1');
   let p2 = document.querySelector('.p2');
   let container = document.querySelector('.container');
@@ -189,10 +189,12 @@ function displayController() {
     }
   }
 
+  function getPlayersDetails() {}
+
   function updatePlayerBoxes() {
     let [p1Name, p1Mark] = p1.querySelectorAll('.p1-name, .p1-mark');
     let [p2Name, p2Mark] = p2.querySelectorAll('.p2-name, .p2-mark');
-
+    // console.log(players.player1.getName());
     p1Name.textContent = players.player1.getName();
     p2Name.textContent = players.player2.getName();
     p1Mark.classList.add(String(players.player1.getMark()));
@@ -242,14 +244,42 @@ function displayController() {
   (function addButtonListener() {
     container.addEventListener('click', (event) => {
       let target = event.target;
+      let playerEntry = document.querySelector('.modal.player-entry');
+      // let playerDetails;
 
-      if (target.className === 'play') {
-        // TODO get players names, mark
-        clearBoard();
-        game.start();
-        players = game.getPlayers();
-        updatePlayerBoxes();
-        addGameBoardListener();
+      switch (target.className) {
+        case 'play':
+          if (players === null) {
+            playerEntry.showModal();
+            // document.addEventListener(
+            //   'submit',
+            //   (event) => {
+            //     event.preventDefault();
+            //     playerDetails = new FormData(playerEntry.querySelector('form'));
+            //   },
+            //   { once: true },
+            // );
+          } else {
+            clearBoard();
+            // game.start(({ p1Name = 'P1', p2Name = 'P2' } = playerDetails));
+            game.start();
+            players = game.getPlayers();
+            updatePlayerBoxes();
+            addGameBoardListener();
+          }
+          break;
+        case 'start':
+          playerEntry.close();
+          let { p1Name = 'P1', p2Name = 'P2' } = Object.fromEntries(
+            new FormData(playerEntry.querySelector('form')),
+          );
+          // console.log(playerData);
+          // console.log('275', p1Name, p2Name);
+          game.start(p1Name, p2Name);
+          players = game.getPlayers();
+          updatePlayerBoxes();
+          addGameBoardListener();
+          break;
       }
 
       if (target.className === 'play-again') {

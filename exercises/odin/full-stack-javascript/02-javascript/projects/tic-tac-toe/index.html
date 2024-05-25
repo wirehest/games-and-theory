@@ -25,39 +25,45 @@
         <div class="cell" data-pos="2,2"></div>
       </div>
       <ul class="nav">
-        <!-- <li class="new">New</li> -->
         <li class="play">Play</li>
+        <li class="restart">Restart</li>
         <li class="reset">Reset</li>
       </ul>
       <div class="p1">
-        <div class="p1-name">Player1</div>
+        <div class="p1-name">P1</div>
         <div class="p1-score">000</div>
         <div class="p1-mark"></div>
       </div>
       <div class="p2">
-        <div class="p2-name">Player2</div>
+        <div class="p2-name">P2</div>
         <div class="p2-score">000</div>
         <div class="p2-mark"></div>
       </div>
-      <dialog class="modal p1-entry">
+      <dialog class="modal player-entry">
         <form method="dialog">
-          <legend>Player 1</legend>
+          <legend>Enter Players</legend>
           <div>
-            <label for="p1-name" placeholder="">Name: </label>
-            <input id="p1-name" type="text" required autofocus />
+            <label for="p1-name">P1 Name <span>X</span></label>
+            <input
+              type="text"
+              id="p1-name"
+              name="p1Name"
+              placeholder="10 characters max."
+              autofocus
+            />
           </div>
           <div>
-            <label for="p1-mark" placeholder="">Mark: </label>
-            <input id="p1-mark" type="text" required />
+            <label for="p2-name">P2 Name <span>O</span></label>
+            <input
+              type="text"
+              id="p2-name"
+              name="p2Name"
+              placeholder="10 characters max."
+            />
           </div>
-        </form>
-      </dialog>
-      <dialog class="modal p2-entry">
-        <form method="dialog">
-          <legend>Player 2</legend>
-          <div>
-            <label for="p2-name" placeholder="">Name: </label>
-            <input id="p2-name" type="text" required autofocus />
+          <div class="buttons">
+            <button type="submit" class="start">Start</button>
+            <button type="button" class="cancel">Cancel</button>
           </div>
         </form>
       </dialog>
@@ -71,3 +77,4 @@
     </div>
   </body>
 </html>
+
