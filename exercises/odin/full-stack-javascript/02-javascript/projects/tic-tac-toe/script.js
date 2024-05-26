@@ -1,157 +1,131 @@
-// readline for user input in console
-// import * as readline from 'node:readline/promises';
-// import { stdin as input, stdout as output } from 'node:process';
-
-let board = (function () {
+let grid = (function () {
   let moves = 0;
-  let grid = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
+  let cells = new Array(9).fill(null);
 
-  let markGrid = (x, y, mark) => {
-    if (grid[x][y] !== null) throw new Error('cell already marked');
-    grid[x][y] = mark;
+  let countMoves = () => cells.filter((cell) => cell !== null).length;
+  let getCells = () => cells;
+
+  let markCell = (i, mark) => {
+    if (cells[i] !== null) throw new Error('cell already marked');
+    cells[i] = mark;
     moves++;
   };
 
-  let checkGrid = () => {
-    let gameWon = false;
-    for (let i of [0, 1, 2]) {
-      // check rows and columns
+  let resetCells = () => {
+    grid.fill(null);
+    moves = 0;
+  };
+
+  let checkForWin = () => {
+    // check rows
+    for (let x of [0, 3, 6]) {
       if (
-        (grid[i][0] !== null && grid[i].every((mark) => mark === grid[i][0])) ||
-        (grid[0][i] !== null &&
-          grid[0][i] === grid[1][i] &&
-          grid[0][i] === grid[2][i])
+        cells[0 + x] !== null &&
+        cells[0 + x] === cells[1 + x] &&
+        cells[0 + x] === cells[2 + x]
       ) {
-        gameWon = true;
-        break;
+        return [0, 1, 2].map((index) => index + x);
+      }
+    }
+    // check columns
+    for (let y of [0, 1, 2]) {
+      if (
+        cells[0 + y] !== null &&
+        cells[0 + y] === cells[3 + y] &&
+        cells[0 + y] === cells[6 + y]
+      ) {
+        return [0, 3, 6].map((index) => index + y);
       }
     }
     // check diagonals
-    if (grid[1][1] !== null) {
-      if (
-        (grid[1][1] === grid[0][2] && grid[1][1] === grid[2][0]) ||
-        (grid[1][1] === grid[0][0] && grid[1][1] === grid[2][2])
-      ) {
-        gameWon = true;
-      }
+    if (cells[4] !== null) {
+      if (cells[4] === cells[0] && cells[4] === cells[8]) return [0, 4, 8];
+      if (cells[4] === cells[2] && cells[4] === cells[6]) return [2, 4, 6];
     }
-    return gameWon;
   };
 
-  let resetGrid = () => {
-    grid.forEach((row) => row.fill(null));
-    moves = 0;
-  };
-  let getGrid = () => grid;
-  let getFlatGrid = () => grid.flat();
-  let getTotalMoves = () => moves;
-
-  return {
-    markGrid,
-    checkGrid,
-    resetGrid,
-    getGrid,
-    getFlatGrid,
-    getTotalMoves,
-  };
+  return { countMoves, getCells, markCell, resetCells, checkForWin };
 })();
 
-function makePlayers(n1, n2) {
-  let makePlayer = (name, mark) => {
-    let [moves, wins] = [0, 0];
-    let getName = () => name;
-    let getMark = () => mark.toLowerCase();
-    let addWin = () => wins++;
-    let addMove = () => moves++;
-    let getWins = () => String(wins).padStart(3, '0');
-    let getMoves = () => moves;
-    let resetMoves = () => (moves = 0);
-
-    return { getName, getMark, addWin, addMove, getWins, getMoves, resetMoves };
-  };
-
-  // let m2 = m1 === 'X' ? 'O' : 'X';
-  let player1 = makePlayer(n1, 'x');
-  let player2 = makePlayer(n2, 'o');
-  let current = null;
-
-  function randomizeStartingPlayer() {
-    current = Math.floor(Math.random() * 2) === 0 ? player1 : player2;
-  }
+function makePlayers(n1 = 'P1', n2 = 'P2') {
+  let p1 = makePlayer(n1, 'x');
+  let p2 = makePlayer(n2, 'o');
+  let current = p1;
 
   let getCurrent = () => current;
-  let flipTurn = () => {
-    current = current === player1 ? player2 : player1;
-  };
+  let flipTurn = () => (current = current === p1 ? p2 : p1);
+  let resetMoves = () => [p1, p2].forEach((p) => p.resetMoves());
+  // let resetMovesAndWins = () => [p1, p2].forEach((p) => p.resetAll());
 
-  let resetMoves = () => {
-    [player1, player2].forEach((p) => p.resetMoves());
-  };
+  function makePlayer(name, mark) {
+    let [moves, wins] = [0, 0];
 
-  return {
-    player1,
-    player2,
-    resetMoves,
-    getCurrent,
-    randomizeStartingPlayer,
-    flipTurn,
-  };
+    let getName = () => name;
+    let getMark = () => mark.toLowerCase();
+    let getWins = () => String(wins).padStart(3, '0');
+    let getMoves = () => moves;
+    let addWin = () => wins++;
+    let addMove = () => moves++;
+    let resetMoves = () => (moves = 0);
+    // let resetAll = () => ([moves, wins] = [0, 0]);
+
+    return {
+      getName,
+      getMark,
+      getWins,
+      getMoves,
+      addWin,
+      addMove,
+      resetMoves,
+      // resetAll,
+    };
+  }
+
+  return { p1, p2, getCurrent, flipTurn, resetMoves }; // , resetMovesAndWins };
 }
 
 function gameController() {
-  // let gamesPlayed = 0;
-  let players = null;
-  let state = null;
-
-  // let init = (instruction) => {
-  //   switch (instruction) {
-  //     case 'reset':
-  //       [players, state] = [null, null];
-  //     case 'start':
-  //       if (players === null) {
-  //         players = makePlayers('A', 'X', 'B');
-  //       }
-  //       board.resetGrid();
-  //   }
-  // };
+  let [players, currentPlayer, state] = [null, null, null];
 
   let start = (p1Name, p2Name) => {
+    if (state === 'playing') return;
     if (players === null) {
       players = makePlayers(p1Name, p2Name);
+      currentPlayer = players.getCurrent();
     }
-    players.randomizeStartingPlayer();
-    board.resetGrid();
-    state = null;
+    state = 'playing';
+  };
+
+  let restart = () => {
+    grid.resetCells();
     players.resetMoves();
+    // no change to state variable
   };
 
-  let restart = () => board.resetGrid();
   let reset = () => {
-    board.resetGrid();
-    players = makePlayers();
+    grid.resetCells();
+    players = makePlayers(players.p1.getName(), players.p2.getName());
     state = null;
   };
 
-  let playTurn = (x, y) => {
-    board.markGrid(x, y, players.getCurrent().getMark().toLowerCase());
-    players.getCurrent().addMove();
+  let playTurn = (i) => {
+    grid.markCell(i, currentPlayer.getMark());
+    currentPlayer.addMove();
 
-    if (board.getTotalMoves() >= 5) {
-      if (board.checkGrid()) {
-        players.getCurrent().addWin();
+    if (grid.countMoves() >= 5) {
+      if (grid.checkForWin() !== undefined) {
+        currentPlayer.addWin();
         state = 'won';
-        return;
+        return grid.checkForWin();
       }
-      if (board.getTotalMoves() === 9) {
+
+      if (grid.countMoves() === 9) {
         state = 'tied';
         return;
       }
     }
     players.flipTurn();
+    currentPlayer = players.getCurrent();
   };
 
   let getState = () => state;
@@ -160,71 +134,69 @@ function gameController() {
   return { start, restart, reset, playTurn, getState, getPlayers };
 }
 
-function displayController() {
+(function displayController() {
   let game = gameController();
   let players = game.getPlayers();
 
-  let p1 = document.querySelector('.p1');
-  let p2 = document.querySelector('.p2');
+  let p1Box = document.querySelector('.p1');
+  let p2Box = document.querySelector('.p2');
   let container = document.querySelector('.container');
   let domCells = document.querySelectorAll('.gameboard > .cell');
 
   function clearBoard() {
     domCells.forEach((domCell) => domCell.classList.remove('x', 'o'));
-    [p1, p2].forEach((player) => player.classList.remove('turn-highlight'));
+    [p1Box, p2Box].forEach((player) =>
+      player.classList.remove('turn-highlight'),
+    );
   }
 
   function updateBoard() {
-    board.getFlatGrid().forEach((cell, i) => {
+    grid.getCells().forEach((cell, i) => {
       if (cell === null) return;
       domCells[i].classList.add(cell);
     });
 
-    if (players.getCurrent() === players.player1) {
-      p1.classList.add('turn-highlight');
-      p2.classList.remove('turn-highlight');
+    if (players.getCurrent() === players.p1) {
+      p1Box.classList.add('turn-highlight');
+      p2Box.classList.remove('turn-highlight');
     } else {
-      p2.classList.add('turn-highlight');
-      p1.classList.remove('turn-highlight');
+      p2Box.classList.add('turn-highlight');
+      p1Box.classList.remove('turn-highlight');
     }
   }
 
-  function getPlayersDetails() {}
-
   function updatePlayerBoxes() {
-    let [p1Name, p1Mark] = p1.querySelectorAll('.p1-name, .p1-mark');
-    let [p2Name, p2Mark] = p2.querySelectorAll('.p2-name, .p2-mark');
-    // console.log(players.player1.getName());
-    p1Name.textContent = players.player1.getName();
-    p2Name.textContent = players.player2.getName();
-    p1Mark.classList.add(String(players.player1.getMark()));
-    p2Mark.classList.add(String(players.player2.getMark()));
+    let [p1Name, p1Mark] = p1Box.querySelectorAll('.p1-name, .p1-mark');
+    let [p2Name, p2Mark] = p2Box.querySelectorAll('.p2-name, .p2-mark');
+    p1Name.textContent = players.p1.getName();
+    p2Name.textContent = players.p2.getName();
+    p1Mark.classList.add(String(players.p1.getMark()));
+    p2Mark.classList.add(String(players.p2.getMark()));
   }
 
   function updateScores() {
     let p1Score = document.querySelector('.p1-score');
     let p2Score = document.querySelector('.p2-score');
-    p1Score.textContent = players.player1.getWins();
-    p2Score.textContent = players.player2.getWins();
+    p1Score.textContent = players.p1.getWins();
+    p2Score.textContent = players.p2.getWins();
   }
 
-  function addGameBoardListener() {
+  let addGameBoardListener = () => {
     let markListener = (event) => {
       let target = event.target;
 
       if (target.className.startsWith('cell')) {
-        let [x, y] = target.dataset.pos.split(',');
-        game.playTurn(+x, +y);
+        game.playTurn(target.dataset.pos);
         updateBoard();
 
-        if (game.getState() === 'won' || game.getState() === 'tied') {
+        if (['won', 'includes'].includes(game.getState())) {
           let message = document.querySelector('.modal.result .message');
 
           switch (game.getState()) {
             case 'won':
               let winner = game.getPlayers().getCurrent();
-              let name = game.getPlayers().getCurrent().getName();
-              let moves = game.getPlayers().getCurrent().getMoves();
+              let name = winner.getName();
+              let moves = winner.getMoves();
 
               updateScores();
               message.textContent = `${name} won in ${moves} moves!`;
@@ -239,7 +211,7 @@ function displayController() {
       }
     };
     container.addEventListener('click', markListener);
-  }
+  };
 
   (function addButtonListener() {
     container.addEventListener('click', (event) => {
@@ -251,17 +223,8 @@ function displayController() {
         case 'play':
           if (players === null) {
             playerEntry.showModal();
-            // document.addEventListener(
-            //   'submit',
-            //   (event) => {
-            //     event.preventDefault();
-            //     playerDetails = new FormData(playerEntry.querySelector('form'));
-            //   },
-            //   { once: true },
-            // );
           } else {
             clearBoard();
-            // game.start(({ p1Name = 'P1', p2Name = 'P2' } = playerDetails));
             game.start();
             players = game.getPlayers();
             updatePlayerBoxes();
@@ -286,7 +249,7 @@ function displayController() {
         target.parentElement.parentElement.close();
         clearBoard();
         game.start();
-        game.getPlayers().randomizeStartingPlayer();
+        // game.getPlayers().randomizeStartingPlayer();
         updatePlayerBoxes();
         addGameBoardListener();
       }
@@ -296,7 +259,7 @@ function displayController() {
         game.reset();
         game.start();
         players = game.getPlayers();
-        game.getPlayers().randomizeStartingPlayer();
+        // game.getPlayers().randomizeStartingPlayer();
         updateScores();
         updatePlayerBoxes();
         addGameBoardListener();
@@ -307,8 +270,9 @@ function displayController() {
       }
     });
   })();
-}
-displayController();
+})();
+
+// displayController();
 
 // console-only gameloop
 // let rl = readline.createInterface({ input, output });
