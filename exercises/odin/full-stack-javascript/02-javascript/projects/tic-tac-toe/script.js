@@ -37,7 +37,6 @@ let grid = (function () {
       }
     }
   };
-
   return { countMarks, getCells, resetCells, markCell, checkForWin };
 })();
 
@@ -64,8 +63,10 @@ function makePlayer(name, mark) {
 }
 
 function gameController() {
-  let [p1, p2] = makePlayers();
-  let currentPlayer = p1;
+  // let [p1, p2] = makePlayers();
+  let p1, p2, currentPlayer;
+  makePlayers();
+  // let currentPlayer = p1;
 
   function getPlayers() {
     return {
@@ -78,7 +79,16 @@ function gameController() {
   }
 
   function makePlayers(p1Name = 'P1', p2Name = 'P2') {
-    return [makePlayer(p1Name, 'x'), makePlayer(p2Name, 'o')];
+    let [n1, n2] = [p1Name, p2Name].map((name) => {
+      if (name.length > 8) {
+        name = name.slice(0, 8);
+      }
+      return name;
+    });
+    console.log(p1Name, p2Name);
+    p1 = p1Name.length === 0 ? makePlayer('P1', 'x') : makePlayer(n1, 'x');
+    p2 = p2Name.length === 0 ? makePlayer('P2', 'o') : makePlayer(n2, 'o');
+    currentPlayer = p1;
   }
 
   let restart = () => {
@@ -89,11 +99,13 @@ function gameController() {
 
   let reset = () => {
     grid.resetCells();
-    [p1, p2] = makePlayers();
+    makePlayers();
     currentPlayer = p1;
   };
 
-  let flipTurn = () => (currentPlayer = currentPlayer === p1 ? p2 : p1);
+  function flipTurn() {
+    currentPlayer = currentPlayer === p1 ? p2 : p1;
+  }
 
   let playTurn = (i) => {
     grid.markCell(i, currentPlayer.getMark());
@@ -111,11 +123,9 @@ function gameController() {
         return ['You tied!'];
       }
     }
-
     flipTurn();
   };
-
-  return { getPlayers, makePlayers, restart, reset, flipTurn, playTurn };
+  return { getPlayers, makePlayers, restart, reset, playTurn };
 }
 
 function displayController() {
@@ -131,7 +141,9 @@ function displayController() {
     let [p1Box, p2Box] = document.querySelectorAll('.p1, .p2');
 
     (function clearDomCells() {
-      domCells.forEach((domCell) => domCell.classList.remove('x', 'o'));
+      domCells.forEach((domCell) =>
+        domCell.classList.remove('x', 'o', 'win-highlight'),
+      );
       [p1Box, p2Box].forEach((p) => p.classList.remove('turn-highlight'));
     })();
 
@@ -149,6 +161,7 @@ function displayController() {
 
     (function updateNames() {
       let [p1Name, p2Name] = document.querySelectorAll('.p1-name, .p2-name');
+      // console.log(p.p1Name, p.p2Name);
       [p1Name.textContent, p2Name.textContent] = [p.p1Name, p.p2Name];
     })();
 
@@ -159,6 +172,16 @@ function displayController() {
       } else {
         p2Box.classList.add('turn-highlight');
         p1Box.classList.remove('turn-highlight');
+      }
+    })();
+
+    (function highlightWinningCells() {
+      // console.log(turnResult[1]);
+      if (turnResult?.[1]) {
+        turnResult?.[1].forEach((cell) => {
+          let winningCell = container.querySelector(`[data-pos="${cell}"]`);
+          winningCell.classList.add('win-highlight');
+        });
       }
     })();
   }
@@ -176,6 +199,7 @@ function displayController() {
       updateBoard();
 
       if (turnResult) {
+        active = false;
         let message = resultModal.querySelector('.message');
         message.textContent = turnResult[0];
         resultModal.showModal();
@@ -185,25 +209,31 @@ function displayController() {
   }
 
   (function addNavListener() {
+    let isFirstGame = true;
     container.addEventListener('click', (event) => {
       let target = event.target;
       let playersModal = document.querySelector('.modal.player-entry');
       let playersForm = playersModal.querySelector('form');
       let resultModal = document.querySelector('.modal.result');
-      let isFirstGame = true;
 
       // main buttons
       if (target.className === 'play') {
         if (active) return;
-        active = true;
+        // active = true;
+
+        console.log('isFirstGame: ' + isFirstGame);
         if (isFirstGame) {
-          playersModal.showModal();
           isFirstGame = false;
-        } else addGameListener();
+          playersModal.showModal();
+        } else {
+          game.restart();
+          updateBoard();
+          addGameListener();
+        }
       }
       if (target.className === 'restart') {
         if (!active) return;
-        active = false;
+        // active = false;
         game.restart();
         updateBoard();
         addGameListener();
@@ -220,21 +250,23 @@ function displayController() {
       // modal buttons
       if (target.className === 'start') {
         let { p1Name, p2Name } = Object.fromEntries(new FormData(playersForm));
+        // console.log(p1Name, p2Name);
         game.makePlayers(p1Name, p2Name);
         updateBoard();
         addGameListener();
         playersModal.close();
         playersForm.reset();
       }
-
       if (target.className === 'play-again') {
         game.restart();
         updateBoard();
         addGameListener();
         resultModal.close();
       }
-
-      if (target.className === 'close') resultModal.close();
+      if (target.className === 'close') {
+        active = false;
+        resultModal.close();
+      }
       if (target.className === 'cancel') playersModal.close();
     });
   })();

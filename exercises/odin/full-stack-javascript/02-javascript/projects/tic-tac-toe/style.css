@@ -87,7 +87,7 @@ h1 {
 
 :is(.x, .o)::before {
   position: absolute;
-  top: -0.6rem;
+  top: -0.5rem;
   -webkit-text-stroke: 3px #000;
 }
 
@@ -98,6 +98,10 @@ h1 {
 .o::before {
   color: #f7fff7;
   content: 'O';
+}
+
+.win-highlight::before {
+  color: #80ed99;
 }
 
 .nav {
