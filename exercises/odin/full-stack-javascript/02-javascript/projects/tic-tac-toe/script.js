@@ -1,6 +1,3 @@
-// import * as readline from 'node:readline/promises';
-// import { stdin as input, stdout as output } from 'node:process';
-
 let grid = (function () {
   let marks = 0;
   let cells = new Array(9).fill(null);
@@ -69,7 +66,6 @@ function makePlayer(name, mark) {
 function gameController() {
   let [p1, p2] = makePlayers();
   let currentPlayer = p1;
-  // let active = true;
 
   function getPlayers() {
     return {
@@ -77,6 +73,7 @@ function gameController() {
       p1Wins: p1.getWins(),
       p2Name: p2.getName(),
       p2Wins: p2.getWins(),
+      getCurrent: () => (currentPlayer === p1 ? 'p1' : 'p2'),
     };
   }
 
@@ -87,15 +84,14 @@ function gameController() {
   let restart = () => {
     grid.resetCells();
     [p1, p2].forEach((p) => p.resetMoves());
+    currentPlayer = p1;
   };
 
   let reset = () => {
     grid.resetCells();
     [p1, p2] = makePlayers();
+    currentPlayer = p1;
   };
-
-  // let getState = () => state;
-  // let setStateNull = () => (state = null);
 
   let flipTurn = () => (currentPlayer = currentPlayer === p1 ? p2 : p1);
 
@@ -127,6 +123,7 @@ function displayController() {
   let turnResult = null;
   let container = document.querySelector('.container');
   let resultModal = document.querySelector('.modal.result');
+  let active = false;
 
   function updateBoard() {
     let domCells = document.querySelectorAll('.gameboard > .cell');
@@ -148,44 +145,41 @@ function displayController() {
     (function updateScores() {
       let [p1Wins, p2Wins] = document.querySelectorAll('.p1-score, .p2-score');
       [p1Wins.textContent, p2Wins.textContent] = [p.p1Wins, p.p2Wins];
-      // p1Wins.textContent = p.p1Wins;
     })();
 
     (function updateNames() {
       let [p1Name, p2Name] = document.querySelectorAll('.p1-name, .p2-name');
       [p1Name.textContent, p2Name.textContent] = [p.p1Name, p.p2Name];
-      // p1Name.textContent = p.p1Name;
     })();
 
-    // TODO highlight winning cells (use turnResult array)
-
-    // highlights the current player's box to indicate turn
-    // if (players.getCurrent() === players.p1) {
-    //   p1Box.classList.add('turn-highlight');
-    //   p2Box.classList.remove('turn-highlight');
-    // } else {
-    //   p2Box.classList.add('turn-highlight');
-    //   p1Box.classList.remove('turn-highlight');
-    // }
+    (function highlightCurrentPlayer() {
+      if (p.getCurrent() === 'p1') {
+        p1Box.classList.add('turn-highlight');
+        p2Box.classList.remove('turn-highlight');
+      } else {
+        p2Box.classList.add('turn-highlight');
+        p1Box.classList.remove('turn-highlight');
+      }
+    })();
   }
 
-  // handles marking the grid and advancing the game
   function addGameListener() {
     container.addEventListener('click', markListener);
+    active = true;
+  }
 
-    function markListener(event) {
-      let target = event.target;
+  function markListener(event) {
+    let target = event.target;
 
-      if (target.className.startsWith('cell')) {
-        turnResult = game.playTurn(target.dataset.pos);
-        updateBoard();
+    if (target.className.startsWith('cell')) {
+      turnResult = game.playTurn(target.dataset.pos);
+      updateBoard();
 
-        if (turnResult) {
-          let message = resultModal.querySelector('.message');
-          message.textContent = turnResult[0];
-          resultModal.showModal();
-          container.removeEventListener('click', markListener);
-        }
+      if (turnResult) {
+        let message = resultModal.querySelector('.message');
+        message.textContent = turnResult[0];
+        resultModal.showModal();
+        container.removeEventListener('click', markListener);
       }
     }
   }
@@ -200,20 +194,25 @@ function displayController() {
 
       // main buttons
       if (target.className === 'play') {
+        if (active) return;
+        active = true;
         if (isFirstGame) {
           playersModal.showModal();
           isFirstGame = false;
         } else addGameListener();
       }
-
       if (target.className === 'restart') {
+        if (!active) return;
+        active = false;
         game.restart();
         updateBoard();
         addGameListener();
       }
-
       if (target.className === 'reset') {
+        active = false;
         game.reset();
+        container.removeEventListener('click', markListener);
+        // TODO unhighlight P1
         isFirstGame = true;
         updateBoard();
       }
@@ -221,14 +220,11 @@ function displayController() {
       // modal buttons
       if (target.className === 'start') {
         let { p1Name, p2Name } = Object.fromEntries(new FormData(playersForm));
-        console.log(p1Name, p2Name);
         game.makePlayers(p1Name, p2Name);
-        console.log(game.getPlayers());
-        playersModal.close();
-        playersForm.reset();
-
         updateBoard();
         addGameListener();
+        playersModal.close();
+        playersForm.reset();
       }
 
       if (target.className === 'play-again') {
@@ -240,39 +236,7 @@ function displayController() {
 
       if (target.className === 'close') resultModal.close();
       if (target.className === 'cancel') playersModal.close();
-      // common statements
-      // game.setStateNull();
-      // players = game.getPlayers();
-      // clearBoard();
-      // updatePlayerBoxes();
-      // addGameBoardListener();
     });
   })();
 }
 displayController();
-
-// console-only gameloop
-// const rl = readline.createInterface({ input, output });
-//
-// let game = gameController();
-// let name1 = await rl.question('Enter name for player 1: ');
-// let name2 = await rl.question('Enter name for player 2: ');
-//
-// game.play(name1, name2);
-// printGrid();
-// while (game.getState()) {
-//   let position = await rl.question(
-//     `${game.getPlayers().getCurrent().getName()}, your turn: `,
-//   );
-//   game.playTurn(+position);
-//   printGrid();
-// }
-// game.gamesPlayed++;
-//
-// rl.close();
-//
-// function printGrid() {
-//   console.log(grid.getCells().slice(0, 3));
-//   console.log(grid.getCells().slice(3, 6));
-//   console.log(grid.getCells().slice(6, 9));
-// }
