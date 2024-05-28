@@ -2,15 +2,15 @@ let grid = (function () {
   let marks = 0;
   let cells = new Array(9).fill(null);
 
-  let countMarks = () => cells.filter((cell) => cell !== null).length;
-  let getCells = () => cells;
+  const countMarks = () => cells.filter((cell) => cell !== null).length;
+  const getCells = () => cells;
 
-  let resetCells = () => {
+  const resetCells = () => {
     cells.fill(null);
     moves = 0;
   };
 
-  let markCell = (i, mark) => {
+  const markCell = (i, mark) => {
     if (cells[i] !== null) throw new Error('cell already marked');
     cells[i] = mark;
     marks++;
@@ -18,7 +18,7 @@ let grid = (function () {
 
   // returns undefined if no winner,
   // array of winning indices if winner
-  let checkForWin = () => {
+  const checkForWin = () => {
     let winners = [
       [0, 1, 2],
       [3, 4, 5],
@@ -43,13 +43,13 @@ let grid = (function () {
 function makePlayer(name, mark) {
   let [moves, wins] = [0, 0];
 
-  let getName = () => name;
-  let getMark = () => mark.toLowerCase();
-  let getWins = () => String(wins).padStart(3, '0');
-  let getMoves = () => moves;
-  let addWin = () => wins++;
-  let addMove = () => moves++;
-  let resetMoves = () => (moves = 0);
+  const getName = () => name;
+  const getMark = () => mark.toLowerCase();
+  const getWins = () => String(wins).padStart(3, '0');
+  const getMoves = () => moves;
+  const addWin = () => wins++;
+  const addMove = () => moves++;
+  const resetMoves = () => (moves = 0);
 
   return {
     getName,
@@ -63,20 +63,8 @@ function makePlayer(name, mark) {
 }
 
 function gameController() {
-  // let [p1, p2] = makePlayers();
   let p1, p2, currentPlayer;
   makePlayers();
-  // let currentPlayer = p1;
-
-  function getPlayers() {
-    return {
-      p1Name: p1.getName(),
-      p1Wins: p1.getWins(),
-      p2Name: p2.getName(),
-      p2Wins: p2.getWins(),
-      getCurrent: () => (currentPlayer === p1 ? 'p1' : 'p2'),
-    };
-  }
 
   function makePlayers(p1Name = 'P1', p2Name = 'P2') {
     let [n1, n2] = [p1Name, p2Name].map((name) => {
@@ -85,29 +73,34 @@ function gameController() {
       }
       return name;
     });
-    console.log(p1Name, p2Name);
     p1 = p1Name.length === 0 ? makePlayer('P1', 'x') : makePlayer(n1, 'x');
     p2 = p2Name.length === 0 ? makePlayer('P2', 'o') : makePlayer(n2, 'o');
     currentPlayer = p1;
   }
 
-  let restart = () => {
+  const getPlayers = () => {
+    return {
+      p1Name: p1.getName(),
+      p1Wins: p1.getWins(),
+      p2Name: p2.getName(),
+      p2Wins: p2.getWins(),
+      getCurrent: () => (currentPlayer === p1 ? 'p1' : 'p2'),
+    };
+  };
+
+  const restart = () => {
     grid.resetCells();
     [p1, p2].forEach((p) => p.resetMoves());
     currentPlayer = p1;
   };
 
-  let reset = () => {
+  const reset = () => {
     grid.resetCells();
     makePlayers();
     currentPlayer = p1;
   };
 
-  function flipTurn() {
-    currentPlayer = currentPlayer === p1 ? p2 : p1;
-  }
-
-  let playTurn = (i) => {
+  const playTurn = (i) => {
     grid.markCell(i, currentPlayer.getMark());
     currentPlayer.addMove();
 
@@ -123,12 +116,12 @@ function gameController() {
         return ['You tied!'];
       }
     }
-    flipTurn();
+    currentPlayer = currentPlayer === p1 ? p2 : p1;
   };
-  return { getPlayers, makePlayers, restart, reset, playTurn };
+  return { makePlayers, getPlayers, restart, reset, playTurn };
 }
 
-function displayController() {
+(function displayController() {
   let game = gameController();
   let turnResult = null;
   let container = document.querySelector('.container');
@@ -161,7 +154,6 @@ function displayController() {
 
     (function updateNames() {
       let [p1Name, p2Name] = document.querySelectorAll('.p1-name, .p2-name');
-      // console.log(p.p1Name, p.p2Name);
       [p1Name.textContent, p2Name.textContent] = [p.p1Name, p.p2Name];
     })();
 
@@ -176,7 +168,6 @@ function displayController() {
     })();
 
     (function highlightWinningCells() {
-      // console.log(turnResult[1]);
       if (turnResult?.[1]) {
         turnResult?.[1].forEach((cell) => {
           let winningCell = container.querySelector(`[data-pos="${cell}"]`);
@@ -219,47 +210,36 @@ function displayController() {
       // main buttons
       if (target.className === 'play') {
         if (active) return;
-        // active = true;
-
-        console.log('isFirstGame: ' + isFirstGame);
         if (isFirstGame) {
           isFirstGame = false;
           playersModal.showModal();
         } else {
           game.restart();
-          updateBoard();
           addGameListener();
         }
       }
       if (target.className === 'restart') {
         if (!active) return;
-        // active = false;
         game.restart();
-        updateBoard();
         addGameListener();
       }
       if (target.className === 'reset') {
         active = false;
         game.reset();
         container.removeEventListener('click', markListener);
-        // TODO unhighlight P1
         isFirstGame = true;
-        updateBoard();
       }
 
       // modal buttons
       if (target.className === 'start') {
         let { p1Name, p2Name } = Object.fromEntries(new FormData(playersForm));
-        // console.log(p1Name, p2Name);
         game.makePlayers(p1Name, p2Name);
-        updateBoard();
         addGameListener();
         playersModal.close();
         playersForm.reset();
       }
       if (target.className === 'play-again') {
         game.restart();
-        updateBoard();
         addGameListener();
         resultModal.close();
       }
@@ -268,7 +248,9 @@ function displayController() {
         resultModal.close();
       }
       if (target.className === 'cancel') playersModal.close();
+
+      // common calls
+      updateBoard();
     });
   })();
-}
-displayController();
+})();
