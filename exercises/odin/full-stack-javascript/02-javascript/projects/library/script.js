@@ -43,8 +43,12 @@ class Library {
 }
 
 let myLibrary = new Library();
+// sample book:
+// myLibrary.addBook('The End of Eternity', 'Isaac Asimov', 250, true);
 
 (function screenController() {
+  redrawLibrary();
+
   (function addButtonListeners() {
     let modal = document.querySelector('.add-book-modal');
     let form = document.querySelector('.add-book-form');
@@ -137,6 +141,3 @@ let myLibrary = new Library();
     bookshelf.appendChild(fragment);
   }
 })();
-
-// sample book:
-// addBookToLibrary('The End of Eternity', 'Isaac Asimov', 250, true);

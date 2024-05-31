@@ -125,7 +125,6 @@ li.new-book-button:active,
 .book {
   align-items: center;
   background: no-repeat center/contain url('./assets/Red-Book-Texture.jpg');
-  border: 1px solid var(--color-slate);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -138,21 +137,24 @@ li.new-book-button:active,
   font-family: Georgia, 'Times New Roman', Times, serif;
   overflow-wrap: break-word;
   text-align: center;
-  text-shadow: 2px 2px 1px #000, -1px -1px 1px #000;
+  -webkit-text-stroke: 3px #1b1b1be6;
+  paint-order: stroke fill;
 }
 .title {
   flex-grow: 1;
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-variant-caps: small-caps;
   font-weight: 900;
+  line-height: 1.7rem;
 }
 .author {
+  font-size: 1.3rem;
   vertical-align: end;
 }
 .read-status {
   border: 2px solid #00000081;
   border-radius: 6px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-top: 5px;
   width: 40%;
 }
@@ -175,7 +177,9 @@ li.new-book-button:active,
 }
 .delete-button:active {
   color: #ff0000;
-  text-shadow: 2px 2px 1px #000, -1px -1px 1px #000;
+  text-shadow:
+    2px 2px 1px #000,
+    -1px -1px 1px #000;
 }
 
 /* decorative */
