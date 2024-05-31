@@ -133,7 +133,7 @@ li.new-book-button:active,
   padding: 50px 10px 20px;
   position: relative;
 }
-.book > :is(.title, .author, .pages, .read) {
+.book > :is(.title, .author, .pages, .read-status) {
   color: var(--color-offwhite);
   font-family: Georgia, 'Times New Roman', Times, serif;
   overflow-wrap: break-word;
@@ -149,15 +149,21 @@ li.new-book-button:active,
 .author {
   vertical-align: end;
 }
-.read {
-  border: 2px dotted #00000081;
-  border-radius: 10px;
+.read-status {
+  border: 2px solid #00000081;
+  border-radius: 6px;
+  font-size: 1.2rem;
   margin-top: 5px;
-  width: 35%;
+  width: 40%;
 }
-.read:hover {
-  background: #00ff8891;
-  border: 2px dotted #000;
+.read-status:hover {
+  border: 2px solid #ffbb00;
+}
+.read {
+  background: #2ecb97a9;
+}
+.unread {
+  background: #e6394798;
 }
 .delete-button {
   background: none;

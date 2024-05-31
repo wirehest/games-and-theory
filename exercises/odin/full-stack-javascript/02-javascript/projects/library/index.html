@@ -1,49 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+    <title>My Bookshelf</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <script src="./script.js" defer></script>
-  <title>Library</title>
-</head>
-
-<body>
-  <div class="container">
-    <h1>My Bookshelf</h1>
-    <ul class="controls">
-      <li class="new-book-button">New Book</li>
-    </ul>
-    <div class="bookshelf">
+  <body>
+    <div class="container">
+      <h1>My Bookshelf</h1>
+      <ul class="controls">
+        <li class="new-book-button">New Book</li>
+      </ul>
+      <div class="bookshelf"></div>
+      <dialog class="add-book-modal">
+        <form class="add-book-form" action="" method="dialog">
+          <legend>Add a New Book</legend>
+          <div>
+            <label for="title" placeholder="">Book Title:</label>
+            <input id="title" type="text" required autofocus />
+          </div>
+          <div>
+            <label for="author">Author:</label>
+            <input id="author" type="text" required />
+          </div>
+          <div>
+            <label for="pages"># of Pages:</label>
+            <input id="pages" type="text" pattern="[0-9]*" required />
+          </div>
+          <div>
+            <label for="read">Read?:</label>
+            <input id="read" type="checkbox" />
+          </div>
+          <div class="form-buttons">
+            <button class="submit-button">Submit</button>
+            <button type="button" class="close-button">Cancel</button>
+          </div>
+        </form>
+      </dialog>
     </div>
-    <dialog class="add-book-modal">
-      <form class="add-book-form" action="" method="dialog">
-        <legend>Add a New Book</legend>
-        <div>
-          <label for="title" placeholder="">Book Title:</label>
-          <input id="title" type="text" required autofocus>
-        </div>
-        <div>
-          <label for="author">Author:</label>
-          <input id="author" type="text" required>
-        </div>
-        <div>
-          <label for="pages"># of Pages:</label>
-          <input id="pages" type="text" pattern="[0-9]*" required>
-        </div>
-        <div>
-          <label for="read">Read?:</label>
-          <input id="read" type="checkbox">
-        </div>
-        <div class="form-buttons">
-          <button class="submit-button">Submit</button>
-          <button type="button" class="close-button">Cancel</button>
-        </div>
-      </form>
-    </dialog>
-  </div>
-
-</body>
-
+  </body>
 </html>
+

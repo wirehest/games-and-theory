@@ -6,7 +6,7 @@ class Book {
     this.read = read;
   }
 
-  flipReadStatus() {
+  flipRead() {
     this.read != this.read;
   }
 }
@@ -24,6 +24,14 @@ class Library {
     return this.#library;
   }
 
+  getReadStatus(index) {
+    return this.#library[index].read;
+  }
+
+  toggleRead(index) {
+    this.#library[index].flipRead();
+  }
+
   clearLibrary() {
     this.#library = [];
     return this.#library;
@@ -36,97 +44,99 @@ class Library {
 
 let myLibrary = new Library();
 
-function clearBooks() {
-  let books = document.querySelectorAll('.book');
-  books.forEach((book) => book.remove());
-}
+(function screenController() {
+  (function addButtonListeners() {
+    let modal = document.querySelector('.add-book-modal');
+    let form = document.querySelector('.add-book-form');
 
-function displayBooks() {
-  // displayBooks redraws all books, so need to clear bookshelf first
-  clearBooks();
-
-  let bookshelf = document.querySelector('.bookshelf');
-  let libIndex = 0;
-
-  myLibrary['books'].forEach((libEntry) => {
-    let book = document.createElement('div');
-    book.classList.add('book', 'shadow');
-    book.setAttribute('data-libindex', libIndex++);
-
-    // adds delete button to book
-    let delButton = document.createElement('button');
-    delButton.type = 'button';
-    delButton.textContent = '✖';
-    delButton.classList.toggle('delete-button');
-    book.appendChild(delButton);
-
-    // adds title, author, pages, and read details from libEntry to book
-    ['title', 'author', 'pages'].forEach((bookDetail) => {
-      let detail = document.createElement('div');
-      detail.classList.toggle(bookDetail);
-      detail.textContent = libEntry[bookDetail];
-      if (bookDetail === 'pages') detail.textContent += ' pages';
-      book.appendChild(detail);
+    document.addEventListener('click', (event) => {
+      let button = event.target.className;
+      if (button === 'new-book-button') modal.showModal();
+      if (button === 'close-button') {
+        form.reset();
+        modal.close();
+      }
     });
 
-    // adds toggle functionality to the read status
-    let read = document.createElement('div');
-    read.classList.toggle('read');
-    read.textContent = libEntry['read'] ? 'Read' : 'Unread';
-    book.appendChild(read);
-
-    book.addEventListener('click', (event) => {
-      let bookIndex = event.target.parentNode.attributes[1].value;
-      if (event.target.className === 'read') {
-        myLibrary['books'][bookIndex].read =
-          !myLibrary['books'][bookIndex].read;
-      }
-      if (event.target.className === 'delete-button') {
-        myLibrary['books'].splice(bookIndex, 1);
-      }
-      displayBooks();
-    });
-    bookshelf.appendChild(book);
-  });
-  console.log(myLibrary);
-}
-displayBooks();
-
-// sets event listeners related to the 'add new book' modal
-function setModalControls() {
-  let modal = document.querySelector('.add-book-modal');
-  let form = document.querySelector('.add-book-form');
-
-  document.addEventListener('click', (event) => {
-    let button = event.target.className;
-    // if (button === 'new-book-button') modal.showModal();
-    if (button === 'close-button') {
+    // submit event is triggered by buttons associated with dialog forms
+    document.addEventListener('submit', (event) => {
+      let title = document.querySelector('#title').value;
+      let author = document.querySelector('#author').value;
+      let pages = +document.querySelector('#pages').value;
+      let read = document.querySelector('#read').checked;
+      myLibrary.addBook(title, author, pages, read);
       form.reset();
-      modal.close();
-    }
-  });
+      redrawLibrary();
+    });
+  })();
 
-  // submit event is triggered by submit buttons when
-  // the associated form method is 'dialog'
-  document.addEventListener('submit', (event) => {
-    let title = document.querySelector('#title').value;
-    let author = document.querySelector('#author').value;
-    let pages = +document.querySelector('#pages').value;
-    let read = document.querySelector('#read').checked;
-    // addBookToLibrary(title, author, pages, read);
-    myLibrary.addBook(title, author, pages, read);
-    form.reset();
-    displayBooks();
-  });
-}
-setModalControls();
+  function clearBooks() {
+    let books = document.querySelectorAll('.book');
+    books.forEach((book) => book.remove());
+  }
+
+  function redrawLibrary() {
+    clearBooks();
+
+    let fragment = new DocumentFragment();
+    let bookshelf = document.querySelector('.bookshelf');
+    let libIndex = 0;
+
+    myLibrary['books'].forEach((book, index) => {
+      let bookCover = document.createElement('div');
+      bookCover.classList.add('book', 'shadow');
+      bookCover.setAttribute('data-libindex', libIndex++);
+
+      // adds delete button to book
+      let delButton = document.createElement('button');
+      delButton.classList.add('delete-button');
+      delButton.textContent = '✖';
+      delButton.type = 'button';
+      bookCover.appendChild(delButton);
+
+      // adds title, author, pages, and read status
+      ['title', 'author', 'pages'].forEach((detail) => {
+        let coverDetail = document.createElement('div');
+        coverDetail.classList.add(detail);
+        coverDetail.textContent = book[detail];
+        if (detail === 'pages') coverDetail.textContent += ' pages';
+        bookCover.appendChild(coverDetail);
+      });
+
+      // adds toggle functionality to the read status
+      let read = document.createElement('div');
+      let readStatus = myLibrary.getReadStatus(index);
+      read.classList.add('read-status', readStatus ? 'read' : 'unread');
+      read.textContent = book['read'] ? 'Read' : 'Unread';
+      bookCover.appendChild(read);
+
+      // adds event listeners for book buttons
+      bookCover.addEventListener('click', (event) => {
+        let bookButton = event.target;
+        let buttonClassArray = Array.from(bookButton.classList);
+        let bookIndex = event.target.parentNode.attributes[1].value;
+        if (buttonClassArray.includes('read-status')) {
+          myLibrary.toggleRead(bookIndex);
+          if (buttonClassArray.includes('unread')) {
+            bookButton.classList.remove('unread');
+            bookButton.classList.add('read');
+            bookButton.textContent = 'Read';
+          } else {
+            bookButton.classList.remove('read');
+            bookButton.classList.add('unread');
+            bookButton.textContent = 'Unread';
+          }
+        }
+        if (bookButton.className === 'delete-button') {
+          myLibrary.removeBook(bookIndex);
+          redrawLibrary();
+        }
+      });
+      fragment.appendChild(bookCover);
+    });
+    bookshelf.appendChild(fragment);
+  }
+})();
+
 // sample book:
 // addBookToLibrary('The End of Eternity', 'Isaac Asimov', 250, true);
-
-(function addMainWindowListeners() {
-  let modal = document.querySelector('.add-book-modal');
-  document.addEventListener('click', (event) => {
-    let button = event.target.className;
-    if (button === 'new-book-button') modal.showModal();
-  });
-})();
