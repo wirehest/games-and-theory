@@ -1,9 +1,18 @@
+# File Patterns
 *__*__*
 template.*
 t*template.*
 scratch.*
-advent-of-code/2023/*.txt
-javascript-info/*
-exercises/javascript-crash-course-1e/*
-
+junk/*
 *.zip
+
+# Folders
+node_modules
+challenges/advent-of-code/*/*.txt
+# javascript-info/*
+# exercises/javascript-crash-course-1e/*
+
+# Prefix
+REVIEW*
+UNFIN*
+EXCL*
