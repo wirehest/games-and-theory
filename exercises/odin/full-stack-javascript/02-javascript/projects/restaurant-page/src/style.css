@@ -9,24 +9,33 @@
   --color-window: #e0e1dd;
   --color-header-footer: #f5ebe0;
   --color-brand: #ff7d00;
+  --color-brand-darker: #de6d00ff;
+  --color-brand-lighter: #ffe1c4ff;
+  --color-accent: #c0c0c0ff;
+  --breakpoint: 350px /* --color-invisible: #ffffff00; */;
 }
 
-/* common styling */
+/* common */
 body {
   display: grid;
   font-family: sans-serif;
   font-size: 20px;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
+  /* width: 100vw; */
 }
 
 header {
   align-items: center;
+  border-bottom: 1px solid var(--color-accent);
+  box-shadow: 0 0 8px #000;
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  min-height: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
+  /* min-height: 4rem; */
+  /* overflow: clip; */
   padding: 10px 30px;
+  width: 100vw;
 }
 
 .header-left,
@@ -60,36 +69,41 @@ footer {
 /* content area styling */
 #content {
   background: fixed center/cover url('./assets/images/chicken-background.jpg');
-  overflow: auto;
+  overflow: scroll;
   position: relative;
-  opacity: 0.9;
-  z-index: -1;
+  opacity: 0.95;
+  height: 100%;
+  /* z-index: -1; */
 }
 
 /* home (initial) page styling */
 .home-container {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  padding: clamp(40px, 10%, 10%) clamp(0.2vw, 2vw, 10vw);
-  position: relative;
+  /* gap: 1rem; */
+  grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
+  /* height: 100%; */
+  /* padding: clamp(8vw, 8vw, 10vw) clamp(1vw, 4vw, 10vw); */
+  /* position: relative; */
+  /* overflow: scroll; */
   justify-items: center;
 }
 
 .home-container section {
+  align-self: end;
   background: #ffffffcc;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  height: 400px;
-  padding: 50px clamp(10px, 3vw, 50px) 40px;
-  width: min(600px, 100%);
+  gap: 20px;
+  min-height: 380px;
+  padding: 10% 5% 8%;
+  width: 95%;
+  /* width: min(600px, 100%); */
 }
 
 .home-container > section > h1 {
   font-size: 2.5rem;
-  line-height: 3rem;
+  line-height: 2.5rem;
 }
 
 .home-container > section > p {
@@ -112,51 +126,81 @@ footer {
 }
 
 .special h1 {
-  font-size: 5rem;
+  font-size: 4.5rem;
 }
 
 .content-buttons {
   display: flex;
-  gap: 50px;
+  flex-flow: row wrap;
+  gap: 20px;
 }
 
 /* button styling */
 button {
   background: none;
   border: 0;
+  display: flex;
   font-size: 1.1rem;
   font-weight: 700;
   outline: none;
   text-decoration: none;
 }
-/* button.nav:hover { */
-/*   text-decoration: underline; */
-/* } */
 
-button:hover {
+nav > button:hover {
   text-decoration: underline;
-  /* background: #000; */
-  /* border: 2px solid #000; */
-}
-button.nav {
-  background: none;
-}
-
-button[class^='order-'] {
-  background: var(--color-brand);
-  border-radius: 20px;
-  color: #fff;
-}
-
-button.order-top {
-  font-size: 0.8rem;
-  padding: 5px 15px;
 }
 
 button.order-content {
-  font-size: 1.2rem;
-  padding: 5px 15px;
+  background: var(--color-brand);
+  border: 2px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  flex: 1;
+  font-size: 1.1rem;
+  /* overflow: none; */
+  padding: 15px 30px;
 }
+
+button.order-content:hover {
+  background: var(--color-brand-darker);
+}
+
+button.signin-top {
+  font-size: 0.8rem;
+  border: 2px solid var(--color-brand);
+  border-radius: 20px;
+  color: var(--color-brand);
+  padding: 8px 25px;
+}
+
+button.signin-top:hover {
+  background: var(--color-brand-lighter);
+}
+
+button.order-content:active,
+button.signin-top:active {
+  outline: 4px solid var(--color-accent);
+}
+
+[class$='-icon'] {
+  display: inline-block;
+  content: '';
+  height: 25px;
+  margin-right: 5px;
+  width: 25px;
+}
+.pickup-icon {
+  background: center/cover url('./assets/images/icon-cart-arrow-down.svg');
+}
+
+.deliver-icon {
+  background: center/cover url('./assets/images/icon-truck-delivery.svg');
+}
+
+/* .filter-white { */
+/*   filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg) */
+/*     brightness(108%) contrast(109%); */
+/* } */
 
 /* mobile styling */
 @media (max-width: 768px) {
