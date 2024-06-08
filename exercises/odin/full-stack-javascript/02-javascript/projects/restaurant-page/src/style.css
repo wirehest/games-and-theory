@@ -12,7 +12,7 @@
   --color-brand-darker: #de6d00ff;
   --color-brand-lighter: #ffe1c4ff;
   --color-accent: #c0c0c0ff;
-  --breakpoint: 350px /* --color-invisible: #ffffff00; */;
+  --breakpoint: 350px;
 }
 
 /* common */
@@ -22,7 +22,6 @@ body {
   font-size: 20px;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
-  /* width: 100vw; */
 }
 
 header {
@@ -30,11 +29,7 @@ header {
   border-bottom: 1px solid var(--color-accent);
   box-shadow: 0 0 8px #000;
   display: grid;
-  gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
-  /* min-height: 4rem; */
-  /* overflow: clip; */
-  padding: 10px 30px;
   width: 100vw;
 }
 
@@ -42,7 +37,8 @@ header {
 .header-middle,
 .header-right {
   display: flex;
-  gap: 0.8rem;
+  gap: 10px;
+  padding: 10px 30px;
 }
 
 .header-middle {
@@ -54,7 +50,6 @@ header {
 
 .header-right {
   justify-content: end;
-  /* text-align: end; */
 }
 
 footer {
@@ -72,20 +67,20 @@ footer {
   overflow: scroll;
   position: relative;
   opacity: 0.95;
-  height: 100%;
-  /* z-index: -1; */
 }
 
 /* home (initial) page styling */
 .home-container {
   display: grid;
-  /* gap: 1rem; */
+  gap: 4vw;
   grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
-  /* height: 100%; */
+  justify-items: center;
+  min-height: 100%;
+  /* max-height: 100%; */
+  padding: 4vw;
   /* padding: clamp(8vw, 8vw, 10vw) clamp(1vw, 4vw, 10vw); */
   /* position: relative; */
   /* overflow: scroll; */
-  justify-items: center;
 }
 
 .home-container section {
@@ -95,21 +90,25 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-height: 380px;
-  padding: 10% 5% 8%;
-  width: 95%;
-  /* width: min(600px, 100%); */
+  /* justify-content: end; */
+  min-height: 350px;
+  padding: 2.5vmax;
+  width: min(570px, 100%);
 }
 
 .home-container > section > h1 {
   font-size: 2.5rem;
-  line-height: 2.5rem;
+  line-height: 2.4rem;
+  width: min(450px, 100%);
 }
 
 .home-container > section > p {
+  font-size: 1.3rem;
   font-weight: 600;
   flex: 1;
-  line-height: 1.5rem;
+  /* flex: 1 1 100px; */
+  line-height: 1.25rem;
+  width: min(480px, 100%);
 }
 
 .special {
@@ -122,17 +121,42 @@ footer {
   font-weight: 900;
   height: 250px;
   justify-content: center;
+  justify-self: flex-end;
+  line-height: 5rem;
+  outline: 10px solid #00667bff;
+  transform: rotate(15deg);
   width: 250px;
 }
 
-.special h1 {
+.special > p {
+  font-size: 1.8rem;
+  line-height: 2rem;
+}
+.special-price {
+  display: flex;
   font-size: 4.5rem;
+  height: 6rem;
+  letter-spacing: -0.2rem;
+}
+
+.special-price-sym {
+  font-size: 3rem;
+}
+
+.special-price-dollars {
+  align-self: flex-end;
+  font-size: 9.5rem;
+}
+
+.special-price-cents {
+  align-self: center;
+  font-size: 4rem;
 }
 
 .content-buttons {
   display: flex;
   flex-flow: row wrap;
-  gap: 20px;
+  gap: 2vw;
 }
 
 /* button styling */
@@ -151,14 +175,14 @@ nav > button:hover {
 }
 
 button.order-content {
+  align-items: center;
   background: var(--color-brand);
   border: 2px solid #fff;
-  border-radius: 30px;
+  border-radius: 100vmax;
   color: #fff;
   flex: 1;
   font-size: 1.1rem;
-  /* overflow: none; */
-  padding: 15px 30px;
+  padding: 5px 20px;
 }
 
 button.order-content:hover {
@@ -166,11 +190,11 @@ button.order-content:hover {
 }
 
 button.signin-top {
-  font-size: 0.8rem;
+  font-size: 1rem;
   border: 2px solid var(--color-brand);
   border-radius: 20px;
   color: var(--color-brand);
-  padding: 8px 25px;
+  padding: 8px 40px;
 }
 
 button.signin-top:hover {
@@ -183,12 +207,15 @@ button.signin-top:active {
 }
 
 [class$='-icon'] {
-  display: inline-block;
   content: '';
-  height: 25px;
-  margin-right: 5px;
-  width: 25px;
+  display: inline-block;
+  /* filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg) */
+  /*   brightness(108%) contrast(109%); */
+  height: 35px;
+  margin-right: 10px;
+  width: 35px;
 }
+
 .pickup-icon {
   background: center/cover url('./assets/images/icon-cart-arrow-down.svg');
 }
@@ -196,11 +223,6 @@ button.signin-top:active {
 .deliver-icon {
   background: center/cover url('./assets/images/icon-truck-delivery.svg');
 }
-
-/* .filter-white { */
-/*   filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg) */
-/*     brightness(108%) contrast(109%); */
-/* } */
 
 /* mobile styling */
 @media (max-width: 768px) {
@@ -211,5 +233,9 @@ button.signin-top:active {
 
   .header-middle {
     order: -1;
+  }
+
+  .special {
+    justify-self: center;
   }
 }
