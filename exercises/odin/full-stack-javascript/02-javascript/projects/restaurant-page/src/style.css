@@ -1,0 +1,241 @@
+* {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-window: #e0e1dd;
+  --color-header-footer: #f5ebe0;
+  --color-brand: #ff7d00;
+  --color-brand-darker: #de6d00ff;
+  --color-brand-lighter: #ffe1c4ff;
+  --color-accent: #c0c0c0ff;
+  --breakpoint: 350px;
+}
+
+/* common */
+body {
+  display: grid;
+  font-family: sans-serif;
+  font-size: 20px;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+header {
+  align-items: center;
+  border-bottom: 1px solid var(--color-accent);
+  box-shadow: 0 0 8px #000;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
+  width: 100vw;
+}
+
+.header-left,
+.header-middle,
+.header-right {
+  display: flex;
+  gap: 10px;
+  padding: 10px 30px;
+}
+
+.header-middle {
+  color: var(--color-brand);
+  font-size: 2rem;
+  font-weight: 900;
+  justify-content: center;
+}
+
+.header-right {
+  justify-content: end;
+}
+
+footer {
+  align-items: center;
+  background: var(--color-header-footer);
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: center;
+  height: 40px;
+}
+
+/* content area styling */
+#content {
+  background: fixed center/cover url('./assets/images/chicken-background.jpg');
+  overflow: scroll;
+  position: relative;
+  opacity: 0.95;
+}
+
+/* home (initial) page styling */
+.home-container {
+  display: grid;
+  gap: 4vw;
+  grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
+  justify-items: center;
+  min-height: 100%;
+  /* max-height: 100%; */
+  padding: 4vw;
+  /* padding: clamp(8vw, 8vw, 10vw) clamp(1vw, 4vw, 10vw); */
+  /* position: relative; */
+  /* overflow: scroll; */
+}
+
+.home-container section {
+  align-self: end;
+  background: #ffffffcc;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* justify-content: end; */
+  min-height: 350px;
+  padding: 2.5vmax;
+  width: min(570px, 100%);
+}
+
+.home-container > section > h1 {
+  font-size: 2.5rem;
+  line-height: 2.4rem;
+  width: min(450px, 100%);
+}
+
+.home-container > section > p {
+  font-size: 1.3rem;
+  font-weight: 600;
+  flex: 1;
+  /* flex: 1 1 100px; */
+  line-height: 1.25rem;
+  width: min(480px, 100%);
+}
+
+.special {
+  align-items: center;
+  background: #00b4d8;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  flex-flow: column;
+  font-weight: 900;
+  height: 250px;
+  justify-content: center;
+  justify-self: flex-end;
+  line-height: 5rem;
+  outline: 10px solid #00667bff;
+  transform: rotate(15deg);
+  width: 250px;
+}
+
+.special > p {
+  font-size: 1.8rem;
+  line-height: 2rem;
+}
+.special-price {
+  display: flex;
+  font-size: 4.5rem;
+  height: 6rem;
+  letter-spacing: -0.2rem;
+}
+
+.special-price-sym {
+  font-size: 3rem;
+}
+
+.special-price-dollars {
+  align-self: flex-end;
+  font-size: 9.5rem;
+}
+
+.special-price-cents {
+  align-self: center;
+  font-size: 4rem;
+}
+
+.content-buttons {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 2vw;
+}
+
+/* button styling */
+button {
+  background: none;
+  border: 0;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 700;
+  outline: none;
+  text-decoration: none;
+}
+
+nav > button:hover {
+  text-decoration: underline;
+}
+
+button.order-content {
+  align-items: center;
+  background: var(--color-brand);
+  border: 2px solid #fff;
+  border-radius: 100vmax;
+  color: #fff;
+  flex: 1;
+  font-size: 1.1rem;
+  padding: 5px 20px;
+}
+
+button.order-content:hover {
+  background: var(--color-brand-darker);
+}
+
+button.signin-top {
+  font-size: 1rem;
+  border: 2px solid var(--color-brand);
+  border-radius: 20px;
+  color: var(--color-brand);
+  padding: 8px 40px;
+}
+
+button.signin-top:hover {
+  background: var(--color-brand-lighter);
+}
+
+button.order-content:active,
+button.signin-top:active {
+  outline: 4px solid var(--color-accent);
+}
+
+[class$='-icon'] {
+  content: '';
+  display: inline-block;
+  /* filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg) */
+  /*   brightness(108%) contrast(109%); */
+  height: 35px;
+  margin-right: 10px;
+  width: 35px;
+}
+
+.pickup-icon {
+  background: center/cover url('./assets/images/icon-cart-arrow-down.svg');
+}
+
+.deliver-icon {
+  background: center/cover url('./assets/images/icon-truck-delivery.svg');
+}
+
+/* mobile styling */
+@media (max-width: 768px) {
+  .header-left,
+  .header-right {
+    justify-content: center;
+  }
+
+  .header-middle {
+    order: -1;
+  }
+
+  .special {
+    justify-self: center;
+  }
+}
