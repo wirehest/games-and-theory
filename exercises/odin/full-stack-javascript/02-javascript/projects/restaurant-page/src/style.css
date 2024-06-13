@@ -1,5 +1,11 @@
+@import url(https://fonts.bunny.net/css?family=abril-fatface:400|amaranth:400|arizonia:400);
+
+/*font-family: 'Abril Fatface', display;*/
+/*font-family: 'Amaranth', sans-serif;*/
+/*font-family: 'Arizonia', handwriting;*/
+
 * {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -17,8 +23,8 @@
 /* common */
 body {
   display: grid;
-  font-family: sans-serif;
-  font-size: 20px;
+  font-family: 'Amaranth', sans-serif;
+  font-size: 22px;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
 }
@@ -29,6 +35,7 @@ header {
   box-shadow: 0 0 8px #000;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--breakpoint), 1fr));
+  /*max-width: 1600px;*/
   width: 100vw;
 }
 
@@ -42,9 +49,12 @@ header {
 
 .header-middle {
   color: var(--color-brand);
-  font-size: 2rem;
-  font-weight: 900;
+  font-family: 'Abril Fatface', display;
+  font-size: 2.2rem;
+  font-variant-caps: small-caps;
   justify-content: center;
+  -webkit-text-stroke: 2px var(--color-brand-lighter);
+  paint-order: stroke fill;
 }
 
 .header-right {
@@ -57,6 +67,7 @@ footer {
   font-size: 0.8rem;
   justify-content: center;
   height: 40px;
+  text-align: center;
 }
 
 /* content div */
@@ -64,6 +75,7 @@ footer {
   background: var(--color-window);
   display: flex;
   justify-content: center;
+  max-width: 1600px;
   opacity: 0.95;
   overflow: scroll;
 }
@@ -213,9 +225,10 @@ footer {
 
 /* rewards page */
 .rewards-container {
+  color: white;
   display: flex;
   flex-flow: row wrap;
-  max-width: 1600px;
+  /*height: 100%;*/
   width: 100vw;
 }
 
@@ -224,16 +237,45 @@ footer {
   background: var(--color-brand);
   color: #fff;
   display: flex;
+  /*flex: 1;*/
   flex-flow: column nowrap;
   justify-content: center;
-  /*min-width: 560px;*/
+  /*min-width: var(--breakpoint);*/
+  padding: 0 20px;
   width: 35%;
 }
 
 .rewards-hero {
   background: content-box center/cover
     url('./assets/images/rewards-background.jpg');
+  flex: 1;
+  /*min-width: ;*/
+  min-height: 500px;
   width: 65%;
+}
+
+.rewards-container h1 {
+  font-size: 3rem;
+  margin-top: 2rem;
+}
+
+.rewards-container h2 {
+  font-size: 2rem;
+  position: relative;
+}
+
+.rewards-leeroys {
+  font-family: 'Abril Fatface', display;
+  font-size: 3rem;
+  font-variant-caps: small-caps;
+  position: relative;
+  left: 4.5rem;
+  top: 3.9rem;
+}
+
+.rewards-name {
+  font-family: 'Arizonia', handwriting;
+  font-size: 6rem;
 }
 
 /* buttons */
@@ -261,6 +303,16 @@ button.cater-order {
   padding: 10px 40px;
 }
 
+button.rewards-order {
+  background: #fff;
+  border: 2px solid #fff;
+  border-radius: 100vmax;
+  color: var(--color-brand);
+  font-size: 1.5rem;
+  margin: 40px;
+  padding: 10px 25px;
+}
+
 button.order-content {
   align-items: center;
   background: var(--color-brand);
@@ -272,8 +324,19 @@ button.order-content {
   padding: 5px 20px;
 }
 
-button.order-content:hover {
+button.order-content:hover,
+button.cater-order:hover {
   background: var(--color-brand-darker);
+}
+
+.icon {
+  content: '';
+  display: inline-block;
+  /*filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg)*/
+  /*  brightness(108%) contrast(109%);*/
+  height: 35px;
+  margin-right: 10px;
+  width: 35px;
 }
 
 button.signin-top {
@@ -293,16 +356,6 @@ button.signin-top:active {
   outline: 4px solid var(--color-accent);
 }
 
-.icon {
-  content: '';
-  display: inline-block;
-  /*filter: invert(100%) sepia(4%) saturate(7485%) hue-rotate(309deg)*/
-  /*  brightness(108%) contrast(109%);*/
-  height: 35px;
-  margin-right: 10px;
-  width: 35px;
-}
-
 /* mobile styling */
 @media (max-width: 768px) {
   .header-left,
@@ -318,5 +371,9 @@ button.signin-top:active {
     margin-right: 0%;
     justify-self: center;
     transform: rotate(0deg);
+  }
+
+  button.rewards-order {
+    align-self: center;
   }
 }

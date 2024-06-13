@@ -25,6 +25,11 @@ let content = document.querySelector('#content');
         case 'menu':
           drawMenu();
           break;
+        case 'rewards':
+          drawRewards();
+          break;
+        case 'locations':
+          break;
         case 'catering':
           drawCatering();
           break;
@@ -46,4 +51,4 @@ function clearPage() {
 //   content.innerHTML = innerMarkup;
 // }
 
-// drawMain();
+drawMain();

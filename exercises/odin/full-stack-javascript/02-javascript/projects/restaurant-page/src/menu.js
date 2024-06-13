@@ -20,7 +20,7 @@ export default function drawMenu() {
     'Fel-Fried Popcorn Chicken': imageUrlPopcorn,
     Sides: imageUrlSides,
     Beverages: imageUrlBeverages,
-    Dessert: imageUrlDessert,
+    Desserts: imageUrlDessert,
   };
   let menuContainer = document.createElement('div');
   menuContainer.classList.add('menu-container');

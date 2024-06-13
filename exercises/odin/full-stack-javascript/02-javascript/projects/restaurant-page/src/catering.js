@@ -11,7 +11,7 @@ export default function drawCatering() {
   caterHero.src = cateringBackground;
 
   let caterHeading = document.createElement('h1');
-  caterHeading.textContent = "Let Leeroy's Cater your Next Event!";
+  caterHeading.textContent = "Let Leeroy's Cater Your Next Event!";
 
   let caterDescription = document.createElement('p');
   caterDescription.textContent =
@@ -20,7 +20,7 @@ export default function drawCatering() {
   let caterTag1 = document.createElement('h2');
   let caterTag2 = document.createElement('h2');
   caterTag1.textContent = 'Stick to the plan, chums!';
-  caterTag2.textContent = "We've got the food covered.";
+  caterTag2.textContent = "Leeroy's has the food covered.";
 
   let orderNow = document.createElement('button');
   orderNow.textContent = 'Order Now';
