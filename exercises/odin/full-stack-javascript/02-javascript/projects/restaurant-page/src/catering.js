@@ -20,7 +20,7 @@ export default function drawCatering() {
   let caterTag1 = document.createElement('h2');
   let caterTag2 = document.createElement('h2');
   caterTag1.textContent = 'Stick to the plan, chums!';
-  caterTag2.textContent = "Let Leeroy's worry about the hunger.";
+  caterTag2.textContent = "We've got the food covered.";
 
   let orderNow = document.createElement('button');
   orderNow.textContent = 'Order Now';

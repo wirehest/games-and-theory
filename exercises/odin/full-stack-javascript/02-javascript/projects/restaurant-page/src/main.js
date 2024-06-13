@@ -49,21 +49,15 @@ export default function drawMain() {
     let button = document.createElement('button');
     let text = document.createTextNode(buttonText);
     let icon = new Image();
-    // let iconSpan = document.createElement('span');
 
     button.setAttribute('type', 'button');
     button.classList.add('order-content');
     icon.classList.add('icon');
-    console.log(buttonText, buttonIcon);
     icon.src = buttonIcon;
     icon.setAttribute('width', '35px');
     icon.setAttribute('height', '35px');
-    // icon.classList.add('icon');
-    // iconSpan.classList.add(buttonClass);
-    // button.innerHTML = icon;
     button.appendChild(icon);
     button.appendChild(text);
-    // button.textContent = buttonText;
 
     buttonContainer.appendChild(button);
   }
@@ -81,28 +75,3 @@ export default function drawMain() {
   fragment.appendChild(homeContainer);
   content.appendChild(fragment);
 }
-const main = `<div class="home-container">
-      <section>
-        <h1>At Least You'll Have Chicken!</h1>
-        <p>
-        </p>
-        <div class="content-buttons">
-          <button type="button" class="order-content">
-            <span class="pickup-icon"></span>
-            Order Pickup
-          </button>
-          <button type="button" class="order-content">
-            <span class="deliver-icon"></span>
-            Order Delivery
-          </button>
-        </div>
-      </section>
-      <div class="special">
-        <p>Starting at</p>
-        <div class="special-price">
-          <span class="special-price-sym">$</span>
-          <span class="special-price-dollars">5</span>
-          <span class="special-price-cents">.99</span>
-        </div>
-      </div>
-    </div>`;
