@@ -13,9 +13,12 @@ export default function drawCatering() {
   let caterHeading = document.createElement('h1');
   caterHeading.textContent = "Let Leeroy's Cater Your Next Event!";
 
-  let caterDescription = document.createElement('p');
-  caterDescription.textContent =
-    "Have you ever wiped because people were tuned out—or maybe away fixing up some chicken—while you laid out your meticulous attack plan? Well never again! Birthdays, raids, funerals—Leeroy's caters every event!";
+  let caterDescription1 = document.createElement('p');
+  caterDescription1.textContent =
+    'Ever raid-wiped because hungry party members AFKed—maybe to fix up some chicken—while you laid out meticulous attack plans?';
+  let caterDescription2 = document.createElement('p');
+  caterDescription2.textContent =
+    "Well never again! Birthdays, raids, funerals—Leeroy's caters every event!";
 
   let caterTag1 = document.createElement('h2');
   let caterTag2 = document.createElement('h2');
@@ -28,7 +31,8 @@ export default function drawCatering() {
 
   caterContainer.appendChild(caterHero);
   caterContainer.appendChild(caterHeading);
-  caterContainer.appendChild(caterDescription);
+  caterContainer.appendChild(caterDescription1);
+  caterContainer.appendChild(caterDescription2);
   caterContainer.appendChild(caterTag1);
   caterContainer.appendChild(caterTag2);
   caterContainer.appendChild(orderNow);

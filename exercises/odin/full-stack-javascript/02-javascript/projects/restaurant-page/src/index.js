@@ -2,6 +2,7 @@ import './style.css';
 
 import drawMain from './main.js';
 import drawMenu from './menu.js';
+import drawRewards from './rewards.js';
 import drawCatering from './catering.js';
 
 let styles = getComputedStyle(document.documentElement);
@@ -14,7 +15,7 @@ let content = document.querySelector('#content');
   header.addEventListener('click', (event) => {
     let target = event.target;
 
-    if (target.className === 'header-middle') {
+    if (target.className.includes('header-middle')) {
       clearPage();
       drawMain();
     }

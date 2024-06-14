@@ -20,10 +20,12 @@ export default function drawRewards() {
   spanRewards.textContent = 'Rewards';
   firstHeading.textContent = 'From us to you.';
   secondHeading.textContent = 'Earn points with every purchase.';
+  rewardsHero.classList.add('rewards-hero');
 
   button.classList.add('rewards-order');
   button.setAttribute('type', 'button');
   button.setAttribute('name', 'rewards-order');
+  button.textContent = 'Order & Earn';
 
   [spanLeeroys, spanRewards, firstHeading, secondHeading, button].forEach(
     (element) => {
@@ -35,7 +37,7 @@ export default function drawRewards() {
     rewardsContainer.appendChild(element);
   });
 
-  fragment.appendChild();
+  fragment.appendChild(rewardsContainer);
 
   content.appendChild(fragment);
 }
