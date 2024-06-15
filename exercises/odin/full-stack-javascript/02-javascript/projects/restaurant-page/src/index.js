@@ -1,8 +1,8 @@
 import './style.css';
-
 import drawMain from './main.js';
 import drawMenu from './menu.js';
 import drawRewards from './rewards.js';
+import drawLocations from './locations.js';
 import drawCatering from './catering.js';
 import drawSignin from './signin.js';
 
@@ -31,6 +31,7 @@ let content = document.querySelector('#content');
           drawRewards();
           break;
         case 'locations':
+          drawLocations();
           break;
         case 'catering':
           drawCatering();
