@@ -276,6 +276,64 @@ footer {
   font-size: 6rem;
 }
 
+/* signin page */
+.signin-container {
+  background: #fff;
+  border-radius: 20px;
+  color: var(--color-accent);
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: 1rem;
+  gap: 20px;
+  height: fit-content;
+  justify-content: center;
+  margin: 4vw;
+  max-width: 500px;
+  padding: 50px 4vw 70px;
+  width: 100%;
+}
+
+.signin-container > form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.signin-container :is(label, input, span) {
+  display: block;
+}
+
+.signin-container h1 {
+  color: var(--color-brand);
+  font-size: 1.3rem;
+}
+
+.signin-container input {
+  border-radius: 4px;
+  padding: 5px 5px 5px 10px;
+  width: 100%;
+}
+
+.remember-checkbox {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
+
+#remember {
+  width: fit-content;
+}
+
+.new-account {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.3rem;
+}
+
+.new-account-link:hover {
+  text-decoration: underline;
+}
+
 /* buttons */
 button {
   background: none;
@@ -358,6 +416,18 @@ button.order-content:active,
 button.cater-order:active,
 button.rewards-order:active {
   outline: 4px solid var(--color-accent);
+}
+
+.signin-container button {
+  background: var(--color-accent);
+  border-radius: 6px;
+  color: #fff;
+  padding: 4px 15px;
+  width: min-content;
+}
+
+.signin-container button:hover {
+  background: var(--color-brand-darker);
 }
 
 /* mobile styling */

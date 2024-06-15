@@ -4,6 +4,7 @@ import drawMain from './main.js';
 import drawMenu from './menu.js';
 import drawRewards from './rewards.js';
 import drawCatering from './catering.js';
+import drawSignin from './signin.js';
 
 let styles = getComputedStyle(document.documentElement);
 let breakpoint = styles.getPropertyValue('--breakpoint');
@@ -34,6 +35,9 @@ let content = document.querySelector('#content');
         case 'catering':
           drawCatering();
           break;
+        case 'sign-in':
+          drawSignin();
+          break;
       }
     }
   });
@@ -46,10 +50,5 @@ function clearPage() {
     content.removeChild(child);
   }
 }
-
-// function drawPage(innerMarkup) {
-//   content.style.background = `fixed center/cover url(${mainBackground})`;
-//   content.innerHTML = innerMarkup;
-// }
 
 drawMain();
