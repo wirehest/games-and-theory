@@ -26,7 +26,8 @@ function update(data) {
   let xScale = d3
     .scaleLinear()
     .domain([0, d3.max(data, (d) => d.count)])
-    .range([margin.left, width - margin.right]);
+    .range([margin.left, width - margin.right])
+    .nice();
 
   let yScale = d3
     .scaleBand()
@@ -34,7 +35,13 @@ function update(data) {
     .range([margin.top, height - margin.bottom])
     .padding(0.5);
 
-  let topAxis = d3.axisTop(xScale);
+  let topAxisTicks = xScale.ticks().filter((tick) => Number.isInteger(tick));
+
+  let topAxis = d3
+    .axisTop(xScale)
+    .tickValues(topAxisTicks)
+    .tickFormat(d3.format('d'));
+
   let leftAxis = d3.axisLeft(yScale);
   topContainer.call(topAxis);
   leftContainer.call(leftAxis);
