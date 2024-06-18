@@ -2,9 +2,12 @@
 
 ## Challenges
 
-- #### [Advent of Code](https://github.com/multiplips/games-and-theory/tree/main/challenges/advent-of-code)
-- #### [Codewars](https://github.com/multiplips/games-and-theory/tree/main/challenges/codewars)
-- #### [Exercism](https://github.com/multiplips/games-and-theory/tree/main/challenges/exercism)
+- #### Advent of Code
+  > [2023 (Python)](https://github.com/multiplips/games-and-theory/tree/main/challenges/advent-of-code/2023)
+- #### Codewars
+  > [JavaScript](https://github.com/multiplips/games-and-theory/tree/main/challenges/codewars/javascript) · [Python](https://github.com/multiplips/games-and-theory/tree/main/challenges/codewars/python)
+- #### Exercism
+  > [JavaScript](https://github.com/multiplips/games-and-theory/tree/main/challenges/exercism/javascript)
 
 ## Exercises
 
@@ -19,4 +22,4 @@
     > [Sign-Up Form](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/sign-up-form/) · [Admin Dashboard](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard/)
 
   - #### JavaScript
-    > [Library](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/) · [Tic-Tac-Toe](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/) · [Restaurant Page](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page/dist/)
+    > [Library](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/) · [Tic-Tac-Toe](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/) · [Restaurant Page](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page/dist/) > [Library](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/) · [Tic-Tac-Toe](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/) · [Restaurant Page](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page/dist/)
