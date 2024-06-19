@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./style.css" rel="stylesheet" />
+    <title>MDN Responsive Images Exercise</title>
+  </head>
+
+  <body>
+    <div class="desktop">1280w</div>
+    <div class="tablet">768w</div>
+    <div class="mobile">320w</div>
+    <h1>Switch image via &lt;picture&gt;:</h1>
+    <picture>
+      <source srcset="./manul-240x334.webp" media="(max-width: 479px)" />
+      <source srcset="./manul-480x668.webp" media="(max-width: 613px)" />
+      <source srcset="./manul-614x855.webp" media="(max-width: 999px)" />
+      <source srcset="./manul-1000x668.webp" media="(min-width: 1000px)" />
+      <img
+        alt="Photograph of Otocolobus Manul, from the Berlin Zoo website"
+        src="./manul-240x334.webp"
+      />
+    </picture>
+    <h1>Same image, different resolution via srcset:</h1>
+    <img
+      alt="Photograph of Otocolobus Manul, from the Berlin Zoo website"
+      srcset="
+        ./manul-240x334.webp 240w,
+        ./manul-480x668.webp 480w,
+        ./manul-614x855.webp 614w
+      "
+      src="./manul-240x334.webp"
+      sizes="(max-width: 479px) 240px, (max-width: 613px) 480px, (min-width: 614px) 614px"
+    />
+    <!-- remove 'sizes' attribute to let img scale with the viewport -->
+  </body>
+</html>
+

@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  border: 1px solid red;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+body h1 {
+  margin-top: 20px;
+}
+
+body > img {
+  object-fit: contain;
+  flex: none;
+}
+
+.desktop {
+  color: red;
+  border-bottom: 4px solid red;
+  width: 1280px;
+}
+
+.tablet {
+  color: green;
+  border-bottom: 4px solid green;
+  width: 768px;
+}
+
+.mobile {
+  color: blue;
+  border-bottom: 4px solid blue;
+  width: 320px;
+}
