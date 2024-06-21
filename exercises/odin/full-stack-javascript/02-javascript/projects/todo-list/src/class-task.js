@@ -1,48 +1,56 @@
-export default class Task {
-  _title = 'new task';
-  _description = 'description';
-  _notes = [];
-  _priority = 'low';
-  _dueDate; // TODO set default to next day;
+// TODO set task status (e.g., complete)
+// TODO set dueDate default to next day;
+// TODO max length checking for title
+// TODO max length checking for description
+
+export default class Todo {
+  constructor(title, description, priority, dueDate) {
+    this._title = title;
+    this._description = description;
+    this._priority = priority;
+    this._dueDate = dueDate;
+  }
+  // _title = 'new todo';
+  // _description = 'description';
+  // _priority = 'low';
+  // _dueDate;
+  _tasks = [];
   _createdTimestamp = Date.now();
 
-  set title(taskName) {
-    // TODO max length checking for title
-    this._title = taskName;
+  set title(todoTitle) {
+    this._title = todoTitle;
   }
 
   get title() {
     return this._title;
   }
 
-  set description(taskDescription) {
-    // TODO max length checking for description
-    this._description = taskDescription;
+  set description(todoDescription) {
+    this._description = todoDescription;
   }
 
   get description() {
     return this._description;
   }
 
-  set notes(taskNote) {
-    console.log('Setting notes directly not allowed');
-    // this._notes = taskNotes;
+  set tasks(value) {
+    console.log('Setting tasks directly not allowed');
   }
 
-  get notes() {
-    return this._notes;
+  get tasks() {
+    return this._tasks;
   }
 
-  set priority(taskPriority) {
-    this._priority = taskPriority;
+  set priority(todoPriority) {
+    this._priority = todoPriority;
   }
 
   get priority() {
     return this._priority;
   }
 
-  set dueDate(taskDue) {
-    this._dueDate = taskDue;
+  set dueDate(todoDue) {
+    this._dueDate = todoDue;
   }
 
   get dueDate() {
@@ -58,12 +66,14 @@ export default class Task {
   }
 
   // methods
-  addNote(noteText, isChecklist = false) {
-    this._notes.push({ noteText, isCheckList });
+  addTask(taskText, isCheckbox = false) {
+    this._tasks.push({ taskText, isCheckbox });
+    return this._tasks;
   }
 
-  removeNote(noteIndex) {
-    if (this._notes[noteIndex] === undefined) return;
-    this._notes.splice(noteIndex, 1);
+  removeTask(taskIndex) {
+    if (this._tasks[taskIndex] === undefined) return;
+    this._tasks.splice(taskIndex, 1);
+    return this._tasks;
   }
 }
