@@ -1,7 +1,5 @@
 import Task from './class-task.js';
 
-// TODO complete entire Todo
-
 export default class Project {
   _todos = [];
 
@@ -9,16 +7,14 @@ export default class Project {
     return this._todos;
   }
 
-  addTodo(title, description, priority, dueDate) {
-    this._todos.push(new Task(title, description, priority, dueDate));
+  addTodo(title, description, priority, tasks, dueDate) {
+    this._todos.push(new Task(title, description, priority, tasks, dueDate));
     return this._todos;
   }
 
-  updateTodo() {
-    // TODO update method that calls relevant setter in Task
+  completeTodo() {
+    // TODO completes todo and all child tasks
   }
-
-  completeTodo() {}
 
   removeTodo(todoIndex) {
     if (_todos[todoIndex] === undefined) return;

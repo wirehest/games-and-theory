@@ -1,21 +1,24 @@
+import { format } from 'date-fns';
 // TODO set task status (e.g., complete)
-// TODO set dueDate default to next day;
 // TODO max length checking for title
 // TODO max length checking for description
 
 export default class Todo {
-  constructor(title, description, priority, dueDate) {
+  _createdTimestamp = Date.now();
+
+  constructor(
+    title,
+    description,
+    priority,
+    tasks = [],
+    dueDate = defaultDuedate,
+  ) {
     this._title = title;
     this._description = description;
     this._priority = priority;
+    this._tasks = tasks;
     this._dueDate = dueDate;
   }
-  // _title = 'new todo';
-  // _description = 'description';
-  // _priority = 'low';
-  // _dueDate;
-  _tasks = [];
-  _createdTimestamp = Date.now();
 
   set title(todoTitle) {
     this._title = todoTitle;
@@ -66,8 +69,8 @@ export default class Todo {
   }
 
   // methods
-  addTask(taskText, isCheckbox = false) {
-    this._tasks.push({ taskText, isCheckbox });
+  addTask(taskText, isCheckbox = false, isDone = false) {
+    this._tasks.push({ taskText, isCheckbox, isDone });
     return this._tasks;
   }
 
@@ -77,3 +80,9 @@ export default class Todo {
     return this._tasks;
   }
 }
+
+let defaultDuedate = (() => {
+  let d = new Date();
+  d.setDate(d.getDate() + 1);
+  return format(d, 'yyyy-MM-dd');
+})();
