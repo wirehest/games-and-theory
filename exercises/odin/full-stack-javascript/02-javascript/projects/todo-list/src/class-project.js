@@ -3,6 +3,10 @@ import Task from './class-task.js';
 export default class Project {
   _todos = [];
 
+  constructor(name) {
+    this._name = name;
+  }
+
   get todos() {
     return this._todos;
   }
