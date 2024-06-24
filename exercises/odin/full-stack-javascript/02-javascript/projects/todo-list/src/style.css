@@ -47,7 +47,7 @@ header > nav {
   flex-flow: column nowrap;
   gap: 20px;
   justify-content: space-between;
-  min-height: 120px;
+  min-height: 100px;
   overflow-wrap: break-word;
   padding: 10px;
   position: relative;
@@ -66,7 +66,7 @@ header > nav {
   top: 5px;
 }
 
-.project-task-counter {
+.project-todo-counter {
   font-size: 1.1rem;
   font-weight: 900;
 }

@@ -7,6 +7,10 @@ export default class Project {
     this._name = name;
   }
 
+  get name() {
+    return this._name;
+  }
+
   get todos() {
     return this._todos;
   }
