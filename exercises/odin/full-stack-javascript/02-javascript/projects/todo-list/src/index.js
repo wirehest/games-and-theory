@@ -7,6 +7,7 @@ import drawProjects from './view-projects.js';
 // TODO 'custom events' handler for decoupling, handles communication between project and task?
 
 let projects = [];
+
 let defaultProject = new Project('My First Project');
 defaultProject.addTodo('ToDo #1', 'Description of ToDo #1.', 'low');
 defaultProject.addTodo('ToDo #2', 'Description of ToDo #2.', 'medium');
@@ -27,4 +28,4 @@ if (true) {
 function main() {}
 main();
 
-drawProjects(projects);
+// drawProjects(projects);

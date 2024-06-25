@@ -1,4 +1,4 @@
-import Task from './class-task.js';
+import Task from './class-todo.js';
 
 export default class Project {
   _todos = [];
@@ -20,7 +20,7 @@ export default class Project {
     return this._todos;
   }
 
-  completeTodo() {
+  completeTodos() {
     // TODO completes todo and all child tasks
   }
 

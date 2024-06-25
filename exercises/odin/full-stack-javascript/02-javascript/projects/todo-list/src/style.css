@@ -17,58 +17,96 @@ body {
   padding: 15px;
 }
 
-#content {
-}
-
 header > nav {
-  /*padding-left: 10px;*/
-}
-
-/*may need to change display here to responsive grid later*/
-.projects {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 12px;
-}
-
-.projects > h1 {
-  background: #000;
-  color: #fff;
-  font-size: 1.4rem;
   padding-left: 10px;
 }
 
-.project-card {
+#content {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#content > h1 {
+  background: #000;
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  padding-left: 10px;
+}
+
+.project {
   background: #f2e9e4;
   border: 2px solid #9d8189;
   border-radius: 6px;
   /*box-shadow: 0 0 5px #000;*/
   display: flex;
   flex-flow: column nowrap;
-  gap: 20px;
+  /*gap: 20px;*/
   justify-content: space-between;
-  min-height: 100px;
+  /*margin-bottom: 12px;*/
+  /*min-height: 100px;*/
   overflow-wrap: break-word;
   padding: 10px;
   position: relative;
 }
 
-.project-card > h1 {
+.todo {
+  border: 0;
+  border-bottom: 1px dashed #9d8189;
+  border-radius: 0;
+  border-right: 2px solid #9d8189;
+  border-top: 1px dashed #9d8189;
+}
+
+.priority-high {
+  border-left: 7px solid #ef233c;
+}
+
+.priority-medium {
+  border-left: 7px solid #fca311;
+}
+
+.priority-low {
+  border-left: 7px solid #2ec4b6;
+}
+
+.card-top {
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  /*min-height: 90px;*/
+}
+
+.card-bottom {
+  border-radius: 0 0 6px 6px;
+  border-top: 0;
+  margin-bottom: 12px;
+  min-height: 0;
+}
+
+.card-top > h1 {
   font-size: 1.3rem;
   font-weight: 900;
+  margin-bottom: 10px;
   padding-right: 25px;
 }
 
-.project-delete-button {
+.delete-button {
   font-size: 1.5rem;
   position: absolute;
   right: 10px;
   top: 5px;
 }
 
-.project-todo-counter {
+.todo-counter {
   font-size: 1.1rem;
   font-weight: 900;
+}
+
+.tasks {
+  display: grid;
+  /*flex-flow: column wrap;*/
+  gap: 5px;
+  grid-template-columns: min-content 1fr;
 }
 
 @media (min-width: 1000px) {
