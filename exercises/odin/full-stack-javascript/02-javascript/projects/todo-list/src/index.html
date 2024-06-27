@@ -15,49 +15,52 @@
     </header>
     <div id="content">
       <h1>Project Name</h1>
-      <div class="container">
-        <div class="project card-top">
-          <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-          <div class="delete-button">✖</div>
+      <div class="project card-top">
+        <h1 contenteditable="true">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </h1>
+        <div class="delete-button">✖</div>
+      </div>
+
+      <div class="project todo priority-high">
+        <input type="date" class="todo-hl-due" value="2024-06-30" />
+        <div class="todo-name-container">
+          <input type="checkbox" id="todo-name" />
+          <label class="todo-hl-title" contenteditable="true">
+            High Priority Todo.
+          </label>
         </div>
 
-        <div class="project todo priority-high">
-          <input type="date" class="todo-hl-due" value="2024-06-30" />
-          <div class="todo-hl-title" contenteditable="true">
-            High Priority Todo Really Long Title I Mean Really Really Long
-          </div>
+        <div class="toggle-arrow2"></div>
 
-          <div class="toggle-arrow2"></div>
+        <section class="todo-desc" contenteditable="true">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </section>
 
-          <section class="todo-desc" contenteditable="true">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </section>
+        <section class="priority-control">
+          <select>
+            <option value="" selected>--Set Priority--</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </section>
 
-          <section class="priority-control">
-            <select name="priority">
-              <option value="" selected>--Set Priority--</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </section>
+        <section class="tasks">
+          <input type="checkbox" id="0" />
+          <label for="0">A sample task.</label>
+          <input type="checkbox" id="1" />
+          <label for="1">Another sample task.</label>
+          <input type="checkbox" id="2" />
+          <label for="2">Yet another sample task.</label>
+        </section>
 
-          <section class="tasks">
-            <input type="checkbox" name="0" />
-            <label for="0">A sample task.</label>
-            <input type="checkbox" name="1" />
-            <label for="1">Another sample task.</label>
-            <input type="checkbox" name="2" />
-            <label for="2">Yet another sample task.</label>
-          </section>
-
-          <div class="tasks-control">
-            <button type="button">+Task</button>
-          </div>
+        <div class="tasks-control">
+          <button type="button">+Task</button>
         </div>
-        <div class="project card-bottom">
-          <span class="todo-counter">ToDos: 5 Open, 10 Total</span>
-        </div>
+      </div>
+      <div class="project card-bottom">
+        <span class="todo-counter">ToDos: 5 Open, 10 Total</span>
       </div>
     </div>
   </body>

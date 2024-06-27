@@ -103,6 +103,22 @@ header > nav {
   /*gap: 15px;*/
 }
 
+.todo-name-container {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: min-content 1fr;
+}
+
+.todo-name-container > input[type='checkbox'] {
+  align-self: start;
+  height: 20px;
+  margin: 1px 0 0;
+  width: 20px;
+}
+/*.todo input[type='checkbox'] {*/
+/*  display: none;*/
+/*}*/
+
 /*.todo-hl {*/
 /*  display: flex;*/
 /*  flex-flow: column nowrap;*/
@@ -112,7 +128,6 @@ header > nav {
   background: none;
   border: none;
   font-weight: 900;
-  gap: 5px;
 }
 
 .todo-hl-title {
