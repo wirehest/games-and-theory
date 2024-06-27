@@ -1,8 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 * {
   /*border: 1px solid red;*/
-  box-sizing: border-box;
+  font-family: sans-serif;
   margin: 0;
   padding: 0;
+}
+
+input,
+button,
+select {
+  font: inherit;
 }
 
 :root {
@@ -12,6 +24,7 @@ body {
   background: #e0e1dd;
   font-family: sans-serif;
   font-size: 16px;
+  line-height: 1.2;
   max-width: 100vw;
   min-height: 100vh;
   padding: 15px;
@@ -34,40 +47,18 @@ header > nav {
   padding-left: 10px;
 }
 
+/*base style for project cards*/
 .project {
   background: #f2e9e4;
   border: 2px solid #9d8189;
   border-radius: 6px;
-  /*box-shadow: 0 0 5px #000;*/
   display: flex;
   flex-flow: column nowrap;
-  /*gap: 20px;*/
-  justify-content: space-between;
-  /*margin-bottom: 12px;*/
-  /*min-height: 100px;*/
+  font-size: 1rem;
+  gap: 15px;
   overflow-wrap: break-word;
   padding: 10px;
   position: relative;
-}
-
-.todo {
-  border: 0;
-  border-bottom: 1px dashed #9d8189;
-  border-radius: 0;
-  border-right: 2px solid #9d8189;
-  border-top: 1px dashed #9d8189;
-}
-
-.priority-high {
-  border-left: 7px solid #ef233c;
-}
-
-.priority-medium {
-  border-left: 7px solid #fca311;
-}
-
-.priority-low {
-  border-left: 7px solid #2ec4b6;
 }
 
 .card-top {
@@ -76,18 +67,18 @@ header > nav {
   /*min-height: 90px;*/
 }
 
-.card-bottom {
-  border-radius: 0 0 6px 6px;
-  border-top: 0;
-  margin-bottom: 12px;
-  min-height: 0;
-}
-
 .card-top > h1 {
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 10px;
   padding-right: 25px;
+}
+
+.card-bottom {
+  border-radius: 0 0 6px 6px;
+  border-top: 0;
+  /*margin-bottom: 12px;*/
+  /*min-height: 0;*/
 }
 
 .delete-button {
@@ -102,11 +93,77 @@ header > nav {
   font-weight: 900;
 }
 
+/*individual todo styling*/
+.todo {
+  border: 0;
+  border-bottom: 1px dashed #9d8189;
+  border-radius: 0;
+  border-right: 2px solid #9d8189;
+  border-top: 1px dashed #9d8189;
+  /*gap: 15px;*/
+}
+
+/*.todo-hl {*/
+/*  display: flex;*/
+/*  flex-flow: column nowrap;*/
+/*}*/
+
+[class^='todo-hl'] {
+  background: none;
+  border: none;
+  font-weight: 900;
+  gap: 5px;
+}
+
+.todo-hl-title {
+  font-size: 1.2rem;
+}
+
+.todo-hl-due {
+  align-self: flex-start;
+}
+
+.toggle-arrow1 {
+  border: solid transparent;
+  border-top: solid #000;
+  border-width: 8px 8px 0;
+  height: 0;
+  width: 0;
+}
+
+.toggle-arrow2 {
+  align-self: center;
+  border: solid #000;
+  border-width: 0 4px 4px 0;
+  height: 0;
+  padding: 3px;
+  transform: rotate(45deg);
+  width: 0;
+}
+
+.priority-high {
+  border-left: 8px solid #ef233c;
+}
+
+.priority-medium {
+  border-left: 8px solid #fca311;
+}
+
+.priority-low {
+  border-left: 8px solid #2ec4b6;
+}
+
 .tasks {
+  max-height: fit-content;
+  border-top: 1px solid #9d8189;
+  /*border-bottom: 1px solid #9d8189;*/
   display: grid;
   /*flex-flow: column wrap;*/
   gap: 5px;
   grid-template-columns: min-content 1fr;
+  padding-top: 10px;
+  /*padding: 15px 0 10px;*/
+  /*margin-top: 15px;*/
 }
 
 @media (min-width: 1000px) {

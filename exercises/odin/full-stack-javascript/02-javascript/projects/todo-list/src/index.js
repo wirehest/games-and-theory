@@ -25,7 +25,10 @@ if (true) {
   // TODO load localStorage
 }
 
-function main() {}
+function main() {
+  let field = document.querySelector('.todo-hl-due');
+  field.addEventListener('blur', (e) => console.log(e));
+}
 main();
 
 // drawProjects(projects);
