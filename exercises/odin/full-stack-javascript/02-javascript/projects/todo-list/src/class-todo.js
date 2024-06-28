@@ -22,6 +22,7 @@ export default class Todo {
 
   set title(todoTitle) {
     this._title = todoTitle;
+    return this;
   }
 
   get title() {
@@ -30,6 +31,7 @@ export default class Todo {
 
   set description(todoDescription) {
     this._description = todoDescription;
+    return this;
   }
 
   get description() {
@@ -45,7 +47,10 @@ export default class Todo {
   }
 
   set priority(todoPriority) {
-    this._priority = todoPriority;
+    const validPriorities = ['high', 'medium', 'low'];
+    if (validPriorities.includes(todoPriority)) this._priority = todoPriority;
+    else this._priority = 'low';
+    return this;
   }
 
   get priority() {
@@ -54,6 +59,7 @@ export default class Todo {
 
   set dueDate(todoDue) {
     this._dueDate = todoDue;
+    return this;
   }
 
   get dueDate() {

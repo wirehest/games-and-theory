@@ -71,7 +71,8 @@ header > nav {
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 10px;
-  padding-right: 25px;
+  margin-right: 25px;
+  /*padding-right: 25px;*/
 }
 
 .card-bottom {
@@ -103,13 +104,13 @@ header > nav {
   /*gap: 15px;*/
 }
 
-.todo-name-container {
+.todo-title-container {
   display: grid;
   gap: 10px;
   grid-template-columns: min-content 1fr;
 }
 
-.todo-name-container > input[type='checkbox'] {
+.todo-title-container > input[type='checkbox'] {
   align-self: start;
   height: 20px;
   margin: 1px 0 0;
