@@ -1,37 +1,67 @@
-export default function drawSingleProject(project) {
-  const priorities = {
-    '--Set Priority--': '',
-    High: 'high',
-    Medium: 'medium',
-    Low: 'low',
-  };
+import * as events from './events.js';
+
+const priorities = {
+  '--Set Priority--': '',
+  High: 'high',
+  Medium: 'medium',
+  Low: 'low',
+};
+
+export default function drawSingleProject({ project, index }) {
   let content = document.querySelector('#content');
   let fragment = new DocumentFragment();
 
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'Single Project';
 
-  // make cardTop
+  // temporary refresh 'button'
+  mainHeading.addEventListener('click', () => {
+    console.log(project);
+  });
+
+  let cardTop = makeProjectCardTop(project, index);
+  let cardTodos = makeProjectCardTodos(project);
+  let cardBottom = makeProjectCardBottom();
+
+  fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
+  content.append(fragment);
+}
+
+function makeProjectCardTop(project, index) {
   let cardTop = document.createElement('div');
   cardTop.classList.add('project', 'card-top');
+
   let projectName = document.createElement('h1');
   projectName.setAttribute('contenteditable', 'true');
   projectName.textContent = project.name;
+
   let deleteButton = document.createElement('div');
   deleteButton.classList.add('delete-button');
   deleteButton.textContent = '✖';
-  cardTop.append(projectName, deleteButton);
+  deleteButton.setAttribute('data-index', index);
+  deleteButton.addEventListener('click', () => {
+    events.eventBus.dispatchEvent(events.deleteProjectEvent(index));
+  });
 
-  // make cardBottom
+  cardTop.append(projectName, deleteButton);
+  return cardTop;
+}
+
+function makeProjectCardBottom() {
   let cardBottom = document.createElement('div');
   cardBottom.classList.add('project', 'card-bottom');
   let todoCounter = document.createElement('span');
   todoCounter.classList.add('todo-counter');
 
-  // make ToDos
+  return cardBottom;
+}
+
+function makeProjectCardTodos(project) {
   let cardTodos = new DocumentFragment();
-  project.todos.forEach((todo) => {
+
+  project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
+    cardTodo.setAttribute('data-index', i);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 
     let todoDueInput = document.createElement('input');
@@ -42,11 +72,13 @@ export default function drawSingleProject(project) {
     let todoTitleInput = document.createElement('input');
     todoTitleInput.setAttribute('type', 'checkbox');
     todoTitleInput.id = 'todo-name';
+    // TODO checkbox for title to update completion state of todo
 
     let todoTitleLabel = document.createElement('label');
     todoTitleLabel.setAttribute('contenteditable', 'true');
     todoTitleLabel.classList.add('todo-hl-title');
     todoTitleLabel.textContent = todo.title;
+
     let todoTitleContainer = document.createElement('div');
     todoTitleContainer.classList.add('todo-title-container');
     todoTitleContainer.append(todoTitleInput, todoTitleLabel);
@@ -62,9 +94,11 @@ export default function drawSingleProject(project) {
     let todoPriorityControls = document.createElement('section');
     todoPriorityControls.classList.add('priority-control');
     let todoPrioritySelect = document.createElement('select');
+    todoPrioritySelect.classList.add('todo-priority');
     for (let [priority, optionValue] of Object.entries(priorities)) {
       let priorityOption = document.createElement('option');
       priorityOption.setAttribute('value', optionValue);
+      // if (optionValue === '') priorityOption.setAttribute('selected', '');
       priorityOption.textContent = priority;
       todoPrioritySelect.append(priorityOption);
     }
@@ -75,14 +109,34 @@ export default function drawSingleProject(project) {
       todoTitleContainer,
       todoExpandArrow,
       todoDescription,
-      todoPrioritySelect,
+      todoPriorityControls,
     );
+
+    cardTodo.addEventListener('focusout', (event) => {
+      console.log('target classname: ' + event.target.className);
+      switch (event.target.className) {
+        case 'todo-hl-due':
+          // console.log('todo duedate modified');
+          events.eventBus.dispatchEvent(events.modifyTodoDueDate);
+          break;
+        case 'todo-hl-title':
+          // console.log('todo title modified');
+          events.eventBus.dispatchEvent(events.modifyTodoTitle);
+          break;
+        case 'todo-desc':
+          // console.log('todo description modified');
+          events.eventBus.dispatchEvent(events.modifyTodoDescription);
+          break;
+        case 'todo-priority':
+          // console.log('todo priority modified');
+          events.eventBus.dispatchEvent(events.modifyTodoPriority);
+          break;
+      }
+    });
     cardTodos.append(cardTodo);
   });
 
-  // populate DOM
-  fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
-  content.append(fragment);
+  return cardTodos;
 }
 
 /*
