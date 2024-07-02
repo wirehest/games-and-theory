@@ -15,8 +15,8 @@ export default class Project {
     return this._todos;
   }
 
-  addTodo(title, description, priority, tasks, dueDate) {
-    this._todos.push(new Task(title, description, priority, tasks, dueDate));
+  addTodo(title, description, priority, dueDate, tasks) {
+    this._todos.push(new Task(title, description, priority, dueDate, tasks));
     return this._todos;
   }
 
@@ -25,8 +25,13 @@ export default class Project {
   }
 
   removeTodo(todoIndex) {
-    if (_todos[todoIndex] === undefined) return;
-    _todos.splice(todoIndex, 1);
+    if (this._todos[todoIndex] === undefined) return;
+    this._todos.splice(todoIndex, 1);
     return this._todos;
+  }
+
+  todoCounter() {
+    // let completeTodos =
+    // return ''
   }
 }

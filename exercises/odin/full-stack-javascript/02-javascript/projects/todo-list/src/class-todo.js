@@ -5,19 +5,20 @@ import { format } from 'date-fns';
 
 export default class Todo {
   _createdTimestamp = Date.now();
+  _complete = false;
 
   constructor(
     title,
     description,
     priority,
-    tasks = [],
     dueDate = defaultDuedate,
+    tasks = [],
   ) {
     this._title = title;
     this._description = description;
     this._priority = priority;
-    this._tasks = tasks;
     this._dueDate = dueDate;
+    this._tasks = tasks;
   }
 
   set title(todoTitle) {
@@ -27,6 +28,10 @@ export default class Todo {
 
   get title() {
     return this._title;
+  }
+
+  get status() {
+    return this._complete;
   }
 
   set description(todoDescription) {
@@ -75,15 +80,20 @@ export default class Todo {
   }
 
   // methods
+  toggleStatus() {
+    this._complete = !this._complete;
+    return this;
+  }
+
   addTask(taskText, isCheckbox = false, isDone = false) {
     this._tasks.push({ taskText, isCheckbox, isDone });
-    return this._tasks;
+    return this;
   }
 
   removeTask(taskIndex) {
     if (this._tasks[taskIndex] === undefined) return;
     this._tasks.splice(taskIndex, 1);
-    return this._tasks;
+    return this;
   }
 }
 

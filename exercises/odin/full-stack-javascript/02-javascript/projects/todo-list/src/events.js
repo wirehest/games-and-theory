@@ -1,40 +1,30 @@
 export let eventBus = new EventTarget();
-// export eventBus;
 
-// card top custom events
-// export let deleteProjectEvent = new CustomEvent('project-delete', {
-//   // bubbles: true,
-//   origin: 'single-project',
-//   position: this,
-// });
-
-export function deleteProjectEvent(index) {
-  return new CustomEvent('project-delete', {
+export function projectAction(projectIndex, action, value) {
+  return new CustomEvent('project-action', {
     detail: {
-      origin: 'single-project',
-      index,
-      test: this,
+      projectIndex,
+      action,
+      value,
     },
   });
 }
 
-// card todo custom events
-export let modifyTodoDueDate = (function () {
-  return new CustomEvent('modify-todo-duedate', {
-    // bubbles: true,
-    test: 'test',
-    position: this,
+export function todoAction(projectIndex, todoIndex, action, value) {
+  return new CustomEvent('todo-action', {
+    detail: {
+      projectIndex,
+      todoIndex,
+      action,
+      value,
+    },
   });
-})();
+}
 
-export let modifyTodoTitle = new CustomEvent('modify-todo-title', {
-  // bubbles: true,
+eventBus.addEventListener('project-action', (event) => {
+  console.log(event);
 });
 
-export let modifyTodoDescription = new CustomEvent('modify-todo-description', {
-  // bubbles: true,
-});
-
-export let modifyTodoPriority = new CustomEvent('modify-todo-priority', {
-  // bubbles: true,
+eventBus.addEventListener('todo-action', (event) => {
+  console.log(event);
 });

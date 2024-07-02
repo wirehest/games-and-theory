@@ -1,5 +1,8 @@
 import * as events from './events.js';
+import { projects } from './data-control.js';
 
+let content = document.querySelector('#content');
+let fragment = new DocumentFragment();
 const priorities = {
   '--Set Priority--': '',
   High: 'high',
@@ -7,27 +10,21 @@ const priorities = {
   Low: 'low',
 };
 
-export default function drawSingleProject({ project, index }) {
-  let content = document.querySelector('#content');
-  let fragment = new DocumentFragment();
+export default function drawSingleProject(projectIndex) {
+  let project = projects[projectIndex];
 
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'Single Project';
 
-  // temporary refresh 'button'
-  mainHeading.addEventListener('click', () => {
-    console.log(project);
-  });
-
-  let cardTop = makeProjectCardTop(project, index);
+  let cardTop = makeProjectCardTop(project);
   let cardTodos = makeProjectCardTodos(project);
-  let cardBottom = makeProjectCardBottom();
+  let cardBottom = makeProjectCardBottom(project);
 
   fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
   content.append(fragment);
 }
 
-function makeProjectCardTop(project, index) {
+function makeProjectCardTop(project) {
   let cardTop = document.createElement('div');
   cardTop.classList.add('project', 'card-top');
 
@@ -38,10 +35,7 @@ function makeProjectCardTop(project, index) {
   let deleteButton = document.createElement('div');
   deleteButton.classList.add('delete-button');
   deleteButton.textContent = '✖';
-  deleteButton.setAttribute('data-index', index);
-  deleteButton.addEventListener('click', () => {
-    events.eventBus.dispatchEvent(events.deleteProjectEvent(index));
-  });
+  // deleteButton.setAttribute('data-index', index);
 
   cardTop.append(projectName, deleteButton);
   return cardTop;
@@ -56,12 +50,13 @@ function makeProjectCardBottom() {
   return cardBottom;
 }
 
-function makeProjectCardTodos(project) {
+function makeProjectCardTodos(project, projectIndex) {
   let cardTodos = new DocumentFragment();
+  let i = 0;
 
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
-    cardTodo.setAttribute('data-index', i);
+    cardTodo.setAttribute('data-index', i++);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 
     let todoDueInput = document.createElement('input');
@@ -112,82 +107,8 @@ function makeProjectCardTodos(project) {
       todoPriorityControls,
     );
 
-    cardTodo.addEventListener('focusout', (event) => {
-      console.log('target classname: ' + event.target.className);
-      switch (event.target.className) {
-        case 'todo-hl-due':
-          // console.log('todo duedate modified');
-          events.eventBus.dispatchEvent(events.modifyTodoDueDate);
-          break;
-        case 'todo-hl-title':
-          // console.log('todo title modified');
-          events.eventBus.dispatchEvent(events.modifyTodoTitle);
-          break;
-        case 'todo-desc':
-          // console.log('todo description modified');
-          events.eventBus.dispatchEvent(events.modifyTodoDescription);
-          break;
-        case 'todo-priority':
-          // console.log('todo priority modified');
-          events.eventBus.dispatchEvent(events.modifyTodoPriority);
-          break;
-      }
-    });
     cardTodos.append(cardTodo);
   });
 
   return cardTodos;
 }
-
-/*
-        <section class="tasks">
-          <input type="checkbox" id="0" />
-          <label for="0">A sample task.</label>
-          <input type="checkbox" id="1" />
-          <label for="1">Another sample task.</label>
-          <input type="checkbox" id="2" />
-          <label for="2">Yet another sample task.</label>
-        </section>
-
-        <div class="tasks-control">
-          <button type="button">+Task</button>
-        </div>
-      </div>
-      <div class="project card-bottom">
-        <span class="todo-counter">ToDos: 5 Open, 10 Total</span>
-      </div>
-      ///////////////////
-      <h1>Single Project</h1>
-      <div class="project card-top">
-        <h1 contenteditable="true">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </h1>
-        <div class="delete-button">✖</div>
-      </div>
-
-      <div class="project todo priority-high">
-        <input type="date" class="todo-hl-due" value="2024-06-30" />
-        <div class="todo-name-container">
-          <input type="checkbox" id="todo-name" />
-          <label class="todo-hl-title" contenteditable="true">
-            High Priority Todo.
-          </label>
-        </div>
-
-        <div class="toggle-arrow2"></div>
-
-        <section class="todo-desc" contenteditable="true">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </section>
-
-        <section class="priority-control">
-          <select>
-            <option value="" selected>--Set Priority--</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </section>
-
-
-*/

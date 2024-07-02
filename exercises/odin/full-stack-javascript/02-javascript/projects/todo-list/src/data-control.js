@@ -1,5 +1,6 @@
 import * as events from './events.js';
 import Project from './class-project.js';
+
 export let projects = [];
 
 let defaultProject = new Project('My First Project');
@@ -17,19 +18,3 @@ if (true) {
 } else {
   // TODO load localStorage
 }
-
-events.eventBus.addEventListener('project-delete', (event) => {
-  // console.log(event.detail.origin);
-  // console.log(event.detail.index);
-  // console.log(event.index);
-});
-
-events.eventBus.addEventListener('modify-todo-duedate', (event) => {
-  console.log('projectIndex: ' + event.detail.projectIndex);
-  console.log('todoIndex: ' + event.detail.todoIndex);
-  projects[projectIndex].dueDate = 
-});
-
-events.eventBus.addEventListener('modify-todo-description', () => {});
-
-events.eventBus.addEventListener('modify-todo-priority', () => {});
