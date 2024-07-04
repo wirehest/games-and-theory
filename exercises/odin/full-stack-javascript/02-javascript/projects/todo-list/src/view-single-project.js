@@ -1,4 +1,4 @@
-import * as events from './events.js';
+// import * as events from './events.js';
 import { projects } from './data-control.js';
 
 let content = document.querySelector('#content');
@@ -17,7 +17,7 @@ export default function drawSingleProject(projectIndex) {
   mainHeading.textContent = 'Single Project';
 
   let cardTop = makeProjectCardTop(project);
-  let cardTodos = makeProjectCardTodos(project);
+  let cardTodos = makeProjectCardTodos(project, projectIndex);
   let cardBottom = makeProjectCardBottom(project);
 
   fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
@@ -56,7 +56,8 @@ function makeProjectCardTodos(project, projectIndex) {
 
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
-    cardTodo.setAttribute('data-index', i++);
+    cardTodo.setAttribute('data-project-index', projectIndex);
+    cardTodo.setAttribute('data-todo-index', i++);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 
     let todoDueInput = document.createElement('input');
