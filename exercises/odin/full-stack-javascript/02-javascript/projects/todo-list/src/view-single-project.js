@@ -16,7 +16,7 @@ export default function drawSingleProject(projectIndex) {
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'Single Project';
 
-  let cardTop = makeProjectCardTop(project);
+  let cardTop = makeProjectCardTop(project, projectIndex);
   let cardTodos = makeProjectCardTodos(project, projectIndex);
   let cardBottom = makeProjectCardBottom(project);
 
@@ -29,6 +29,7 @@ function makeProjectCardTop(project) {
   cardTop.classList.add('project', 'card-top');
 
   let projectName = document.createElement('h1');
+  projectName.classList.add('project-name');
   projectName.setAttribute('contenteditable', 'true');
   projectName.textContent = project.name;
 

@@ -67,7 +67,8 @@ header > nav {
   /*min-height: 90px;*/
 }
 
-.card-top > h1 {
+/*.card-top > h1 {*/
+.project-name {
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 10px;

@@ -4,14 +4,18 @@ import { eventBus, todoAction } from './events.js';
 
 export function attachListeners() {
   content.addEventListener('focusout', (e) => {
-    // console.log(e);
+    console.log(e);
     let className = e.target.className;
-    // console.log(e.target.offsetParent);
+    if (className === 'project-name') {
+      console.log('fire project action');
+      return;
+    }
+
     let todoIndex = e.target.offsetParent.attributes['data-todo-index'].value;
     let projectIndex =
       e.target.offsetParent.attributes['data-project-index'].value;
-
     let newValue;
+
     switch (className) {
       case 'todo-hl-due':
       case 'todo-priority':
