@@ -24,8 +24,9 @@ export default function drawSingleProject(projectIndex) {
   content.append(fragment);
 }
 
-function makeProjectCardTop(project) {
+function makeProjectCardTop(project, projectIndex) {
   let cardTop = document.createElement('div');
+  cardTop.setAttribute('data-project-index', projectIndex);
   cardTop.classList.add('project', 'card-top');
 
   let projectName = document.createElement('h1');
@@ -112,5 +113,6 @@ function makeProjectCardTodos(project, projectIndex) {
     cardTodos.append(cardTodo);
   });
 
+  console.log(projects);
   return cardTodos;
 }

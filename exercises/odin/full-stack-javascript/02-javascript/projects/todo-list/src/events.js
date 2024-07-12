@@ -24,20 +24,28 @@ export function todoAction(projectIndex, todoIndex, action, value) {
 }
 
 eventBus.addEventListener('project-action', (e) => {
-  console.log(e);
+  let projectIndex = e.detail.projectIndex;
+  let action = e.detail.action;
+  let value = e.detail.value;
+  // console.log(e);
+  // console.log(projectIndex);
+  // console.log(projects);
+  // console.log(projectIndex, action, value);
+  switch (action) {
+    case 'project-delete':
+      projects.splice(projectIndex, 1);
+      console.log(projects);
+      break;
+  }
 });
 
 eventBus.addEventListener('todo-action', (e) => {
-  // console.log(e);
   let projectIndex = e.detail.projectIndex;
   let todoIndex = e.detail.todoIndex;
   let action = e.detail.action;
   let newValue = e.detail.value;
   let todo = projects[projectIndex].todos[todoIndex];
-  // console.log(e);
-  // console.log(e.detail);
-  // console.log(e.detail);
-  // console.log(todo);
+
   switch (action) {
     case 'todo-hl-due':
       todo.dueDate = newValue;
@@ -54,3 +62,5 @@ eventBus.addEventListener('todo-action', (e) => {
   }
   console.log(todo);
 });
+
+// eventBus.addEventListener('');

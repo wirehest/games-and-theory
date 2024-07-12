@@ -1,4 +1,4 @@
-import { eventBus, todoAction } from './events.js';
+import { eventBus, projectAction, todoAction } from './events.js';
 
 // let content = document.querySelectorAll('#content');
 
@@ -33,6 +33,15 @@ export function attachListeners() {
   });
 
   content.addEventListener('click', (e) => {
+    // console.log(e);
+    if (e.target.className !== 'delete-button') return;
+    // console.log('delete button clicked');
+    let projectIndex =
+      e.target.offsetParent.attributes['data-project-index'].value;
+    eventBus.dispatchEvent(projectAction(projectIndex, 'project-delete', null));
+
+    // call redraw function
+    console.log('call redraw function here');
     return;
   });
 }

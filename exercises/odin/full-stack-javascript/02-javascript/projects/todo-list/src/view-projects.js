@@ -39,6 +39,7 @@ export default function drawProjects(projects) {
       // console.log(target.attributes.class.value === 'project-delete-button');
       if (className === 'delete-button') {
         // TODO try to set up emitter?
+        console.log('delete button clicked')
         return;
       }
 
