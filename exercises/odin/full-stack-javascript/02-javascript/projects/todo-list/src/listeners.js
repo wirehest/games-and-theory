@@ -1,13 +1,12 @@
 import { eventBus, projectAction, todoAction } from './events.js';
 
-// let content = document.querySelectorAll('#content');
+let content = document.querySelector('#content');
 
-export function attachListeners() {
+export function attachSingleProjectListeners() {
   content.addEventListener('focusout', (e) => {
-    console.log(e);
     let className = e.target.className;
+
     if (className === 'project-name') {
-      console.log('fire project action');
       return;
     }
 
@@ -33,27 +32,21 @@ export function attachListeners() {
   });
 
   content.addEventListener('click', (e) => {
-    // console.log(e);
     if (e.target.className !== 'delete-button') return;
-    // console.log('delete button clicked');
+
     let projectIndex =
       e.target.offsetParent.attributes['data-project-index'].value;
+
     eventBus.dispatchEvent(projectAction(projectIndex, 'project-delete', null));
 
     // call redraw function
-    console.log('call redraw function here');
-    return;
+    // console.log('call redraw function here');
+    // return;
   });
 }
 
-// cardTodos.addEventListener('focusout', (event) => {
-//   // console.log('target classname: ' + event.target.className);
-//   // let todoIndex = event.explicitOriginalTarget.attributes['data-index'].value;
-//   // console.log(event.explicitOriginalTarget.value);
-// });
-
-// deleteButton.addEventListener('click', () => {
-//   events.eventBus.dispatchEvent(
-//     events.deleteProjectEvent('single-project', index),
-//   );
-// });
+// export function attachProjectsListeners() {
+//   content.addEventListener('click', (e) => {
+//     return;
+//   });
+// }

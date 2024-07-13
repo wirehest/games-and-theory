@@ -1,5 +1,5 @@
-// import * as events from './events.js';
 import { projects } from './data-control.js';
+import { attachSingleProjectListeners } from './listeners.js';
 
 let content = document.querySelector('#content');
 let fragment = new DocumentFragment();
@@ -22,6 +22,7 @@ export default function drawSingleProject(projectIndex) {
 
   fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
   content.append(fragment);
+  attachSingleProjectListeners();
 }
 
 function makeProjectCardTop(project, projectIndex) {
@@ -113,6 +114,6 @@ function makeProjectCardTodos(project, projectIndex) {
     cardTodos.append(cardTodo);
   });
 
-  console.log(projects);
+  // console.log(projects);
   return cardTodos;
 }

@@ -1,4 +1,8 @@
 import { projects } from './data-control.js';
+import drawSingleProject from './view-single-project.js';
+import drawProjects from './view-projects.js';
+
+let content = document.querySelector('#content');
 
 export let eventBus = new EventTarget();
 
@@ -27,14 +31,12 @@ eventBus.addEventListener('project-action', (e) => {
   let projectIndex = e.detail.projectIndex;
   let action = e.detail.action;
   let value = e.detail.value;
-  // console.log(e);
-  // console.log(projectIndex);
-  // console.log(projects);
-  // console.log(projectIndex, action, value);
+
   switch (action) {
     case 'project-delete':
       projects.splice(projectIndex, 1);
-      console.log(projects);
+      clearContent();
+      drawProjects(projects);
       break;
   }
 });
@@ -60,7 +62,21 @@ eventBus.addEventListener('todo-action', (e) => {
       todo.priority = newValue;
       break;
   }
-  console.log(todo);
 });
 
-// eventBus.addEventListener('');
+function clearContent() {
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+  // for (let child of content.childNodes) {
+  //   content.removeChild(child);
+  // }
+}
+
+// function clearPage() {
+//   console.log(content.childNodes);
+//   content.style.background = '';
+//   for (let child of content.childNodes) {
+//     content.removeChild(child);
+//   }
+// }
