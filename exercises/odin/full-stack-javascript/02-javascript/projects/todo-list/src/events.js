@@ -68,15 +68,4 @@ function clearContent() {
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
-  // for (let child of content.childNodes) {
-  //   content.removeChild(child);
-  // }
 }
-
-// function clearPage() {
-//   console.log(content.childNodes);
-//   content.style.background = '';
-//   for (let child of content.childNodes) {
-//     content.removeChild(child);
-//   }
-// }

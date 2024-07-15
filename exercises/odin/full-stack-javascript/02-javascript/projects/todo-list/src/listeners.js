@@ -2,7 +2,7 @@ import { eventBus, projectAction, todoAction } from './events.js';
 
 let content = document.querySelector('#content');
 
-export function attachSingleProjectListeners() {
+export function attachListeners() {
   content.addEventListener('focusout', (e) => {
     let className = e.target.className;
 
@@ -34,8 +34,9 @@ export function attachSingleProjectListeners() {
   content.addEventListener('click', (e) => {
     if (e.target.className !== 'delete-button') return;
 
+    console.log(e);
     let projectIndex =
-      e.target.offsetParent.attributes['data-project-index'].value;
+      e.target?.offsetParent.attributes['data-project-index'].value;
 
     eventBus.dispatchEvent(projectAction(projectIndex, 'project-delete', null));
 

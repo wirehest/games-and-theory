@@ -37,6 +37,7 @@ header > nav {
 #content {
   display: flex;
   flex-flow: column nowrap;
+  /*gap: 15px;*/
 }
 
 #content > h1 {
@@ -79,7 +80,7 @@ header > nav {
 .card-bottom {
   border-radius: 0 0 6px 6px;
   border-top: 0;
-  /*margin-bottom: 12px;*/
+  margin-bottom: 15px;
   /*min-height: 0;*/
 }
 
