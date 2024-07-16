@@ -11,6 +11,7 @@ const priorities = {
 };
 
 export default function drawSingleProject(projectIndex) {
+  // let project = JSON.parse(projects.getItem('' + projectIndex));
   let project = projects[projectIndex];
 
   let mainHeading = document.createElement('h1');
@@ -38,7 +39,6 @@ function makeProjectCardTop(project, projectIndex) {
   let deleteButton = document.createElement('div');
   deleteButton.classList.add('delete-button');
   deleteButton.textContent = '✖';
-  // deleteButton.setAttribute('data-index', index);
 
   cardTop.append(projectName, deleteButton);
   return cardTop;
@@ -57,6 +57,7 @@ function makeProjectCardTodos(project, projectIndex) {
   let cardTodos = new DocumentFragment();
   let i = 0;
 
+  // console.log(project);
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
     cardTodo.setAttribute('data-project-index', projectIndex);
@@ -97,7 +98,6 @@ function makeProjectCardTodos(project, projectIndex) {
     for (let [priority, optionValue] of Object.entries(priorities)) {
       let priorityOption = document.createElement('option');
       priorityOption.setAttribute('value', optionValue);
-      // if (optionValue === '') priorityOption.setAttribute('selected', '');
       priorityOption.textContent = priority;
       todoPrioritySelect.append(priorityOption);
     }
@@ -114,6 +114,5 @@ function makeProjectCardTodos(project, projectIndex) {
     cardTodos.append(cardTodo);
   });
 
-  // console.log(projects);
   return cardTodos;
 }

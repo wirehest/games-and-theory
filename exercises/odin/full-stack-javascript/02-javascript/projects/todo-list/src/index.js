@@ -1,10 +1,9 @@
 import './style.css';
-// import addListeners from './events.js';
-// import drawProjects from './view-projects.js';
-import { attachListeners } from './listeners.js';
+import { projects } from './data-control.js';
 import drawSingleProject from './view-single-project.js';
-// import { projects } from './data-control.js';
+import drawProjects from './view-projects.js';
 
-// console.log(projects);
-drawSingleProject(0);
-attachListeners();
+drawProjects(projects);
+console.log(projects);
+// drawSingleProject(0);
+// attachListeners();

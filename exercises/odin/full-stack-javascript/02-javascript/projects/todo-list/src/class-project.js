@@ -1,10 +1,17 @@
-import Task from './class-todo.js';
+import Todo from './class-todo.js';
 
 export default class Project {
   _todos = [];
 
   constructor(name) {
     this._name = name;
+  }
+
+  set todos(todosArray) {
+    if ({}.toString.call(todosArray) === '[object Array]') {
+      this._todos = todosArray;
+    }
+    return this._todos;
   }
 
   get name() {
@@ -16,7 +23,7 @@ export default class Project {
   }
 
   addTodo(title, description, priority, dueDate, tasks) {
-    this._todos.push(new Task(title, description, priority, dueDate, tasks));
+    this._todos.push(new Todo(title, description, priority, dueDate, tasks));
     return this._todos;
   }
 

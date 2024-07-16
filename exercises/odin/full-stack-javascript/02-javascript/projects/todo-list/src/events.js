@@ -1,8 +1,9 @@
-import { projects } from './data-control.js';
+import { projects, refreshProjects } from './data-control.js';
 import drawSingleProject from './view-single-project.js';
 import drawProjects from './view-projects.js';
 
 let content = document.querySelector('#content');
+let nav = document.querySelector('nav');
 
 export let eventBus = new EventTarget();
 
@@ -27,6 +28,35 @@ export function todoAction(projectIndex, todoIndex, action, value) {
   });
 }
 
+function clearContent() {
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+}
+
+nav.addEventListener('click', (e) => {
+  let className = e.target.className;
+  // console.log(className);
+  switch (className) {
+    case 'show-all':
+      break;
+    case 'add-project':
+      break;
+    case 'reset':
+      localStorage.clear();
+      refreshProjects();
+      clearContent();
+      drawProjects(projects);
+      break;
+  }
+
+  // console.log(localStorage.getItem('data') + 'after setItem');
+});
+
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('data', JSON.stringify(projects));
+});
+
 eventBus.addEventListener('project-action', (e) => {
   let projectIndex = e.detail.projectIndex;
   let action = e.detail.action;
@@ -36,6 +66,7 @@ eventBus.addEventListener('project-action', (e) => {
     case 'project-delete':
       projects.splice(projectIndex, 1);
       clearContent();
+      // TODO handle 0 length project, if all projects deleted
       drawProjects(projects);
       break;
   }
@@ -63,9 +94,3 @@ eventBus.addEventListener('todo-action', (e) => {
       break;
   }
 });
-
-function clearContent() {
-  while (content.firstChild) {
-    content.removeChild(content.firstChild);
-  }
-}
