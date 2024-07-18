@@ -1,4 +1,5 @@
 import { eventBus, projectAction, todoAction } from './events.js';
+
 let content = document.querySelector('#content');
 
 export function attachListeners() {
@@ -31,22 +32,23 @@ export function attachListeners() {
   });
 
   content.addEventListener('click', (e) => {
-    if (e.target.className !== 'delete-button') return;
+    let container = e.target.closest('.container');
+    let className = e.target.className;
+    let projectIndex = container?.attributes['data-project-index'].value;
 
-    // console.log(e);
-    let projectIndex =
-      e.target?.offsetParent.attributes['data-project-index'].value;
+    // console.log(container);
+    // console.log(container.className === 'container project-only');
+    if (className === 'delete-button') {
+      eventBus.dispatchEvent(
+        projectAction(projectIndex, 'project-delete', null),
+      );
+      return;
+    }
 
-    eventBus.dispatchEvent(projectAction(projectIndex, 'project-delete', null));
-
-    // call redraw function
-    // console.log('call redraw function here');
-    // return;
+    if (container.classList.contains('project-only')) {
+      // TODO projectAction open todos
+      eventBus.dispatchEvent(projectAction(projectIndex, 'project-open', null));
+      return;
+    }
   });
 }
-
-// export function attachProjectsListeners() {
-//   content.addEventListener('click', (e) => {
-//     return;
-//   });
-// }

@@ -11,8 +11,12 @@ const priorities = {
 };
 
 export default function drawSingleProject(projectIndex) {
-  // let project = JSON.parse(projects.getItem('' + projectIndex));
+  console.log(projects.length);
+  if (projects.length === 0) return;
   let project = projects[projectIndex];
+  let container = document.createElement('div');
+  container.setAttribute('data-project-index', projectIndex);
+  container.classList.add('container');
 
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'Single Project';
@@ -21,20 +25,21 @@ export default function drawSingleProject(projectIndex) {
   let cardTodos = makeProjectCardTodos(project, projectIndex);
   let cardBottom = makeProjectCardBottom(project);
 
-  fragment.append(mainHeading, cardTop, cardTodos, cardBottom);
+  container.append(cardTop, cardTodos, cardBottom);
+  fragment.append(mainHeading, container);
   content.append(fragment);
-  attachListeners();
+  // attachListeners();
 }
 
 function makeProjectCardTop(project, projectIndex) {
   let cardTop = document.createElement('div');
-  cardTop.setAttribute('data-project-index', projectIndex);
+  // cardTop.setAttribute('data-project-index', projectIndex);
   cardTop.classList.add('project', 'card-top');
 
   let projectName = document.createElement('h1');
   projectName.classList.add('project-name');
   projectName.setAttribute('contenteditable', 'true');
-  projectName.textContent = project.name;
+  projectName.textContent = project?.name;
 
   let deleteButton = document.createElement('div');
   deleteButton.classList.add('delete-button');
@@ -60,7 +65,7 @@ function makeProjectCardTodos(project, projectIndex) {
   // console.log(project);
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
-    cardTodo.setAttribute('data-project-index', projectIndex);
+    // cardTodo.setAttribute('data-project-index', projectIndex);
     cardTodo.setAttribute('data-todo-index', i++);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 

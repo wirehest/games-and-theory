@@ -11,12 +11,11 @@ export default function drawProjects(projects) {
   fragment.append(mainHeading);
 
   projects.forEach((project) => {
-    // Objects.values(projects).forEach((project) => {
     let container = document.createElement('div');
-    container.classList.add('container');
+    container.setAttribute('data-project-index', projectIndex++);
+    container.classList.add('container', 'project-only');
 
     let cardTop = document.createElement('div');
-    cardTop.setAttribute('data-project-index', projectIndex++);
     cardTop.classList.add('project', 'card-top');
 
     let projectName = document.createElement('h1');
@@ -43,5 +42,4 @@ export default function drawProjects(projects) {
   });
 
   content.append(fragment);
-  attachListeners();
 }

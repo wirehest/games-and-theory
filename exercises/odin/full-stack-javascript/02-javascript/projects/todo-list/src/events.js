@@ -1,8 +1,10 @@
 import { projects, refreshProjects } from './data-control.js';
 import drawSingleProject from './view-single-project.js';
 import drawProjects from './view-projects.js';
+import Project from './class-project.js';
 
 let content = document.querySelector('#content');
+let container = document.querySelector('.container');
 let nav = document.querySelector('nav');
 
 export let eventBus = new EventTarget();
@@ -39,8 +41,20 @@ nav.addEventListener('click', (e) => {
   // console.log(className);
   switch (className) {
     case 'show-all':
+      clearContent();
+      drawProjects(projects);
       break;
     case 'add-project':
+      // TODO replace with modal and form to add project
+      let addProjectTest = new Project('Added Project');
+      addProjectTest.addTodo(
+        'Added Todo',
+        'Description of Added Todo.',
+        'high',
+      );
+      projects.push(addProjectTest);
+      clearContent();
+      drawProjects(projects);
       break;
     case 'reset':
       localStorage.clear();
@@ -53,6 +67,7 @@ nav.addEventListener('click', (e) => {
   // console.log(localStorage.getItem('data') + 'after setItem');
 });
 
+// saves projects array data to localStorage on quit/refresh
 window.addEventListener('beforeunload', () => {
   localStorage.setItem('data', JSON.stringify(projects));
 });
@@ -64,10 +79,16 @@ eventBus.addEventListener('project-action', (e) => {
 
   switch (action) {
     case 'project-delete':
+      // console.log(projectIndex);
+      // console.log(projects[projectIndex]);
       projects.splice(projectIndex, 1);
       clearContent();
-      // TODO handle 0 length project, if all projects deleted
+      // TODO handee 0 length project, if all projects deleted
       drawProjects(projects);
+      break;
+    case 'project-open':
+      clearContent();
+      drawSingleProject(projectIndex);
       break;
   }
 });
