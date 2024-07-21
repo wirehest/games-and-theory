@@ -78,6 +78,8 @@ eventBus.addEventListener('project-action', (e) => {
   let value = e.detail.value;
 
   switch (action) {
+    case 'project-name':
+      break;
     case 'project-delete':
       // console.log(projectIndex);
       // console.log(projects[projectIndex]);
@@ -102,16 +104,22 @@ eventBus.addEventListener('todo-action', (e) => {
 
   switch (action) {
     case 'todo-hl-due':
+      // console.log(newValue);
       todo.dueDate = newValue;
       break;
     case 'todo-hl-title':
+      // console.log(newValue);
       todo.title = newValue;
       break;
     case 'todo-desc':
+      // console.log(newValue);
       todo.description = newValue;
       break;
     case 'todo-priority':
+      // console.log(newValue);
       todo.priority = newValue;
+      clearContent();
+      drawSingleProject(projectIndex);
       break;
   }
 });

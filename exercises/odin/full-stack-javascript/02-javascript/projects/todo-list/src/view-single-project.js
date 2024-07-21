@@ -62,7 +62,6 @@ function makeProjectCardTodos(project, projectIndex) {
   let cardTodos = new DocumentFragment();
   let i = 0;
 
-  // console.log(project);
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
     // cardTodo.setAttribute('data-project-index', projectIndex);
@@ -100,11 +99,17 @@ function makeProjectCardTodos(project, projectIndex) {
     todoPriorityControls.classList.add('priority-control');
     let todoPrioritySelect = document.createElement('select');
     todoPrioritySelect.classList.add('todo-priority');
+
     for (let [priority, optionValue] of Object.entries(priorities)) {
       let priorityOption = document.createElement('option');
+
       priorityOption.setAttribute('value', optionValue);
       priorityOption.textContent = priority;
       todoPrioritySelect.append(priorityOption);
+
+      if (todo.priority === optionValue) {
+        priorityOption.setAttribute('selected', '');
+      }
     }
     todoPriorityControls.append(todoPrioritySelect);
 

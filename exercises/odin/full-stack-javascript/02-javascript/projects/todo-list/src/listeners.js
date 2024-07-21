@@ -1,19 +1,24 @@
 import { eventBus, projectAction, todoAction } from './events.js';
 
 let content = document.querySelector('#content');
+// let container = document.querySelector('.container');
 
 export function attachListeners() {
   content.addEventListener('focusout', (e) => {
     let className = e.target.className;
+    if (className === 'project-name') return;
+    console.log(className);
 
-    if (className === 'project-name') {
+    let container = e.target.closest('.container');
+    let projectIndex = container?.attributes['data-project-index'].value;
+    let todoIndex = e.target.offsetParent.attributes['data-todo-index'].value;
+    // let projectIndex =
+    //   e.target.offsetParent.attributes['data-project-index'].value;
+    let newValue;
+
+    if (className === '') {
       return;
     }
-
-    let todoIndex = e.target.offsetParent.attributes['data-todo-index'].value;
-    let projectIndex =
-      e.target.offsetParent.attributes['data-project-index'].value;
-    let newValue;
 
     switch (className) {
       case 'todo-hl-due':
