@@ -21,7 +21,6 @@ refreshProjects();
 
 export function refreshProjects() {
   if (storageAvailable('localStorage')) {
-    // console.log(typeof projects);
     projects = [];
     if (localStorage.length === 0) {
       ['First', 'Second'].forEach((projectName) => {
@@ -33,22 +32,23 @@ export function refreshProjects() {
       });
     } else {
       for (let parsedProjectString of JSON.parse(localStorage.data)) {
+        // console.log(parsedProjectString);
         let todos = [];
-        let newTodoInstance = new Todo();
         let newProjectInstance = new Project();
-
         Object.assign(newProjectInstance, parsedProjectString);
+
         for (let parsedTodoString of newProjectInstance.todos) {
+          let newTodoInstance = new Todo();
           Object.assign(newTodoInstance, parsedTodoString);
           todos.push(newTodoInstance);
         }
+
         newProjectInstance.todos = todos;
         projects.push(newProjectInstance);
       }
     }
   } else {
     console.log('localStorage not available');
-    projects = [];
   }
 }
 
@@ -70,8 +70,3 @@ function storageAvailable(type) {
     );
   }
 }
-
-// function dataParse() {
-//   projects = JSON.parse(projects);
-//   console.log(projects);
-// }

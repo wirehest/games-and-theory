@@ -14,6 +14,11 @@ export default class Project {
     return this._todos;
   }
 
+  set name(newName) {
+    this._name = newName;
+    return this;
+  }
+
   get name() {
     return this._name;
   }

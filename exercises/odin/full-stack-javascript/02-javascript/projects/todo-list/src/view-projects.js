@@ -1,10 +1,13 @@
 import { projects } from './data-control.js';
-import { attachListeners } from './listeners.js';
+// import { attachListeners } from './listeners.js';
+// import { currentView } from './events.js';
 
 let content = document.querySelector('#content');
 let fragment = new DocumentFragment();
 
 export default function drawProjects(projects) {
+  // currentView = 'all-projects';
+
   let projectIndex = 0;
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'Projects';

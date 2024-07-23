@@ -184,5 +184,20 @@ header > nav {
   /*margin-top: 15px;*/
 }
 
+/* for modal */
+::backdrop {
+  background: #000000ab;
+}
+
+.add-project-modal {
+  margin: auto;
+}
+
+.add-project-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (min-width: 1000px) {
 }

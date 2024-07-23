@@ -1,5 +1,6 @@
 import { projects } from './data-control.js';
-import { attachListeners } from './listeners.js';
+// import { currentView } from './events.js';
+// import { attachListeners } from './listeners.js';
 
 let content = document.querySelector('#content');
 let fragment = new DocumentFragment();
@@ -11,7 +12,8 @@ const priorities = {
 };
 
 export default function drawSingleProject(projectIndex) {
-  console.log(projects.length);
+  // currentView = 'single-project';
+  // console.log(projects.length);
   if (projects.length === 0) return;
   let project = projects[projectIndex];
   let container = document.createElement('div');
