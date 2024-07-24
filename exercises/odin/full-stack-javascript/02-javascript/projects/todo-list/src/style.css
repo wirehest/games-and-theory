@@ -84,8 +84,16 @@ header > nav {
   /*min-height: 0;*/
 }
 
-.delete-button {
+.delete-project-button {
+  /*content: '🗑';*/
   font-size: 1.5rem;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.delete-todo-button {
+  font-size: 1.2rem;
   position: absolute;
   right: 10px;
   top: 5px;
@@ -189,7 +197,7 @@ header > nav {
   background: #000000ab;
 }
 
-.add-project-modal {
+[class$='-modal'] {
   margin: auto;
 }
 

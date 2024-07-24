@@ -1,8 +1,8 @@
-import { projects, refreshProjects } from './data-control.js';
-import drawSingleProject from './view-single-project.js';
-import drawProjects from './view-projects.js';
-import { drawAddProjectModal } from './view-modals.js';
-import Project from './class-project.js';
+// import { projects, refreshProjects } from './data-control.js';
+// import drawSingleProject from './view-single-project.js';
+// import drawProjects from './view-projects.js';
+// import { drawAddProjectModal } from './view-modals.js';
+// import Project from './class-project.js';
 
 export let eventBus = new EventTarget();
 
@@ -35,9 +35,3 @@ export function modalAction(action, inputs) {
     },
   });
 }
-
-// function clearContent() {
-//   while (content.firstChild) {
-//     content.removeChild(content.firstChild);
-//   }
-// }

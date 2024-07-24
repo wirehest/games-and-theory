@@ -1,16 +1,14 @@
 import { projects } from './data-control.js';
 // import { attachListeners } from './listeners.js';
-// import { currentView } from './events.js';
-
-let content = document.querySelector('#content');
-let fragment = new DocumentFragment();
 
 export default function drawProjects(projects) {
-  // currentView = 'all-projects';
+  makeProjectsNav(); // build nav for this view
 
+  let content = document.querySelector('#content');
+  let fragment = new DocumentFragment();
   let projectIndex = 0;
   let mainHeading = document.createElement('h1');
-  mainHeading.textContent = 'Projects';
+  mainHeading.textContent = 'All Projects';
   fragment.append(mainHeading);
 
   projects.forEach((project) => {
@@ -25,9 +23,9 @@ export default function drawProjects(projects) {
     projectName.classList.add('project-name');
     projectName.textContent = project.name;
 
-    let deleteButton = document.createElement('div');
-    deleteButton.classList.add('delete-button');
-    deleteButton.textContent = '✖';
+    let deleteProjectButton = document.createElement('div');
+    deleteProjectButton.classList.add('delete-project-button');
+    deleteProjectButton.textContent = '✖';
 
     let cardBottom = document.createElement('div');
     cardBottom.classList.add('project', 'card-bottom');
@@ -38,11 +36,32 @@ export default function drawProjects(projects) {
     let todoCounts = 'ToDos: 5 Open, 10 Total'; // TODO build todo counter text
     todoCounter.textContent = todoCounts;
 
-    cardTop.append(projectName, deleteButton);
+    cardTop.append(projectName, deleteProjectButton);
     cardBottom.append(todoCounter);
     container.append(cardTop, cardBottom);
     fragment.append(container);
   });
 
   content.append(fragment);
+}
+
+function makeProjectsNav() {
+  let header = document.querySelector('header');
+  let navFragment = new DocumentFragment();
+
+  let nav = document.createElement('nav');
+
+  let addProjectButton = document.createElement('button');
+  addProjectButton.classList.add('add-project-button');
+  addProjectButton.setAttribute('type', 'button');
+  addProjectButton.textContent = 'Add Project';
+
+  let resetButton = document.createElement('button');
+  resetButton.classList.add('reset-button');
+  resetButton.setAttribute('type', 'button');
+  resetButton.textContent = 'Reset';
+
+  nav.append(addProjectButton, resetButton);
+  navFragment.append(nav);
+  header.append(navFragment);
 }

@@ -1,10 +1,7 @@
 import { projects } from './data-control.js';
 // import { currentView } from './events.js';
 // import { attachListeners } from './listeners.js';
-
-let content = document.querySelector('#content');
-let fragment = new DocumentFragment();
-const priorities = {
+export const priorities = {
   '--Set Priority--': '',
   High: 'high',
   Medium: 'medium',
@@ -12,10 +9,15 @@ const priorities = {
 };
 
 export default function drawSingleProject(projectIndex) {
-  // currentView = 'single-project';
-  // console.log(projects.length);
+  makeSingleProjectNav(); // build nav for this view
+
+  // if there are no projects
   if (projects.length === 0) return;
+
   let project = projects[projectIndex];
+  let content = document.querySelector('#content');
+  let fragment = new DocumentFragment();
+
   let container = document.createElement('div');
   container.setAttribute('data-project-index', projectIndex);
   container.classList.add('container');
@@ -30,7 +32,29 @@ export default function drawSingleProject(projectIndex) {
   container.append(cardTop, cardTodos, cardBottom);
   fragment.append(mainHeading, container);
   content.append(fragment);
+
   // attachListeners();
+}
+
+function makeSingleProjectNav() {
+  let header = document.querySelector('header');
+  let navFragment = new DocumentFragment();
+
+  let nav = document.createElement('nav');
+
+  let allProjectsButton = document.createElement('button');
+  allProjectsButton.classList.add('all-projects-button');
+  allProjectsButton.setAttribute('type', 'button');
+  allProjectsButton.textContent = 'All Projects';
+
+  let addTodoButton = document.createElement('button');
+  addTodoButton.classList.add('add-todo-button');
+  addTodoButton.setAttribute('type', 'button');
+  addTodoButton.textContent = 'Add Todo';
+
+  nav.append(allProjectsButton, addTodoButton);
+  navFragment.append(nav);
+  header.append(navFragment);
 }
 
 function makeProjectCardTop(project, projectIndex) {
@@ -41,19 +65,25 @@ function makeProjectCardTop(project, projectIndex) {
   let projectName = document.createElement('h1');
   projectName.classList.add('project-name');
   projectName.setAttribute('contenteditable', 'true');
-  projectName.textContent = project?.name;
+  projectName.textContent = project.name;
 
-  let deleteButton = document.createElement('div');
-  deleteButton.classList.add('delete-button');
-  deleteButton.textContent = '✖';
+  let deleteProjectButton = document.createElement('div');
+  deleteProjectButton.classList.add('delete-project-button');
+  deleteProjectButton.textContent = '✖';
 
-  cardTop.append(projectName, deleteButton);
+  // if there are no todos
+  if (project.todos.length === 0) {
+  }
+  // TODO display "click X to add todo"
+
+  cardTop.append(projectName, deleteProjectButton);
   return cardTop;
 }
 
 function makeProjectCardBottom() {
   let cardBottom = document.createElement('div');
   cardBottom.classList.add('project', 'card-bottom');
+  let addTodoButton = document.createElement('button');
   let todoCounter = document.createElement('span');
   todoCounter.classList.add('todo-counter');
 
@@ -66,7 +96,6 @@ function makeProjectCardTodos(project, projectIndex) {
 
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
-    // cardTodo.setAttribute('data-project-index', projectIndex);
     cardTodo.setAttribute('data-todo-index', i++);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 
@@ -75,10 +104,13 @@ function makeProjectCardTodos(project, projectIndex) {
     todoDueInput.setAttribute('value', todo.dueDate);
     todoDueInput.classList.add('todo-hl-due');
 
+    let deleteTodoButton = document.createElement('div');
+    deleteTodoButton.classList.add('delete-todo-button');
+    deleteTodoButton.textContent = '✖';
+
     let todoTitleInput = document.createElement('input');
     todoTitleInput.setAttribute('type', 'checkbox');
     todoTitleInput.id = 'todo-name';
-    // TODO checkbox for title to update completion state of todo
 
     let todoTitleLabel = document.createElement('label');
     todoTitleLabel.setAttribute('contenteditable', 'true');
@@ -117,6 +149,7 @@ function makeProjectCardTodos(project, projectIndex) {
 
     cardTodo.append(
       todoDueInput,
+      deleteTodoButton,
       todoTitleContainer,
       todoExpandArrow,
       todoDescription,
