@@ -30,6 +30,10 @@ export default class Todo {
     return this._title;
   }
 
+  set status(value) {
+    console.log('Setting status directly not allowed');
+  }
+
   get status() {
     return this._complete;
   }

@@ -61,51 +61,45 @@ export function attachListeners() {
   });
 
   body.addEventListener('click', (e) => {
-    console.log(`class: ${e.target.className}`);
+    // console.log(`class: ${e.target.className}`);
     let container = e.target.closest('.container');
+    let todo = e.target.closest('.todo');
     let className = e.target.className;
     let projectIndex = container?.attributes['data-project-index'].value;
-
-    if (className === 'delete-project-button') {
-      eventBus.dispatchEvent(
-        projectAction(projectIndex, 'project-delete', null),
-      );
-      return;
-    }
-
-    if (className === 'add-project-modal-add-button') {
-      projects.push(new Project(document.querySelector('#modal-name').value));
-      let modal = document.querySelector('dialog');
-      let form = document.querySelector('form');
-      form.reset();
-      modal.close();
-      clearContent();
-      drawProjects(projects);
-      // TODO redraw projects or single-project based on state
-      // or maybe remove option to add project when in single-project view?
-      // Replace with add todo?
-    }
-
-    if (className === 'add-project-modal-cancel-button') {
-      console.log('cancel button clicked');
-      let modal = document.querySelector('dialog');
-      let form = document.querySelector('form');
-      form.reset();
-      modal.close();
-    }
-
-    if (className === '') {
-      return;
-    }
+    // e.target.closest( '[data-todo-index]'
+    // console.log(todo);
+    let todoIndex = todo?.attributes['data-todo-index'].value;
+    let modal, form;
 
     if (container?.classList.contains('project-only')) {
-      // TODO projectAction open todos
       eventBus.dispatchEvent(projectAction(projectIndex, 'project-open', null));
     }
 
     switch (className) {
+      // clicks from within modals:
+      case 'add-project-modal-add-button':
+        projects.push(new Project(document.querySelector('#modal-name').value));
+        modal = document.querySelector('dialog');
+        form = document.querySelector('form');
+        form.reset();
+        modal.close();
+        clearContent();
+        drawProjects(projects);
+        // TODO redraw projects or single-project based on state
+        // or maybe remove option to add project when in single-project view?
+        // Replace with add todo?
+        break;
+      case 'add-project-modal-cancel-button':
+        // console.log('cancel button clicked');
+        modal = document.querySelector('dialog');
+        form = document.querySelector('form');
+        form.reset();
+        modal.close();
+        break;
+
+      // nav buttons:
       case 'all-projects-button':
-        console.log('triggered');
+        // console.log('triggered');
         clearContent();
         drawProjects(projects);
         break;
@@ -119,11 +113,25 @@ export function attachListeners() {
         modal = document.querySelector('.add-todo-modal');
         modal.showModal();
         break;
+      case 'save-button':
+        break;
       case 'reset-button':
         localStorage.clear();
         refreshProjects();
         clearContent();
         drawProjects(projects);
+        break;
+      // deletes:
+      case 'delete-project-button':
+        eventBus.dispatchEvent(
+          projectAction(projectIndex, 'project-delete', null),
+        );
+        break;
+      case 'delete-todo-button':
+        console.log(todoIndex);
+        eventBus.dispatchEvent(
+          todoAction(projectIndex, todoIndex, 'todo-delete', null),
+        );
         break;
     }
   });
@@ -185,13 +193,24 @@ export function attachListeners() {
         // console.log(newValue);
         todo.description = newValue;
         break;
+      case 'todo-delete':
+        projects[projectIndex].removeTodo(todoIndex);
+        redraw();
+        break;
       case 'todo-priority':
         // console.log(newValue);
         todo.priority = newValue;
-      case 'todo-redraw':
-        clearContent();
-        drawSingleProject(projectIndex);
+        redraw();
         break;
+      // case 'todo-redraw':
+      //   clearContent();
+      //   drawSingleProject(projectIndex);
+      //   break;
+    }
+
+    function redraw() {
+      clearContent();
+      drawSingleProject(projectIndex);
     }
   });
 

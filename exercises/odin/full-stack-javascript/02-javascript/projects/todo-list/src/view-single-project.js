@@ -71,12 +71,20 @@ function makeProjectCardTop(project, projectIndex) {
   deleteProjectButton.classList.add('delete-project-button');
   deleteProjectButton.textContent = '✖';
 
+  let saveOrAdd = document.createElement('div');
+  saveOrAdd.classList.add('save-or-add-message');
+  let saveButton = document.createElement('button');
+  saveButton.classList.add('save-project-button');
+  saveButton.textContent = 'Save';
+
   // if there are no todos
   if (project.todos.length === 0) {
+    saveOrAdd.textContent = 'Click "Add Todo" to start.';
+  } else {
+    saveOrAdd.append(saveButton);
   }
-  // TODO display "click X to add todo"
 
-  cardTop.append(projectName, deleteProjectButton);
+  cardTop.append(projectName, deleteProjectButton, saveOrAdd);
   return cardTop;
 }
 
@@ -96,7 +104,7 @@ function makeProjectCardTodos(project, projectIndex) {
 
   project.todos.forEach((todo, i) => {
     let cardTodo = document.createElement('div');
-    cardTodo.setAttribute('data-todo-index', i++);
+    cardTodo.setAttribute('data-todo-index', i);
     cardTodo.classList.add('project', 'todo', `priority-${todo.priority}`);
 
     let todoDueInput = document.createElement('input');
@@ -121,8 +129,26 @@ function makeProjectCardTodos(project, projectIndex) {
     todoTitleContainer.classList.add('todo-title-container');
     todoTitleContainer.append(todoTitleInput, todoTitleLabel);
 
-    let todoExpandArrow = document.createElement('div');
-    todoExpandArrow.classList.add('toggle-arrow2');
+    // let todoExpandArrow = document.createElement('div');
+    // todoExpandArrow.classList.add('toggle-arrow2');
+
+    // creates the collapsible section with desc. and priority
+    let collapseWrap = document.createElement('div');
+    collapseWrap.classList.add('collapsible-wrap');
+
+    let collapseInput = document.createElement('input');
+    collapseInput.setAttribute('id', `collapse-${i}`);
+    collapseInput.setAttribute('type', 'checkbox');
+    collapseInput.classList.add('toggle');
+    let collapseLabel = document.createElement('label');
+    collapseLabel.setAttribute('for', `collapse-${i}`);
+    collapseLabel.classList.add('toggle-label');
+    collapseLabel.textContent = 'Expand';
+
+    let collapseContent = document.createElement('div');
+    collapseContent.classList.add('collapse-content');
+    let collapseInner = document.createElement('div');
+    collapseInner.classList.add('collapse-inner');
 
     let todoDescription = document.createElement('section');
     todoDescription.setAttribute('contenteditable', 'true');
@@ -147,16 +173,22 @@ function makeProjectCardTodos(project, projectIndex) {
     }
     todoPriorityControls.append(todoPrioritySelect);
 
+    collapseInner.append(todoDescription, todoPriorityControls);
+    collapseContent.append(collapseInner);
+    collapseWrap.append(collapseInput, collapseLabel, collapseContent);
+
     cardTodo.append(
       todoDueInput,
       deleteTodoButton,
       todoTitleContainer,
-      todoExpandArrow,
-      todoDescription,
-      todoPriorityControls,
+      collapseWrap,
+      // todoExpandArrow,
+      // todoDescription,
+      // todoPriorityControls,
     );
 
     cardTodos.append(cardTodo);
+    i++; // remember to increment todo index counter
   });
 
   return cardTodos;
