@@ -77,6 +77,7 @@ export function drawAddTodoModal() {
   let divPriority = document.createElement('div');
   // divPriority.classList.add('');
   let prioritySelect = document.createElement('select');
+  prioritySelect.setAttribute('id', 'modal-todo-priority');
   // todoPrioritySelect.classList.add('todo-priority');
 
   for (let [priority, optionValue] of Object.entries(priorities)) {

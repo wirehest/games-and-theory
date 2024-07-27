@@ -45,7 +45,7 @@ function makeSingleProjectNav() {
   let allProjectsButton = document.createElement('button');
   allProjectsButton.classList.add('all-projects-button');
   allProjectsButton.setAttribute('type', 'button');
-  allProjectsButton.textContent = 'All Projects';
+  allProjectsButton.textContent = 'Back';
 
   let addTodoButton = document.createElement('button');
   addTodoButton.classList.add('add-todo-button');

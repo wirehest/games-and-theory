@@ -62,14 +62,20 @@ export function attachListeners() {
 
   body.addEventListener('click', (e) => {
     // console.log(`class: ${e.target.className}`);
-    let container = e.target.closest('.container');
+    let container = document.querySelector('.container');
+    // let container = e.target.closest('.container');
     let todo = e.target.closest('.todo');
     let className = e.target.className;
-    let projectIndex = container?.attributes['data-project-index'].value;
+    let projectIndex = container.attributes['data-project-index'].value;
     // e.target.closest( '[data-todo-index]'
     // console.log(todo);
     let todoIndex = todo?.attributes['data-todo-index'].value;
     let modal, form;
+
+    console.log('container:');
+    console.log(container);
+    console.log('projectIndex:');
+    console.log(projectIndex);
 
     if (container?.classList.contains('project-only')) {
       eventBus.dispatchEvent(projectAction(projectIndex, 'project-open', null));
@@ -77,6 +83,28 @@ export function attachListeners() {
 
     switch (className) {
       // clicks from within modals:
+      case 'add-todo-modal-add-button':
+        let todoTitle = document.querySelector('#modal-todo-title').value;
+        let todoDescription = document.querySelector(
+          '#modal-todo-description',
+        ).value;
+        let todoPriority = document.querySelector('#modal-todo-priority').value;
+        // console.log(todoTitle);
+        // console.log(todoDescription);
+        // console.log(todoPriority);
+        projects[projectIndex].addTodo(
+          todoTitle,
+          todoDescription,
+          todoPriority,
+        );
+        modal = document.querySelector('dialog');
+        form = document.querySelector('form');
+        form.reset();
+        modal.close();
+        clearContent();
+        drawSingleProject(projectIndex);
+
+        break;
       case 'add-project-modal-add-button':
         projects.push(new Project(document.querySelector('#modal-name').value));
         modal = document.querySelector('dialog');
@@ -89,6 +117,7 @@ export function attachListeners() {
         // or maybe remove option to add project when in single-project view?
         // Replace with add todo?
         break;
+      case 'add-todo-modal-cancel-button':
       case 'add-project-modal-cancel-button':
         // console.log('cancel button clicked');
         modal = document.querySelector('dialog');
