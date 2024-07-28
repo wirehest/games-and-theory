@@ -1,6 +1,6 @@
 import { projects } from './data-control.js';
-// import { currentView } from './events.js';
-// import { attachListeners } from './listeners.js';
+import { setCurrentView } from './utility.js';
+
 export const priorities = {
   '--Set Priority--': '',
   High: 'high',
@@ -9,6 +9,7 @@ export const priorities = {
 };
 
 export default function drawSingleProject(projectIndex) {
+  setCurrentView('single-project');
   makeSingleProjectNav(); // build nav for this view
 
   // if there are no projects

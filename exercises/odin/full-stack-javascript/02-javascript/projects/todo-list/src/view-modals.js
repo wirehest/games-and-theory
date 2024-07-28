@@ -4,6 +4,7 @@ let content = document.querySelector('#content');
 
 export function drawAddProjectModal() {
   let fragment = new DocumentFragment();
+
   let dialog = document.createElement('dialog');
   dialog.classList.add('add-project-modal');
 
@@ -41,6 +42,7 @@ export function drawAddProjectModal() {
 
 export function drawAddTodoModal() {
   let fragment = new DocumentFragment();
+
   let dialog = document.createElement('dialog');
   dialog.classList.add('add-todo-modal');
 

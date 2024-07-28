@@ -21,21 +21,25 @@ export default class Todo {
     this._tasks = tasks;
   }
 
+  get title() {
+    return this._title;
+  }
+
   set title(todoTitle) {
     this._title = todoTitle;
     return this;
   }
 
-  get title() {
-    return this._title;
+  get status() {
+    return this._complete;
   }
 
   set status(value) {
     console.log('Setting status directly not allowed');
   }
 
-  get status() {
-    return this._complete;
+  get description() {
+    return this._description;
   }
 
   set description(todoDescription) {
@@ -43,16 +47,16 @@ export default class Todo {
     return this;
   }
 
-  get description() {
-    return this._description;
+  get tasks() {
+    return this._tasks;
   }
 
   set tasks(value) {
     console.log('Setting tasks directly not allowed');
   }
 
-  get tasks() {
-    return this._tasks;
+  get priority() {
+    return this._priority;
   }
 
   set priority(todoPriority) {
@@ -62,8 +66,8 @@ export default class Todo {
     return this;
   }
 
-  get priority() {
-    return this._priority;
+  get dueDate() {
+    return this._dueDate;
   }
 
   set dueDate(todoDue) {
@@ -71,16 +75,12 @@ export default class Todo {
     return this;
   }
 
-  get dueDate() {
-    return this._dueDate;
+  get createdTimestamp() {
+    return this._createdTimestamp;
   }
 
   set createdTimestamp(value) {
     console.log('Setting creation timestamp directly not allowed');
-  }
-
-  get createdTimestamp() {
-    return this._createdTimestamp;
   }
 
   // methods

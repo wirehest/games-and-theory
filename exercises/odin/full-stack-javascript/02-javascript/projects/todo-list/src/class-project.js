@@ -7,6 +7,10 @@ export default class Project {
     this._name = name;
   }
 
+  get todos() {
+    return this._todos;
+  }
+
   set todos(todosArray) {
     if ({}.toString.call(todosArray) === '[object Array]') {
       this._todos = todosArray;
@@ -14,17 +18,13 @@ export default class Project {
     return this._todos;
   }
 
-  set name(newName) {
-    this._name = newName;
-    return this;
-  }
-
   get name() {
     return this._name;
   }
 
-  get todos() {
-    return this._todos;
+  set name(newName) {
+    this._name = newName;
+    return this;
   }
 
   addTodo(title, description, priority, dueDate, tasks) {
@@ -32,14 +32,14 @@ export default class Project {
     return this._todos;
   }
 
-  completeTodos() {
-    // TODO completes todo and all child tasks
-  }
-
   removeTodo(todoIndex) {
     if (this._todos[todoIndex] === undefined) return;
     this._todos.splice(todoIndex, 1);
     return this._todos;
+  }
+
+  completeTodos() {
+    // TODO completes todo and all child tasks
   }
 
   todoCounter() {

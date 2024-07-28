@@ -1,20 +1,5 @@
-import * as events from './events.js';
 import Project from './class-project.js';
 import Todo from './class-todo.js';
-
-// export let projects = [];
-//
-// let project1 = new Project('Project #1');
-// project1.addTodo('ToDo #1', 'Description of ToDo #1.', 'low');
-// project1.addTodo('ToDo #2', 'Description of ToDo #2.', 'medium');
-// project1.addTodo('ToDo #3', 'Description of ToDo #3.', 'high');
-//
-// let project2 = new Project('Project #2');
-// project2.addTodo('ToDo #1', 'Description of ToDo #1.', 'low');
-// project2.addTodo('ToDo #2', 'Description of ToDo #2.', 'medium');
-// project2.addTodo('ToDo #3', 'Description of ToDo #3.', 'high');
-//
-// projects.push(project1, project2);
 
 export let projects;
 refreshProjects();
@@ -32,7 +17,6 @@ export function refreshProjects() {
       });
     } else {
       for (let parsedProjectString of JSON.parse(localStorage.data)) {
-        // console.log(parsedProjectString);
         let todos = [];
         let newProjectInstance = new Project();
         Object.assign(newProjectInstance, parsedProjectString);
@@ -42,7 +26,6 @@ export function refreshProjects() {
           Object.assign(newTodoInstance, parsedTodoString);
           todos.push(newTodoInstance);
         }
-
         newProjectInstance.todos = todos;
         projects.push(newProjectInstance);
       }

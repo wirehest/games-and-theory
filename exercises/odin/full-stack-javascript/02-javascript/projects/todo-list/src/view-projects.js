@@ -1,12 +1,14 @@
 import { projects } from './data-control.js';
-// import { attachListeners } from './listeners.js';
+import { setCurrentView } from './utility.js';
 
 export default function drawProjects(projects) {
+  setCurrentView('all-projects');
   makeProjectsNav(); // build nav for this view
 
   let content = document.querySelector('#content');
   let fragment = new DocumentFragment();
   let projectIndex = 0;
+
   let mainHeading = document.createElement('h1');
   mainHeading.textContent = 'All Projects';
   fragment.append(mainHeading);
