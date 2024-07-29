@@ -115,7 +115,9 @@ function makeProjectCardTodos(project, projectIndex) {
     deleteTodoButton.textContent = '✖';
 
     let todoTitleInput = document.createElement('input');
+    let todoIsComplete = projects[projectIndex].getTodo(i).isComplete;
     todoTitleInput.setAttribute('type', 'checkbox');
+    todoTitleInput.classList.add('todo-name');
     todoTitleInput.id = `todo-name-${i}`;
 
     let todoTitleLabel = document.createElement('label');
@@ -123,6 +125,11 @@ function makeProjectCardTodos(project, projectIndex) {
     // todoTitleLabel.setAttribute('for', `todo-name-${i}`);
     todoTitleLabel.classList.add('todo-hl-title');
     todoTitleLabel.textContent = todo.title;
+
+    if (todoIsComplete) {
+      todoTitleInput.setAttribute('checked', 'true');
+      todoTitleLabel.classList.add('strikethrough');
+    }
 
     let todoTitleContainer = document.createElement('div');
     todoTitleContainer.classList.add('todo-title-container');
@@ -133,9 +140,12 @@ function makeProjectCardTodos(project, projectIndex) {
     collapseWrap.classList.add('collapsible-wrap');
 
     let collapseInput = document.createElement('input');
+    let extrasVisible = projects[projectIndex].getTodo(i).extrasVisible;
     collapseInput.setAttribute('id', `collapse-${i}`);
     collapseInput.setAttribute('type', 'checkbox');
+    if (extrasVisible) collapseInput.setAttribute('checked', 'true');
     collapseInput.classList.add('toggle');
+
     let collapseLabel = document.createElement('label');
     collapseLabel.setAttribute('for', `collapse-${i}`);
     collapseLabel.classList.add('toggle-label');
@@ -160,6 +170,7 @@ function makeProjectCardTodos(project, projectIndex) {
       let priorityOption = document.createElement('option');
 
       priorityOption.setAttribute('value', optionValue);
+      if (optionValue !== '') priorityOption.classList.add('priority-option');
       priorityOption.textContent = priority;
       todoPrioritySelect.append(priorityOption);
 

@@ -32,6 +32,11 @@ export default class Project {
     return this._todos;
   }
 
+  getTodo(todoIndex) {
+    if (this._todos[todoIndex] === undefined) return;
+    return this._todos[todoIndex];
+  }
+
   removeTodo(todoIndex) {
     if (this._todos[todoIndex] === undefined) return;
     this._todos.splice(todoIndex, 1);
@@ -44,7 +49,7 @@ export default class Project {
 
   todoCounter() {
     let total = this._todos.length;
-    let incomplete = this._todos.filter((todo) => todo.status === false).length;
+    let incomplete = this._todos.filter((todo) => !todo.isComplete).length;
     return `Todos: ${incomplete} Open, ${total} Total`;
   }
 }

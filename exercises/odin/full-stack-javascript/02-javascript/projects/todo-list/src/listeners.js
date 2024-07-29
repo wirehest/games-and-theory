@@ -13,7 +13,7 @@ export function attachListeners() {
   body.addEventListener('focusout', (e) => {
     let validTargets = [
       'todo-hl-due',
-      'todo-priority',
+      // 'todo-priority',
       'todo-hl-title',
       'todo-desc',
       'project-name',
@@ -27,7 +27,8 @@ export function attachListeners() {
     let tIndex = todo.attributes['data-todo-index'].value ?? undefined;
     let newValue;
 
-    if (['todo-hl-due', 'todo-priority'].includes(className)) {
+    // if (['todo-hl-due', 'todo-priority'].includes(className)) {
+    if (className === 'todo-hl-due') {
       newValue = e.target.value;
     }
 
@@ -86,11 +87,21 @@ export function attachListeners() {
     let className = e.target.className;
     let container = e.target.closest('.container') ?? undefined;
     let pIndex = container?.attributes['data-project-index'].value;
-    let todo = e.target.closest('.todo');
+    let todo = e.target.closest('[data-todo-index]');
     let tIndex = todo?.attributes['data-todo-index'].value;
+    let newValue = e.target.value;
 
-    if (className === 'delete-todo-button') {
-      eventBus.dispatchEvent(makeEvent({ pIndex, tIndex, action: className }));
+    if (
+      [
+        'delete-todo-button',
+        'todo-name',
+        'priority-option',
+        'toggle-label',
+      ].includes(className)
+    ) {
+      eventBus.dispatchEvent(
+        makeEvent({ pIndex, tIndex, action: className, newValue }),
+      );
     }
   });
 

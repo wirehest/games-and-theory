@@ -150,6 +150,10 @@ header > nav {
   font-size: 1.2rem;
 }
 
+.strikethrough {
+  text-decoration: line-through;
+}
+
 .todo-hl-due {
   align-self: flex-start;
 }
@@ -243,5 +247,6 @@ header > nav {
 .toggle:checked + .toggle-label + .collapse-content {
   max-height: 350px;
 }
+
 @media (min-width: 1000px) {
 }

@@ -25,18 +25,20 @@ eventBus.addEventListener('eventbus-event', (e) => {
   let action = e.detail.action;
   let newValue = e.detail.newValue;
   let inputs = e.detail.inputs;
-  let validTargets = [
+  let validClassTargets = [
     'todo-hl-due',
-    'todo-priority',
+    'priority-option',
     'todo-hl-title',
     'todo-desc',
+    'todo-name',
     'project-name',
+    'toggle-label',
   ];
   let todo;
   let modal;
   let form;
 
-  if (validTargets.includes(action)) {
+  if (validClassTargets.includes(action)) {
     todo = projects[pIndex].todos[tIndex];
   }
 
@@ -44,7 +46,7 @@ eventBus.addEventListener('eventbus-event', (e) => {
   if (action === 'todo-hl-title') todo.title = newValue;
   if (action === 'todo-hl-due') todo.dueDate = newValue;
   if (action === 'todo-desc') todo.description = newValue;
-  if (action === 'todo-priority') {
+  if (action === 'priority-option') {
     todo.priority = newValue;
     redraw({ viewName: 'single', pIndex });
   }
@@ -55,6 +57,13 @@ eventBus.addEventListener('eventbus-event', (e) => {
   if (action === 'save-button') {
     refreshProjects();
     // redraw({ viewName: 'single', pIndex });
+  }
+  if (action === 'todo-name') {
+    todo.toggleStatus();
+    redraw({ viewName: 'single', pIndex });
+  }
+  if (action === 'toggle-label') {
+    todo.toggleCollapsible();
   }
 
   // project change handling

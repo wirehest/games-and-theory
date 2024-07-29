@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 export default class Todo {
   _createdTimestamp = Date.now();
   _complete = false;
+  _extrasVisible = false;
 
   constructor(
     title,
@@ -30,12 +31,20 @@ export default class Todo {
     return this;
   }
 
-  get status() {
+  get isComplete() {
     return this._complete;
   }
 
-  set status(value) {
-    console.log('Setting status directly not allowed');
+  set isComplete(value) {
+    console.log('Setting isComplete directly not allowed');
+  }
+
+  get extrasVisible() {
+    return this._extrasVisible;
+  }
+
+  set extrasVisible(value) {
+    console.log('Setting extrasVisible directly not allowed');
   }
 
   get description() {
@@ -86,6 +95,11 @@ export default class Todo {
   // methods
   toggleStatus() {
     this._complete = !this._complete;
+    return this;
+  }
+
+  toggleCollapsible() {
+    this._extrasVisible = !this._extrasVisible;
     return this;
   }
 
