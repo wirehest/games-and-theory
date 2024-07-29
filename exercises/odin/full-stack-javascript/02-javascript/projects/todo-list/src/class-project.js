@@ -43,7 +43,8 @@ export default class Project {
   }
 
   todoCounter() {
-    // let completeTodos =
-    // return ''
+    let total = this._todos.length;
+    let incomplete = this._todos.filter((todo) => todo.status === false).length;
+    return `Todos: ${incomplete} Open, ${total} Total`;
   }
 }

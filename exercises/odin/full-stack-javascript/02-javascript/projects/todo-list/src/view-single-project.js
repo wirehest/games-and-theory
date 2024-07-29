@@ -33,8 +33,6 @@ export default function drawSingleProject(projectIndex) {
   container.append(cardTop, cardTodos, cardBottom);
   fragment.append(mainHeading, container);
   content.append(fragment);
-
-  // attachListeners();
 }
 
 function makeSingleProjectNav() {
@@ -60,7 +58,6 @@ function makeSingleProjectNav() {
 
 function makeProjectCardTop(project, projectIndex) {
   let cardTop = document.createElement('div');
-  // cardTop.setAttribute('data-project-index', projectIndex);
   cardTop.classList.add('project', 'card-top');
 
   let projectName = document.createElement('h1');
@@ -119,19 +116,17 @@ function makeProjectCardTodos(project, projectIndex) {
 
     let todoTitleInput = document.createElement('input');
     todoTitleInput.setAttribute('type', 'checkbox');
-    todoTitleInput.id = 'todo-name';
+    todoTitleInput.id = `todo-name-${i}`;
 
     let todoTitleLabel = document.createElement('label');
     todoTitleLabel.setAttribute('contenteditable', 'true');
+    // todoTitleLabel.setAttribute('for', `todo-name-${i}`);
     todoTitleLabel.classList.add('todo-hl-title');
     todoTitleLabel.textContent = todo.title;
 
     let todoTitleContainer = document.createElement('div');
     todoTitleContainer.classList.add('todo-title-container');
     todoTitleContainer.append(todoTitleInput, todoTitleLabel);
-
-    // let todoExpandArrow = document.createElement('div');
-    // todoExpandArrow.classList.add('toggle-arrow2');
 
     // creates the collapsible section with desc. and priority
     let collapseWrap = document.createElement('div');
@@ -183,9 +178,6 @@ function makeProjectCardTodos(project, projectIndex) {
       deleteTodoButton,
       todoTitleContainer,
       collapseWrap,
-      // todoExpandArrow,
-      // todoDescription,
-      // todoPriorityControls,
     );
 
     cardTodos.append(cardTodo);

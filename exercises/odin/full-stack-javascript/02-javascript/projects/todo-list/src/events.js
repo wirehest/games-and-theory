@@ -52,6 +52,10 @@ eventBus.addEventListener('eventbus-event', (e) => {
     projects[pIndex].removeTodo(tIndex);
     redraw({ viewName: 'single', pIndex });
   }
+  if (action === 'save-button') {
+    refreshProjects();
+    // redraw({ viewName: 'single', pIndex });
+  }
 
   // project change handling
   if (action === 'project-name') {

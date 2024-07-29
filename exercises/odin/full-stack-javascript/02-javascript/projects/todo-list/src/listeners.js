@@ -1,4 +1,4 @@
-import { clearContent, currentView } from './utility.js';
+import { currentView } from './utility.js';
 import { eventBus, makeEvent } from './events.js';
 import { projects } from './data-control.js';
 
@@ -49,21 +49,16 @@ export function attachListeners() {
         'all-projects-button',
         'add-project-button',
         'add-todo-button',
+        'save-button',
         'reset-button',
       ].includes(className)
     ) {
       eventBus.dispatchEvent(makeEvent({ action: className }));
     }
-
-    if (className === 'save-button') {
-      // TODO
-    }
   });
 
   // click handlers for modal buttons
   body.addEventListener('click', (e) => {
-    // if (currentView !== 'single-project') return;
-
     let className = e.target.className;
     let container = document.querySelector('.container');
     let pIndex = container?.attributes['data-project-index'].value;
@@ -74,9 +69,6 @@ export function attachListeners() {
 
     if (className === 'add-project-modal-add-button') {
       eventBus.dispatchEvent(makeEvent({ action: className }));
-      // TODO redraw projects or single-project based on state
-      // or maybe remove option to add project when in single-project view?
-      // Replace with add todo?
     }
 
     if (
@@ -99,10 +91,6 @@ export function attachListeners() {
 
     if (className === 'delete-todo-button') {
       eventBus.dispatchEvent(makeEvent({ pIndex, tIndex, action: className }));
-    }
-
-    if (className === '') {
-      // TODO update card immediately when new priority clicked
     }
   });
 

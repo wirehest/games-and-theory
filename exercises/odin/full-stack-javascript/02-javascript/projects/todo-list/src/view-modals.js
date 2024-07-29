@@ -73,14 +73,11 @@ export function drawAddTodoModal() {
   inputDescription.setAttribute('id', 'modal-todo-description');
   inputDescription.setAttribute('type', 'text');
   inputDescription.setAttribute('required', '');
-  // inputDescription.setAttribute('autofocus', '');
   divDescription.append(labelDescription, inputDescription);
 
   let divPriority = document.createElement('div');
-  // divPriority.classList.add('');
   let prioritySelect = document.createElement('select');
   prioritySelect.setAttribute('id', 'modal-todo-priority');
-  // todoPrioritySelect.classList.add('todo-priority');
 
   for (let [priority, optionValue] of Object.entries(priorities)) {
     let priorityOption = document.createElement('option');
@@ -88,13 +85,8 @@ export function drawAddTodoModal() {
     priorityOption.setAttribute('value', optionValue);
     priorityOption.textContent = priority;
     prioritySelect.append(priorityOption);
-
-    // if (todo.priority === optionValue) {
-    //   priorityOption.setAttribute('selected', '');
-    // }
   }
   divPriority.append(prioritySelect);
-  // addTodo(title, description, priority, dueDate, tasks) {
 
   let divButtons = document.createElement('div');
   let addButton = document.createElement('button');

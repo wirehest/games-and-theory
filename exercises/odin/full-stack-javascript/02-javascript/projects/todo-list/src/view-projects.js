@@ -15,7 +15,7 @@ export default function drawProjects(projects) {
 
   projects.forEach((project) => {
     let container = document.createElement('div');
-    container.setAttribute('data-project-index', projectIndex++);
+    container.setAttribute('data-project-index', projectIndex);
     container.classList.add('container', 'project-only');
 
     let cardTop = document.createElement('div');
@@ -35,13 +35,14 @@ export default function drawProjects(projects) {
     let todoCounter = document.createElement('span');
     todoCounter.classList.add('project-todo-counter');
 
-    let todoCounts = 'ToDos: 5 Open, 10 Total'; // TODO build todo counter text
+    let todoCounts = projects[projectIndex].todoCounter();
     todoCounter.textContent = todoCounts;
 
     cardTop.append(projectName, deleteProjectButton);
     cardBottom.append(todoCounter);
     container.append(cardTop, cardBottom);
     fragment.append(container);
+    projectIndex++;
   });
 
   content.append(fragment);
