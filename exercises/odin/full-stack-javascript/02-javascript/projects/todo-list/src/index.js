@@ -7,8 +7,3 @@ drawProjects(projects);
 attachListeners();
 
 // TODO
-// 1. refresh todos immediately when priority is changed
-//    (to update highlight color)
-// 6. add-project immediately opens new project
-// 7. issue with todo array being overwritten for all projects
-//    with identical data. Find trigger
