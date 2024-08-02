@@ -1,7 +1,5 @@
 import './style.css';
+import { Dropdown } from './classes.js';
 
-let menuButton = document.querySelector('.menu-button');
-let menu = document.querySelector('.menu');
-menuButton.addEventListener('click', (e) => {
-  menu.classList.toggle(invisible);
-});
+new Dropdown({ buttonSelector: '.menu-button1', menuSelector: '.menu1' });
+new Dropdown({ buttonSelector: '.menu-button2', menuSelector: '.menu2' });
