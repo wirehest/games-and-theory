@@ -5,17 +5,21 @@
 }
 
 * {
-  /* border: 1px solid red; */
+  border: 1px solid red;
   font-family: sans-serif;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --carousel-width: 500px;
+  --carousel-center-width: 500px;
   --carousel-roll-gap: 20px;
+  /* --carousel-roll-padding: 30px; */
+  /* --carousel-offset: calc(
+    (var(--carousel-center-width) - var(--carousel-roll-gap)) * 0.5
+  ); */
   --carousel-offset: calc(
-    (var(--carousel-width) + var(--carousel-roll-gap) * 0.5) * 0.5
+    var(--carousel-center-width) + 2 * var(--carousel-roll-gap)
   );
 }
 
@@ -86,16 +90,19 @@ div[class^='menu'] ul {
   display: flex;
   flex-flow: column;
   outline: 1px solid #000;
+  overflow: hidden;
+  width: var(--carousel-center-width);
 }
 
 .carousel-roll {
   align-items: center;
+  /* background: red; */
   display: flex;
   gap: var(--carousel-roll-gap);
   height: 350px;
-  overflow: hidden;
-  padding: 30px;
-  width: var(--carousel-width);
+  padding: var(--carousel-roll-gap);
+  /* transform: translate(-250px); */
+  /* width: var(--carousel-roll-width); */
 }
 
 .carousel-img {
@@ -107,10 +114,7 @@ div[class^='menu'] ul {
   justify-content: space-around;
   min-width: 300px;
   position: relative;
-}
-
-.carousel-img {
-  right: var(--carousel-offset);
+  right: calc((var(--carousel-center-width) - var(--carousel-roll-gap)) * 0.5);
 }
 
 .carousel-nav-circles ul {
