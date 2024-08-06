@@ -14,10 +14,6 @@
 :root {
   --carousel-center-width: 500px;
   --carousel-roll-gap: 20px;
-  /* --carousel-roll-padding: 30px; */
-  /* --carousel-offset: calc(
-    (var(--carousel-center-width) - var(--carousel-roll-gap)) * 0.5
-  ); */
   --carousel-offset: calc(
     var(--carousel-center-width) + 2 * var(--carousel-roll-gap)
   );

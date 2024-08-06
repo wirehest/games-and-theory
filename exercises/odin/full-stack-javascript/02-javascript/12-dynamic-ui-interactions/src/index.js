@@ -4,8 +4,6 @@ import { Dropdown } from './classes.js';
 new Dropdown({ buttonSelector: '.menu-button1', menuSelector: '.menu1' });
 new Dropdown({ buttonSelector: '.menu-button2', menuSelector: '.menu2' });
 
-// setInterval(myCallback, 5000);
-
 function myCallback() {
   console.log('tick');
 }
