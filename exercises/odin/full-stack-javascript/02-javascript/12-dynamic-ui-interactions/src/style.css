@@ -92,13 +92,13 @@ div[class^='menu'] ul {
 
 .carousel-roll {
   align-items: center;
-  /* background: red; */
   display: flex;
   gap: var(--carousel-roll-gap);
   height: 350px;
   padding: var(--carousel-roll-gap);
-  /* transform: translate(-250px); */
-  /* width: var(--carousel-roll-width); */
+  position: relative;
+  right: calc((var(--carousel-center-width) - var(--carousel-roll-gap)) * 0.5);
+  width: max-content;
 }
 
 .carousel-img {
@@ -109,8 +109,6 @@ div[class^='menu'] ul {
   height: 200px;
   justify-content: space-around;
   min-width: 300px;
-  position: relative;
-  right: calc((var(--carousel-center-width) - var(--carousel-roll-gap)) * 0.5);
 }
 
 .carousel-nav-circles ul {
@@ -126,7 +124,6 @@ div[class^='menu'] ul {
   display: inline-block;
   height: 12px;
   margin: 0 8px;
-  /* outline: 1px solid #000; */
   width: 12px;
 }
 

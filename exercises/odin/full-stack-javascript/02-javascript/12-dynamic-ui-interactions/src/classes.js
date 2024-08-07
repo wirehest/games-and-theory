@@ -11,3 +11,7 @@ export class Dropdown {
     });
   }
 }
+
+export class ImageCarousel {
+  constructor() {}
+}
