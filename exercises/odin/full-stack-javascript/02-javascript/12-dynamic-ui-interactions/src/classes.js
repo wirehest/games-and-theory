@@ -32,6 +32,7 @@ export class ImageCarousel {
   // init remaining variables
   init() {
     this.imageCarousel = document.querySelector(this.insertTarget);
+    this.makeCarouselFrame();
     this.carouselRoll = document.querySelector(
       `${this.insertTarget} .carousel-roll`,
     );
@@ -39,14 +40,19 @@ export class ImageCarousel {
       `${this.insertTarget} .carousel-img`,
     ).length;
     this.rollMax = this.rollLength - 2;
-    this.makeCarouselFrame();
-    // console.log(this.images);
-    // console.log(this.carouselRoll);
-    // console.log(this.rollMax);
+    this.circles = document.querySelectorAll(`${this.insertTarget} .dot`);
+    this.addClickListener();
   }
 
   redrawCircles() {
-    //
+    this.circles.forEach((circle) => {
+      let circleNum = +circle.attributes['data-imgnum'].value;
+      if (circleNum === this.rollPosition) {
+        circle.classList.add('dot-filled');
+      } else {
+        circle.classList.remove('dot-filled');
+      }
+    });
   }
 
   makeCarouselFrame() {
@@ -95,51 +101,38 @@ export class ImageCarousel {
 
     this.imageCarousel.append(fragment);
   }
-}
 
-/*
-imageCarousel.addEventListener('click', (e) => {
-  let className = e.target.className;
+  addClickListener() {
+    this.imageCarousel.addEventListener('click', (e) => {
+      let target = e.target;
+      let classList = [...target.classList];
+      let className = target.className;
+      let validNavClasses = ['carousel-nav-left', 'carousel-nav-right', 'dot'];
+      let offset;
 
-  // console.log(className);
-  if (className === 'carousel-nav-right' || className === 'carousel-nav-left') {
-    let sign = className === 'carousel-nav-left' ? -1 : 1;
-    rollPosition = wrapPosition(rollPosition, sign, rollMin, rollMax);
-    let offset = -(rollPosition - 1) * 320;
-    carouselRoll.style.transform = `translate(${offset}px)`;
+      if (validNavClasses.some((c) => classList.includes(c))) {
+        if (classList.includes('dot')) {
+          this.rollPosition = +target.attributes['data-imgnum'].value;
+        } else {
+          let sign = className === 'carousel-nav-left' ? -1 : 1;
+          this.rollPosition = this.#wrapPosition(
+            this.rollPosition,
+            sign,
+            this.rollMin,
+            this.rollMax,
+          );
+        }
+        offset = -(this.rollPosition - 1) * 320;
+        this.carouselRoll.style.transform = `translate(${offset}px)`;
+        this.redrawCircles();
+      }
+    });
   }
-});
 
-function wrapPosition(current, sign, minimum, maximum) {
-  current += sign;
-  if (current < minimum) current = maximum;
-  if (current > maximum) current = minimum;
-  return current;
+  #wrapPosition(current, sign, minimum, maximum) {
+    current += sign;
+    if (current < minimum) current = maximum;
+    if (current > maximum) current = minimum;
+    return current;
+  }
 }
-
-
-<div class="carousel-frame">
-  <div class="carousel-nav-left"></div>
-  <div class="carousel-center">
-    <div class="carousel-roll">
-      <div class="carousel-img">5</div>
-      <div class="carousel-img">1</div>
-      <div class="carousel-img">2</div>
-      <div class="carousel-img">3</div>
-      <div class="carousel-img">4</div>
-      <div class="carousel-img">5</div>
-      <div class="carousel-img">1</div>
-    </div>
-  </div>
-  <div class="carousel-nav-right"></div>
-</div>
-<div class="carousel-nav-circles">
-  <ul>
-    <li class="dot"></li>
-    <li class="dot"></li>
-    <li class="dot"></li>
-    <li class="dot"></li>
-    <li class="dot"></li>
-  </ul>
-</div>
-*/
