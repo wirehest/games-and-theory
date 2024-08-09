@@ -6,9 +6,10 @@ scratch.*
 junk/*
 *.zip
 
-# Folders
+# directories
 node_modules
 challenges/advent-of-code/*/*.txt
+webpack-template/
 # javascript-info/*
 # exercises/javascript-crash-course-1e/*
 
