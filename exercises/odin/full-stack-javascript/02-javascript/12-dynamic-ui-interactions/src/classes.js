@@ -16,7 +16,7 @@ export class ImageCarousel {
   rollMin = 1;
   rollPosition = 1;
 
-  constructor(images, insertTarget, frameWidth) {
+  constructor(images, insertTarget) {
     if (images.length === 0) {
       this.images = [];
     } else {
@@ -42,6 +42,7 @@ export class ImageCarousel {
     this.rollMax = this.rollLength - 2;
     this.circles = document.querySelectorAll(`${this.insertTarget} .dot`);
     this.addClickListener();
+    this.slideshow(this.insertTarget);
   }
 
   redrawCircles() {
@@ -127,6 +128,34 @@ export class ImageCarousel {
         this.redrawCircles();
       }
     });
+  }
+
+  slideshow(carouselRootElement) {
+    const activeEvents = [
+      'load',
+      'click',
+      'keydown',
+      'mousemove',
+      'mousedown',
+      'contextmenu',
+    ];
+    let timer;
+
+    activeEvents.forEach((event) => window.addEventListener(event, resetTimer));
+
+    function startSlideshow() {
+      let navRight = document.querySelector(
+        `${carouselRootElement} .carousel-nav-right`,
+      );
+      let simClick = new MouseEvent('click', { bubbles: true });
+      navRight.dispatchEvent(simClick);
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(startSlideshow, 5_000);
+    }
   }
 
   #wrapPosition(current, sign, minimum, maximum) {
