@@ -31,13 +31,22 @@ body {
 }
 
 header > nav {
+  display: flex;
+  gap: 3px;
   padding-left: 10px;
+}
+
+header > nav > button {
+  border-color: #8d99ae;
+  border-style: solid;
+  border-radius: 8px 8px 0 0;
+  border-width: 2px 2px 0 2px;
+  padding: 5px 5px 2px 5px;
 }
 
 #content {
   display: flex;
   flex-flow: column nowrap;
-  /*gap: 15px;*/
 }
 
 #content > h1 {
@@ -65,7 +74,6 @@ header > nav {
 .card-top {
   border-bottom: 0;
   border-radius: 6px 6px 0 0;
-  /*min-height: 90px;*/
 }
 
 .save-or-add-message {
@@ -73,24 +81,20 @@ header > nav {
   display: flex;
 }
 
-/*.card-top > h1 {*/
 .project-name {
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 10px;
   margin-right: 25px;
-  /*padding-right: 25px;*/
 }
 
 .card-bottom {
   border-radius: 0 0 6px 6px;
   border-top: 0;
   margin-bottom: 15px;
-  /*min-height: 0;*/
 }
 
 .delete-project-button {
-  /*content: '🗑';*/
   font-size: 1.5rem;
   position: absolute;
   right: 10px;
@@ -116,7 +120,6 @@ header > nav {
   border-radius: 0;
   border-right: 2px solid #9d8189;
   border-top: 1px dashed #9d8189;
-  /*gap: 15px;*/
 }
 
 .todo-title-container {
@@ -131,14 +134,6 @@ header > nav {
   margin: 1px 0 0;
   width: 20px;
 }
-/*.todo input[type='checkbox'] {*/
-/*  display: none;*/
-/*}*/
-
-/*.todo-hl {*/
-/*  display: flex;*/
-/*  flex-flow: column nowrap;*/
-/*}*/
 
 [class^='todo-hl'] {
   background: none;
@@ -158,6 +153,14 @@ header > nav {
   align-self: flex-start;
 }
 
+.todo-desc {
+  border-color: #bbb;
+  border-width: 0 0 0 4px;
+  border-style: dotted;
+  margin: 10px 0 20px;
+  padding: 3px 10px 10px;
+}
+
 .priority-high {
   border-left: 8px solid #ef233c;
 }
@@ -170,32 +173,41 @@ header > nav {
   border-left: 8px solid #2ec4b6;
 }
 
-.tasks {
-  max-height: fit-content;
-  border-top: 1px solid #9d8189;
-  /*border-bottom: 1px solid #9d8189;*/
-  display: grid;
-  /*flex-flow: column wrap;*/
-  gap: 5px;
-  grid-template-columns: min-content 1fr;
-  padding-top: 10px;
-  /*padding: 15px 0 10px;*/
-  /*margin-top: 15px;*/
-}
-
 /* for modal */
 ::backdrop {
   background: #000000ab;
 }
 
 [class$='-modal'] {
+  border: 2px solid #8d99ae;
+  border-radius: 6px;
   margin: auto;
+  padding: 10px;
 }
 
-.add-project-form {
-  align-items: center;
+[class$='-form'] {
+  align-items: flex-start;
   display: flex;
-  flex-direction: column;
+  gap: 15px;
+  flex-flow: column;
+}
+
+legend {
+  align-self: center;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+form > div {
+  display: flex;
+  flex-flow: column;
+}
+
+.modal-buttons {
+  align-self: center;
+  flex-flow: row;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 /* for collapsibles */
@@ -204,37 +216,25 @@ header > nav {
   overflow: hidden;
 }
 
-/*.toggle-arrow1 {*/
-/*  border: solid transparent;*/
-/*  border-top: solid #000;*/
-/*  border-width: 8px 8px 0;*/
-/*  height: 0;*/
-/*  width: 0;*/
-/*}*/
-
-/*.toggle-arrow2 {*/
+.collapsible-wrap > label {
+  color: #2b2d42;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 900;
+}
 
 .toggle {
   display: none;
-}
-
-.toggle-label {
-  /*align-self: center;*/
-  /*border: solid #000;*/
-  /*border-width: 0 4px 4px 0;*/
-  /*height: 0;*/
-  /*padding: 3px;*/
-  /*transform: rotate(45deg);*/
-  /*width: 0;*/
 }
 
 .toggle-label::after {
   content: ' ';
   display: inline-block;
   align-self: center;
-  border: solid #000;
+  border: solid #2b2d42;
   border-width: 0 4px 4px 0;
   height: 0;
+  margin-left: 6px;
   padding: 3px;
   transform: rotate(-45deg);
   width: 0;

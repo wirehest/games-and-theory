@@ -1,7 +1,4 @@
 import { format } from 'date-fns';
-// TODO set task status (e.g., complete)
-// TODO max length checking for title
-// TODO max length checking for description
 
 export default class Todo {
   _createdTimestamp = Date.now();

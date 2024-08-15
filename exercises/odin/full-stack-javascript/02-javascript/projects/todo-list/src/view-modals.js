@@ -14,7 +14,7 @@ export function drawAddProjectModal() {
   form.setAttribute('method', 'dialog');
 
   let legend = document.createElement('legend');
-  legend.textContent = 'Project Name:';
+  legend.textContent = 'New Project Name';
 
   let divInput = document.createElement('div');
   let input = document.createElement('input');
@@ -22,9 +22,11 @@ export function drawAddProjectModal() {
   input.setAttribute('type', 'text');
   input.setAttribute('required', '');
   input.setAttribute('autofocus', '');
+  input.setAttribute('placeholder', 'E.g., Groceries');
   divInput.append(input);
 
   let divButtons = document.createElement('div');
+  divButtons.classList.add('modal-buttons');
   let addButton = document.createElement('button');
   addButton.classList.add('add-project-modal-add-button');
   addButton.textContent = 'Add Project';
@@ -52,7 +54,7 @@ export function drawAddTodoModal() {
   form.setAttribute('method', 'dialog');
 
   let legend = document.createElement('legend');
-  legend.textContent = 'Add New Todo:';
+  legend.textContent = 'New Todo';
 
   let divTitle = document.createElement('div');
   let labelTitle = document.createElement('label');
@@ -63,6 +65,7 @@ export function drawAddTodoModal() {
   inputTitle.setAttribute('type', 'text');
   inputTitle.setAttribute('required', '');
   inputTitle.setAttribute('autofocus', '');
+  inputTitle.setAttribute('placeholder', 'E.g., Buy apples');
   divTitle.append(labelTitle, inputTitle);
 
   let divDescription = document.createElement('div');
@@ -73,6 +76,7 @@ export function drawAddTodoModal() {
   inputDescription.setAttribute('id', 'modal-todo-description');
   inputDescription.setAttribute('type', 'text');
   inputDescription.setAttribute('required', '');
+  inputDescription.setAttribute('placeholder', 'E.g., Apples for baking pie');
   divDescription.append(labelDescription, inputDescription);
 
   let divPriority = document.createElement('div');
@@ -89,6 +93,7 @@ export function drawAddTodoModal() {
   divPriority.append(prioritySelect);
 
   let divButtons = document.createElement('div');
+  divButtons.classList.add('modal-buttons');
   let addButton = document.createElement('button');
   addButton.classList.add('add-todo-modal-add-button');
   addButton.textContent = 'Add Todo';

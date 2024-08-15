@@ -8,7 +8,7 @@ export function refreshProjects() {
   if (storageAvailable('localStorage')) {
     projects = [];
     if (localStorage.length === 0) {
-      ['First', 'Second'].forEach((projectName) => {
+      ['First'].forEach((projectName) => {
         let project = new Project(`My ${projectName} Project`);
         project.addTodo('ToDo #1', 'Description of ToDo #1.', 'low');
         project.addTodo('ToDo #2', 'Description of ToDo #2.', 'medium');
