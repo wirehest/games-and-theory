@@ -47,28 +47,63 @@ let myLibrary = new Library();
 // myLibrary.addBook('The End of Eternity', 'Isaac Asimov', 250, true);
 
 (function screenController() {
+  let title = document.querySelector('#title');
+  let author = document.querySelector('#author');
+  let pages = document.querySelector('#pages');
+  let read = document.querySelector('#read');
+
   redrawLibrary();
 
-  (function addButtonListeners() {
+  (function addListeners() {
     let modal = document.querySelector('.add-book-modal');
     let form = document.querySelector('.add-book-form');
+    // let submitButton = document.querySelector('.submit-button')
 
     document.addEventListener('click', (event) => {
       let button = event.target.className;
+
       if (button === 'new-book-button') modal.showModal();
+
       if (button === 'close-button') {
         form.reset();
         modal.close();
+      }
+
+      if (button === 'submit-button') {
+        console.log(title.validity.valueMissing);
+        if (title.validity.valueMissing) {
+          title.setCustomValidity('Please enter a title.');
+        } else {
+          title.setCustomValidity('');
+        }
+
+        if (author.validity.valueMissing) {
+          author.setCustomValidity("Please enter the author's name.");
+        } else {
+          author.setCustomValidity('');
+        }
+
+        if (pages.validity.valueMissing) {
+          pages.setCustomValidity('Please enter the page count.');
+        } else if (pages.validity.typeMismatch) {
+          pages.setCustomValidity('Page count must be numerals, 0-9.');
+        } else if (pages.validity.rangeUnderflow) {
+          pages.setCustomValidity('Page count cannot be zero.');
+        } else {
+          pages.setCustomValidity('');
+        }
       }
     });
 
     // submit event is triggered by buttons associated with dialog forms
     document.addEventListener('submit', (event) => {
-      let title = document.querySelector('#title').value;
-      let author = document.querySelector('#author').value;
-      let pages = +document.querySelector('#pages').value;
-      let read = document.querySelector('#read').checked;
-      myLibrary.addBook(title, author, pages, read);
+      // let title = document.querySelector('#title');
+      // let author = document.querySelector('#author');
+      // let pages = document.querySelector('#pages');
+      // let read = document.querySelector('#read');
+      // console.log('submit fired');
+      //
+      myLibrary.addBook(title.value, author.value, +pages.value, read.checked);
       form.reset();
       redrawLibrary();
     });
