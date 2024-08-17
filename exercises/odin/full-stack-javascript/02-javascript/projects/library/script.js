@@ -57,7 +57,6 @@ let myLibrary = new Library();
   (function addListeners() {
     let modal = document.querySelector('.add-book-modal');
     let form = document.querySelector('.add-book-form');
-    // let submitButton = document.querySelector('.submit-button')
 
     document.addEventListener('click', (event) => {
       let button = event.target.className;
@@ -97,12 +96,6 @@ let myLibrary = new Library();
 
     // submit event is triggered by buttons associated with dialog forms
     document.addEventListener('submit', (event) => {
-      // let title = document.querySelector('#title');
-      // let author = document.querySelector('#author');
-      // let pages = document.querySelector('#pages');
-      // let read = document.querySelector('#read');
-      // console.log('submit fired');
-      //
       myLibrary.addBook(title.value, author.value, +pages.value, read.checked);
       form.reset();
       redrawLibrary();
