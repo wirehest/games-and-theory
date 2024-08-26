@@ -1,3 +1,9 @@
+@import url(https://fonts.bunny.net/css?family=abel:400|alatsi:400|albert-sans:400);
+
+/*font-family: 'Abel', sans-serif;*/
+/*font-family: 'Alatsi', sans-serif;*/
+/*font-family: 'Albert Sans', sans-serif;*/
+
 *,
 *::before,
 *::after {
@@ -5,8 +11,7 @@
 }
 
 * {
-  /*border: 1px solid red;*/
-  font-family: sans-serif;
+  border: 1px solid #ef233c90;
   margin: 0;
   padding: 0;
 }
@@ -18,4 +23,121 @@ select {
 }
 
 :root {
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  font-family: 'Albert Sans', sans-serif;
+  font-size: 16px;
+  gap: 4px;
+}
+
+h1 {
+  font-family: 'Alatsi', sans-serif;
+}
+
+.condition-label {
+  /*font-family: 'Abel', sans-serif;*/
+}
+
+/*.condition-value {*/
+/*  font-family: '', monospace;*/
+/*}*/
+
+#nav-box {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#search-details {
+  padding-bottom: 15px;
+}
+
+#actual-location {
+  font-size: 1.8rem;
+  /*line-height: 1.5rem;*/
+}
+
+#current-box {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    'icon temperature'
+    'conditions conditions'
+    'description description';
+  /*font-family: 'Alatsi', sans-serif;*/
+  /*font-size: 1.5rem;*/
+}
+
+#conditions-icon {
+  grid-area: icon;
+}
+
+#current-temps {
+  grid-area: temperature;
+  text-align: end;
+}
+
+#main-temp-units {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+#main-temp-value {
+  font-size: 2.8rem;
+  font-weight: 900;
+  /*justify-self: end;*/
+  /*-webkit-text-stroke: 2px black;*/
+}
+
+#feelslike-value {
+  font-size: 2rem;
+}
+
+#conditions-desc {
+  font-family: 'Alatsi', 'sans-serif';
+  font-size: 1.5rem;
+  grid-area: conditions;
+}
+
+#short-description {
+  grid-area: description;
+}
+
+/*#temp {*/
+/*  font-family: 'Abel', sans-serif;*/
+/*  font-size: 3rem;*/
+/*}*/
+
+/*#main-temp .temp-units {*/
+/*  font-size: 1.5rem;*/
+/*}*/
+
+#extras-box {
+  display: grid;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.2rem;
+  grid-template: repeat(3, min-content) / repeat(2, 1fr);
+}
+
+#forecasts-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.forecast {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  min-height: 120px;
+}
+
+.forecast > p {
+  font-size: 1.6rem;
+}
+
+@media (min-width: 1000px) {
 }
