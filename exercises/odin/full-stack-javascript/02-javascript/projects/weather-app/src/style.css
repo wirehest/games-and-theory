@@ -11,7 +11,7 @@
 }
 
 * {
-  border: 1px solid #ef233c90;
+  /*border: 1px solid #ef233c90;*/
   margin: 0;
   padding: 0;
 }
@@ -26,59 +26,127 @@ select {
 }
 
 body {
+  /*background: url('./bg/partly-cloudy-night.jpg') center / cover #778da9;*/
+  color: #fff;
   display: flex;
   flex-flow: column;
   font-family: 'Albert Sans', sans-serif;
   font-size: 16px;
-  gap: 4px;
+  gap: 15px;
+  height: 100vh;
+  padding: 10px;
 }
 
-h1 {
+.main-container {
+  background: #403d3950;
+  border-radius: 5px;
+  backdrop-filter: blur(25px);
+  padding: 15px 10px 20px;
+}
+
+h1,
+h2 {
   font-family: 'Alatsi', sans-serif;
 }
 
-.condition-label {
-  /*font-family: 'Abel', sans-serif;*/
+h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-bottom: 10px;
 }
 
-/*.condition-value {*/
-/*  font-family: '', monospace;*/
-/*}*/
-
 #nav-box {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  justify-items: center;
+  padding: 15px 10px;
+}
+
+#nav-box form,
+#nav-box div {
+  align-items: center;
   display: flex;
-  flex-flow: row nowrap;
+  gap: 8px;
+}
+
+#submit-search {
+  background: none;
+  border: none;
+  filter: invert(100%);
+}
+
+#search-icon {
+  /*background: none;*/
+  /*border: none;*/
+  /*filter: invert(100%);*/
+  /*position: fixed;*/
+  /*top: 0px;*/
+  margin: 5px 0;
+}
+
+#search-field,
+#toggle-units,
+#input-api {
+  background: none;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: 'Alatsi', sans-serif;
+  font-weight: 900;
+  padding: 3px 10px;
+  width: 80px;
+}
+
+#search-field {
+  font-family: 'Albert Sans', sans-serif;
+  font-weight: 400;
+  width: 280px;
 }
 
 #search-details {
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 #actual-location {
-  font-size: 1.8rem;
-  /*line-height: 1.5rem;*/
+  font-size: 1.4rem;
 }
 
-#current-box {
+#main-box {
   display: grid;
-  gap: 4px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    'icon temperature'
+    'location location'
     'conditions conditions'
+    'temperature icon'
     'description description';
-  /*font-family: 'Alatsi', sans-serif;*/
-  /*font-size: 1.5rem;*/
+}
+
+#location {
+  grid-area: location;
+  margin-bottom: 15px;
 }
 
 #conditions-icon {
+  filter: invert(100%);
   grid-area: icon;
+  justify-self: end;
+  margin-right: 15px;
+}
+
+#conditions-desc {
+  font-family: 'Alatsi', 'sans-serif';
+  font-size: 1.8rem;
+  grid-area: conditions;
+  line-height: 1.2rem;
 }
 
 #current-temps {
   grid-area: temperature;
-  text-align: end;
 }
 
 #main-temp-units {
@@ -89,32 +157,30 @@ h1 {
 #main-temp-value {
   font-size: 2.8rem;
   font-weight: 900;
-  /*justify-self: end;*/
-  /*-webkit-text-stroke: 2px black;*/
+}
+
+#feelslike {
+  display: flex;
+  /*line-height: 1.4rem;*/
+}
+
+#feelslike-desc {
+  align-self: flex-start;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding-top: 4px;
+  padding-right: 5px;
 }
 
 #feelslike-value {
-  font-size: 2rem;
-}
-
-#conditions-desc {
-  font-family: 'Alatsi', 'sans-serif';
-  font-size: 1.5rem;
-  grid-area: conditions;
+  font-size: 1.6rem;
+  font-weight: 900;
 }
 
 #short-description {
   grid-area: description;
+  padding-top: 20px;
 }
-
-/*#temp {*/
-/*  font-family: 'Abel', sans-serif;*/
-/*  font-size: 3rem;*/
-/*}*/
-
-/*#main-temp .temp-units {*/
-/*  font-size: 1.5rem;*/
-/*}*/
 
 #extras-box {
   display: grid;
@@ -123,7 +189,11 @@ h1 {
   grid-template: repeat(3, min-content) / repeat(2, 1fr);
 }
 
-#forecasts-box {
+.condition-value {
+  justify-self: end;
+}
+
+#forecasts-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
@@ -135,9 +205,41 @@ h1 {
   min-height: 120px;
 }
 
-.forecast > p {
-  font-size: 1.6rem;
+.forecast-day {
+  font-family: 'Abel', sans-serif;
+  line-height: 1rem;
 }
 
-@media (min-width: 1000px) {
+.forecast-img {
+  filter: invert(100%);
+  margin: 5px 0;
+}
+
+.forecast-temp {
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+@media (min-width: 800px) {
+  body {
+    margin: auto;
+    max-width: 800px;
+  }
+
+  #nav-box {
+    align-items: start;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    justify-items: start;
+  }
+
+  #search-field {
+    width: 400px;
+  }
+
+  #nav-box div {
+    justify-self: end;
+  }
 }

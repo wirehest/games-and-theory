@@ -1,7 +1,7 @@
 import apiKey from './config.js';
 import dummyData from './dummy-data.js';
 
-let searchString = 'victoria';
+let searchString = 'archangelsk';
 let startDate = '2024-08-26'; //Date.now();
 let endDate = 'next5days';
 // let apiKey = ...

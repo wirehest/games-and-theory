@@ -1,23 +1,42 @@
-// gets data used in this app from the raw json
-export function getDataFromJson(rawJson, unitGroup) {
-  let location = {};
-  let current = {};
-  let forecast = [];
-  let units = getUnits(unitGroup);
+import Snow from './icons/snow.svg';
+import SnowBg from './bg/snow.jpg';
+import Rain from './icons/rain.svg';
+import RainBg from './bg/rain.jpg';
+import Fog from './icons/fog.svg';
+import FogBg from './bg/fog.jpg';
+import Wind from './icons/wind.svg';
+import WindBg from './bg/wind.jpg';
+import Cloudy from './icons/cloudy.svg';
+import CloudyBg from './bg/cloudy.jpg';
+import PartlyCloudyDay from './icons/partly-cloudy-day.svg';
+import PartlyCloudyDayBg from './bg/partly-cloudy-day.jpg';
+import PartlyCloudyNight from './icons/partly-cloudy-night.svg';
+import PartlyCloudyNightBg from './bg/partly-cloudy-night.jpg';
+import ClearDay from './icons/clear-day.svg';
+import ClearDayBg from './bg/clear-day.jpg';
+import ClearNight from './icons/clear-night.svg';
+import ClearNightBg from './bg/partly-cloudy-night.jpg';
+import { format } from 'date-fns';
 
+export function getDataFromJson(rawJson, unitGroup) {
+  let units = getUnits(unitGroup);
+  let bgSrc = getVariableVisuals(rawJson.currentConditions.icon).bgSrc;
+
+  let location = {};
   location.searched = rawJson.address;
   location.latitude = rawJson.latitude;
   location.longitude = rawJson.longitude;
   location.timezone = rawJson.timezone;
   location.actual = rawJson.resolvedAddress;
 
+  let current = {};
   current.conditions = rawJson.currentConditions.conditions;
   current.cloudcover = rawJson.currentConditions.cloudcover;
   current.datetime = rawJson.currentConditions.datetime;
   current.description = rawJson.description;
   current.feelslike = rawJson.currentConditions.feelslike;
   current.humidity = rawJson.currentConditions.humidity;
-  current.icon = rawJson.currentConditions.icon;
+  current.icon = getVariableVisuals(rawJson.currentConditions.icon).iconSrc;
 
   current.precip = rawJson.currentConditions.precip;
   current.precipprob = rawJson.currentConditions.precipprob;
@@ -33,12 +52,13 @@ export function getDataFromJson(rawJson, unitGroup) {
   current.visibility = rawJson.currentConditions.visibility;
   current.windspeed = rawJson.currentConditions.windspeed;
 
+  let forecast = [];
   if (rawJson.days.length > 1) {
-    rawJson.days.splice(1, rawJson.days.length).forEach((day) => {
+    rawJson.days.slice(1, rawJson.days.length).forEach((day) => {
       forecast.push({
-        datetime: day.datetime,
-        datetimeEpoch: day.datetimeEpoch,
-        icon: day.icon,
+        day: format(new Date(day.datetime), 'EEE'),
+        date: format(new Date(day.datetime), 'do'),
+        icon: getVariableVisuals(day.icon).iconSrc,
         tempave: day.temp,
         tempmax: day.tempmax,
         tempmin: day.tempmin,
@@ -46,11 +66,11 @@ export function getDataFromJson(rawJson, unitGroup) {
     });
   }
 
-  return { location, current, forecast };
+  return { bgSrc, location, current, forecast };
 }
 
 export function getUnits(unitGroup) {
-  // from https://www.visualcrossing.com/resources/documentation/weather-api/unit-groups-and-measurement-units/
+  // see VisualCrossing documentation
   const usUnits = {
     temp: '°F',
     precipitation: 'in',
@@ -75,4 +95,51 @@ export function getUnits(unitGroup) {
   };
 
   return usUnits ? unitGroup === 'usUnits' : metricUnits;
+}
+
+function getVariableVisuals(iconString) {
+  let variableVisuals = {};
+
+  switch (iconString) {
+    case 'snow':
+      variableVisuals.bgSrc = SnowBg;
+      variableVisuals.iconSrc = Snow;
+      break;
+    case 'rain':
+      variableVisuals.bgSrc = RainBg;
+      variableVisuals.iconSrc = Rain;
+      break;
+    case 'fog':
+      variableVisuals.bgSrc = FogBg;
+      variableVisuals.iconSrc = Fog;
+      break;
+    case 'wind':
+      variableVisuals.bgSrc = WindBg;
+      variableVisuals.iconSrc = Wind;
+      break;
+    case 'cloudy':
+      variableVisuals.bgSrc = CloudyBg;
+      variableVisuals.iconSrc = Cloudy;
+      break;
+    case 'partly-cloudy-day':
+      variableVisuals.bgSrc = PartlyCloudyDayBg;
+      variableVisuals.iconSrc = PartlyCloudyDay;
+      break;
+    case 'partly-cloudy-night':
+      variableVisuals.bgSrc = PartlyCloudyNightBg;
+      variableVisuals.iconSrc = PartlyCloudyNight;
+      break;
+    case 'clear-day':
+      variableVisuals.bgSrc = ClearDayBg;
+      variableVisuals.iconSrc = ClearDay;
+      break;
+    case 'clear-night':
+      variableVisuals.bgSrc = ClearNightBg;
+      variableVisuals.iconSrc = ClearNight;
+      break;
+    default:
+      throw new Error('issue with icon string');
+  }
+
+  return variableVisuals;
 }
