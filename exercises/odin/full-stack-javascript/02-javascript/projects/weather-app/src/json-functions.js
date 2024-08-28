@@ -23,34 +23,49 @@ export function getDataFromJson(rawJson, unitGroup) {
   let bgSrc = getVariableVisuals(rawJson.currentConditions.icon).bgSrc;
 
   let location = {};
-  location.searched = rawJson.address;
-  location.latitude = rawJson.latitude;
-  location.longitude = rawJson.longitude;
-  location.timezone = rawJson.timezone;
-  location.actual = rawJson.resolvedAddress;
+  ['searched', 'latitude', 'longitude', 'timezone', 'resolvedAddress'].forEach(
+    (measure) => (location[measure] = rawJson[measure]),
+  );
 
   let current = {};
-  current.conditions = rawJson.currentConditions.conditions;
-  current.cloudcover = rawJson.currentConditions.cloudcover;
-  current.datetime = rawJson.currentConditions.datetime;
+  [
+    'conditions',
+    'cloudcover',
+    'datetime',
+    'feelslike',
+    'humidity',
+    'precip',
+    'precipprob',
+    'preciptype',
+    'temp',
+    'pressure',
+    'uvindex',
+    'visibility',
+    'windspeed',
+  ].forEach(
+    (measure) => (current[measure] = rawJson.currentConditions[measure]),
+  );
+  // current.conditions = rawJson.currentConditions.conditions;
+  // current.cloudcover = rawJson.currentConditions.cloudcover;
+  // current.datetime = rawJson.currentConditions.datetime;
   current.description = rawJson.description;
-  current.feelslike = rawJson.currentConditions.feelslike;
-  current.humidity = rawJson.currentConditions.humidity;
+  // current.feelslike = rawJson.currentConditions.feelslike;
+  // current.humidity = rawJson.currentConditions.humidity;
   current.icon = getVariableVisuals(rawJson.currentConditions.icon).iconSrc;
 
-  current.precip = rawJson.currentConditions.precip;
-  current.precipprob = rawJson.currentConditions.precipprob;
-  current.preciptype = rawJson.currentConditions.preciptype; // array
+  // current.precip = rawJson.currentConditions.precip;
+  // current.precipprob = rawJson.currentConditions.precipprob;
+  // current.preciptype = rawJson.currentConditions.preciptype; // array
 
-  current.temp = rawJson.currentConditions.temp;
+  // current.temp = rawJson.currentConditions.temp;
   // current.tempave = rawJson.days[0].temp;
   current.tempmax = rawJson.days[0].tempmax;
   current.tempmin = rawJson.days[0].tempmin;
 
-  current.pressure = rawJson.currentConditions.pressure;
-  current.uvindex = rawJson.currentConditions.uvindex;
-  current.visibility = rawJson.currentConditions.visibility;
-  current.windspeed = rawJson.currentConditions.windspeed;
+  // current.pressure = rawJson.currentConditions.pressure;
+  // current.uvindex = rawJson.currentConditions.uvindex;
+  // current.visibility = rawJson.currentConditions.visibility;
+  // current.windspeed = rawJson.currentConditions.windspeed;
 
   let forecast = [];
   if (rawJson.days.length > 1) {
@@ -66,10 +81,10 @@ export function getDataFromJson(rawJson, unitGroup) {
     });
   }
 
-  return { bgSrc, location, current, forecast };
+  return { bgSrc, units, location, current, forecast };
 }
 
-export function getUnits(unitGroup) {
+function getUnits(unitGroup) {
   // see VisualCrossing documentation
   const usUnits = {
     temp: '°F',
@@ -94,7 +109,7 @@ export function getUnits(unitGroup) {
     soilMoisture: 'mm',
   };
 
-  return usUnits ? unitGroup === 'usUnits' : metricUnits;
+  return unitGroup === 'us' ? usUnits : metricUnits;
 }
 
 function getVariableVisuals(iconString) {
