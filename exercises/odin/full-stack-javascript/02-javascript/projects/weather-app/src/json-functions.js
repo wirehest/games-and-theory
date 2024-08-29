@@ -62,8 +62,8 @@ export function getDataFromJson(rawJson, unitGroup) {
       .map((x) => x[0].toUpperCase() + x.slice(1, x.length))
       .join(', ');
 
-    current.precip = rawJson.currentConditions.precipprob + '% ';
-    current.precip += precipString;
+    current.precip = rawJson.currentConditions.precipprob + '% chance of ';
+    current.precip += precipString.toLowerCase();
   }
 
   current.temp = rawJson.currentConditions.temp;

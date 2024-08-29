@@ -1,6 +1,7 @@
 /**
  * DOM Functions Module
  *
+ * Functions related to drawing the DOM and event listeners.
  */
 import {
   toggleUnits,
@@ -10,6 +11,7 @@ import {
   updateApiKey,
   setSearchString,
   checkStorage,
+  searchString,
 } from './api-functions.js';
 import { getDataFromJson } from './json-functions.js';
 
@@ -21,10 +23,12 @@ export function initialDraw() {
 }
 
 async function drawPage() {
+  let loadingIndicator = document.querySelector('#loading-indicator');
+  loadingIndicator.showModal();
   errorMessage.textContent = '';
+
   try {
     let rawData = await getRawData();
-    console.log(rawData);
     let jsonData = await getDataFromJson(rawData, unitGroup);
     updateDom(jsonData);
   } catch (error) {
@@ -41,10 +45,13 @@ async function drawPage() {
       errorMessage.textContent = 'Server problem, try again later';
     }
   }
+
+  loadingIndicator.close();
 }
 
+// refreshes the entire page
 function updateDom(data) {
-  // console.log(data);
+  document.querySelector('#search-field').value = '';
   document.querySelector('body').style.background =
     `url(${data.bgSrc}) center / cover`;
   document.querySelector('#actual-location').textContent =
@@ -77,8 +84,6 @@ function updateDom(data) {
     data.current.pressure;
   document.querySelector('#visibility .condition-value').textContent =
     data.current.visibility;
-  // document.querySelector('#').textContent =
-  //   data.;
   document.querySelector('#windspeed .condition-value').textContent =
     data.current.windspeed;
 
@@ -100,19 +105,18 @@ function addListeners() {
 
   // saves API key to localStorage on quit/refresh
   window.addEventListener('beforeunload', () => {
-    let settings = { key: apiKey, units: unitGroup };
+    let settings = { key: apiKey, units: unitGroup, lastSearch: searchString };
     localStorage.setItem('data', JSON.stringify(settings));
   });
 
   document.querySelector('body').addEventListener('submit', (e) => {
-    // console.log(e);
     if (e.target.id === 'search-form') {
       e.preventDefault();
       let formData = new FormData(searchForm);
       let searchString = formData.get('search-string');
 
       if (searchString.length === 0) return;
-      setSearchString(formData.get('search-string'));
+      setSearchString(searchString);
       drawPage();
     } else {
       let formData = new FormData(keyForm);

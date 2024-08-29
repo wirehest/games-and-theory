@@ -10,6 +10,8 @@
   /*border: 1px solid #ef233c90;*/
   margin: 0;
   padding: 0;
+  /*-webkit-text-stroke: 1px #00000099;*/
+  /*paint-order: stroke fill;*/
 }
 
 input,
@@ -28,20 +30,21 @@ body {
   font-family: 'Albert Sans', sans-serif;
   font-size: 16px;
   gap: 10px;
-  height: 100vh;
+  height: 110vh;
   padding: 10px;
 }
 
 .main-container,
 dialog {
   background: #403d3950;
+  border: 1px solid #00000010;
   border-radius: 5px;
+  box-shadow: 0px 0px 10px #00000030;
   backdrop-filter: blur(25px);
   padding: 10px 15px 15px;
 }
 
 #api-key-modal {
-  border: none;
   color: #fff;
   font-family: 'Alatsi', sans-serif;
   font-size: 1.3rem;
@@ -50,9 +53,30 @@ dialog {
   width: 100vw;
 }
 
+#loading-indicator {
+  margin: auto;
+  outline: none;
+  padding: 10px;
+}
+
+#loading-indicator > div {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px 10px 10px 10px;
+}
+
+#loading-indicator > div > img {
+  height: 50px;
+  width: 50px;
+}
+
 #key-form > p {
   font-family: 'Albert Sans', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 0.9rem;
   margin-bottom: 15px;
 }
@@ -61,13 +85,13 @@ dialog::backdrop {
   background-color: #000000bf;
 }
 
-dialog > form {
+#api-key-modal > form {
   display: flex;
   flex-flow: column nowrap;
   gap: 8px;
 }
 
-dialog > form > div {
+#api-key-modal > form > div {
   display: flex;
   gap: 8px;
   justify-content: center;
@@ -85,20 +109,23 @@ h2 {
 }
 
 #nav-box {
-  align-items: center;
   display: grid;
-  gap: 8px;
+  gap: 5px;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  justify-items: center;
-  padding: 15px 10px;
+  padding: 10px;
 }
 
-#nav-box form,
-#nav-box div {
+#nav-box form {
   align-items: center;
   display: flex;
-  gap: 8px;
+  gap: 5px;
+  width: 100%;
+}
+
+#units-and-key-buttons-container {
+  justify-self: end;
+  padding-right: 29px;
 }
 
 #submit-search {
@@ -110,21 +137,15 @@ h2 {
   width: 25px;
 }
 
-/*#search-icon {*/
-/*  position: relative;*/
-/*  filter: invert(100%);*/
-/*}*/
+#submit-search:hover {
+  outline: none;
+}
 
-#search-field,
-#toggle-units,
-#open-key-modal,
-#input-key-field,
-#submit-key,
-#clear-key,
-#cancel-button {
+input,
+button {
   background: none;
   border: 2px solid #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #fff;
   font-size: 1rem;
   font-family: 'Alatsi', sans-serif;
@@ -133,11 +154,19 @@ h2 {
   width: 80px;
 }
 
+button:hover {
+  outline: 2px solid #06d6a0;
+}
+
+button:active {
+  background: #06d6a0;
+}
+
 #input-key-field,
 #search-field {
   font-family: 'Albert Sans', sans-serif;
   font-weight: 400;
-  width: 280px;
+  width: 100%;
 }
 
 #input-key-field {
@@ -150,12 +179,10 @@ h2 {
 
 #search-error {
   color: #ff006e;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 900;
   justify-self: start;
   height: 1rem;
-  margin-bottom: 5px;
-  padding-left: 10px;
 }
 
 #actual-location {
@@ -164,14 +191,18 @@ h2 {
 
 #main-box {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 110px;
   grid-template-rows: auto;
   grid-template-areas:
     'location location'
     'section section'
-    'conditions conditions'
+    'conditions icon'
     'temperature icon'
     'description description';
+}
+
+#currently-section-heading {
+  grid-area: section;
 }
 
 #location {
@@ -183,14 +214,14 @@ h2 {
   filter: invert(100%);
   grid-area: icon;
   justify-self: end;
-  margin: 6px 20px 6px 0;
+  margin-right: 10px;
 }
 
 #conditions-desc {
   font-family: 'Alatsi', 'sans-serif';
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   grid-area: conditions;
-  line-height: 1.2rem;
+  line-height: 1.6rem;
 }
 
 #current-temps {
@@ -203,32 +234,32 @@ h2 {
 }
 
 #main-temp-value {
-  font-size: 2.8rem;
+  font-size: 3.5rem;
   font-weight: 900;
 }
 
 #feelslike {
+  align-items: flex-start;
   display: flex;
+  font-weight: 900;
+  margin-top: -5px;
 }
 
 #feelslike-desc {
-  align-self: flex-start;
-  font-size: 1.1rem;
-  font-weight: 900;
-  padding-top: 4px;
+  font-size: 1rem;
   padding-right: 5px;
 }
 
 #feelslike-value {
-  font-size: 1.6rem;
-  font-weight: 900;
+  font-size: 2rem;
+  margin-top: -5px;
 }
 
 #short-description {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   grid-area: description;
-  /*padding-top: 20px;*/
+  padding-top: 6px;
 }
 
 #measurements-grid {
@@ -236,7 +267,30 @@ h2 {
   font-family: 'Abel', sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
-  grid-template: repeat(3, min-content) / repeat(2, 1fr);
+  grid-template: auto / repeat(2, 1fr);
+  grid-template-areas:
+    'fr1 fr1'
+    'fr2 fr2'
+    'fr3 fr3';
+}
+
+#precip,
+#highlow,
+#pressure {
+  font-size: 1.3rem;
+}
+
+#precip {
+  grid-area: fr1;
+}
+
+#highlow {
+  grid-area: fr2;
+}
+
+#pressure {
+  grid-area: fr3;
+  padding-bottom: 10px;
 }
 
 .condition-value {
@@ -280,7 +334,7 @@ h2 {
   #nav-box {
     align-items: start;
     display: grid;
-    gap: 5px;
+    gap: 1px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;
     justify-items: start;
@@ -291,11 +345,12 @@ h2 {
   }
 
   #search-error {
-    order: 99;
+    order: 90;
   }
 
-  #nav-box div {
-    justify-self: end;
+  #units-and-key-buttons-container {
+    order: 50;
+    padding: 0;
   }
 
   #api-key-modal {

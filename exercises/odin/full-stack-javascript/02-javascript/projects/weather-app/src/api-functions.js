@@ -13,12 +13,14 @@ let apiKey = '';
 let unitGroup = 'us';
 const fetchOptions = { mode: 'cors' };
 
+export { unitGroup, apiKey, searchString };
+
 function makeQuery() {
   let query = 'https://weather.visualcrossing.com/VisualCrossingWebServices/';
   query += `rest/services/timeline/${searchString}`;
-  // endpoint += `rest/services/timeline/${searchString}/${startDate}/${endDate}`;
   query += `?key=${apiKey}&unitGroup=${unitGroup}`;
   query += '&include=fcst,days,current';
+
   return query;
 }
 
@@ -58,6 +60,7 @@ export function checkStorage() {
     let localData = JSON.parse(localStorage.data);
     apiKey = localData.key;
     unitGroup = localData.units;
+    searchString = localData.lastSearch;
   } else {
     console.log('localStorage not available');
   }
@@ -81,5 +84,3 @@ function storageAvailable(type) {
     );
   }
 }
-
-export { unitGroup, apiKey };
