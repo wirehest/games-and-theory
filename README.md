@@ -43,3 +43,6 @@
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page)
     – [Todo List](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/todo-list/dist/)
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/todo-list)
+    – [Weather App](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app/dist/)
+    [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app)
+    
