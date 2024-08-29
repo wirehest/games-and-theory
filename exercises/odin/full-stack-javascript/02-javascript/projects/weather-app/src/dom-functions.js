@@ -1,3 +1,7 @@
+/**
+ * DOM Functions Module
+ *
+ */
 import {
   toggleUnits,
   getRawData,
@@ -9,35 +13,45 @@ import {
 } from './api-functions.js';
 import { getDataFromJson } from './json-functions.js';
 
+let errorMessage = document.querySelector('#search-error');
+
 export function initialDraw() {
   checkStorage();
   drawPage().finally(addListeners);
 }
 
 async function drawPage() {
+  errorMessage.textContent = '';
   try {
     let rawData = await getRawData();
-    // console.log(rawData);
+    console.log(rawData);
     let jsonData = await getDataFromJson(rawData, unitGroup);
     updateDom(jsonData);
   } catch (error) {
-    throw new Error(error);
+    if (error.message === '400') {
+      errorMessage.textContent = 'Try another location';
+    }
+    if (error.message === '401') {
+      errorMessage.textContent = 'Check API key';
+    }
+    if (error.message === '429') {
+      errorMessage.textContent = 'Too many requests, try again later';
+    }
+    if (error.message === '500') {
+      errorMessage.textContent = 'Server problem, try again later';
+    }
   }
 }
 
 function updateDom(data) {
   // console.log(data);
-  // let units = getUnits(unitGroup);
-  // console.log(units);
-  // document.querySelector('#searched-location').textContent =
-  //   data.location.searched;
   document.querySelector('body').style.background =
     `url(${data.bgSrc}) center / cover`;
   document.querySelector('#actual-location').textContent =
     data.location.resolvedAddress;
   document.querySelector('#current-time').textContent = data.current.datetime;
-  document.querySelector('#timezone').textContent =
-    `(${data.location.timezone})`;
+  document.querySelector('#current-date').textContent = data.current.date;
+  document.querySelector('#timezone').textContent = data.location.timezone;
   document.querySelector('#longitude').textContent = data.location.longitude;
   document.querySelector('#latitude').textContent = data.location.latitude;
   document.querySelector('#conditions-icon').src = data.current.icon;
@@ -51,6 +65,8 @@ function updateDom(data) {
     data.current.description;
   document.querySelector('#humidity .condition-value').textContent =
     data.current.humidity;
+  document.querySelector('#precip .condition-value').textContent =
+    data.current.precip;
   document.querySelector('#uvindex .condition-value').textContent =
     data.current.uvindex;
   document.querySelector('#cloudcover .condition-value').textContent =
@@ -73,12 +89,14 @@ function updateDom(data) {
     node.querySelector('.forecast-img').src = data.forecast[i].icon;
     node.querySelector('.forecast-temp').textContent = data.forecast[i].tempave;
   });
+
+  document.querySelector('#input-key-field').value = apiKey;
 }
 
 function addListeners() {
   let modal = document.querySelector('#api-key-modal');
   let keyForm = document.querySelector('#api-key-modal form');
-  let searchForm = document.querySelector('#nav-box form');
+  let searchForm = document.querySelector('#search-form');
 
   // saves API key to localStorage on quit/refresh
   window.addEventListener('beforeunload', () => {
@@ -87,32 +105,38 @@ function addListeners() {
   });
 
   document.querySelector('body').addEventListener('submit', (e) => {
-    let formData = new FormData(keyForm);
-    updateApiKey(formData.get('new-key'));
-    // console.log(localStorage.data);
+    // console.log(e);
+    if (e.target.id === 'search-form') {
+      e.preventDefault();
+      let formData = new FormData(searchForm);
+      let searchString = formData.get('search-string');
+
+      if (searchString.length === 0) return;
+      setSearchString(formData.get('search-string'));
+      drawPage();
+    } else {
+      let formData = new FormData(keyForm);
+      updateApiKey(formData.get('new-key'));
+    }
   });
 
   document.querySelector('body').addEventListener('click', (e) => {
-    let targetId = e.target.id;
-    // console.log(e);
-
-    if (targetId === 'toggle-units') {
+    if (e.target.id === 'toggle-units') {
       toggleUnits();
       drawPage();
     }
 
-    if (targetId === 'open-key-modal') {
-      keyForm.reset();
+    if (e.target.id === 'open-key-modal') {
       modal.showModal();
     }
 
-    if (targetId === 'search-icon') {
-      // console.log('submit-search click detected');
-      let formData = new FormData(searchForm);
-      setSearchString(formData.get('search-string'));
+    if (e.target.id === 'clear-key') {
+      updateApiKey('');
+      localStorage.clear();
+      document.querySelector('#input-key-field').textContent = '';
       drawPage();
     }
 
-    if (targetId === 'cancel-button') modal.close();
+    if (e.target.id === 'cancel-button') modal.close();
   });
 }

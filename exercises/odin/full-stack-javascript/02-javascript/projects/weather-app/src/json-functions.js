@@ -1,3 +1,9 @@
+/**
+ * JSON Functions Module
+ *
+ * Contains functions that structure the raw data from Visual Crossing
+ * into the structures used in the app.
+ */
 import Snow from './icons/snow.svg';
 import SnowBg from './bg/snow.jpg';
 import Rain from './icons/rain.svg';
@@ -32,40 +38,38 @@ export function getDataFromJson(rawJson, unitGroup) {
     'conditions',
     'cloudcover',
     'datetime',
-    'feelslike',
     'humidity',
-    'precip',
-    'precipprob',
-    'preciptype',
-    'temp',
     'pressure',
     'uvindex',
     'visibility',
     'windspeed',
   ].forEach(
-    (measure) => (current[measure] = rawJson.currentConditions[measure]),
+    (measure) =>
+      (current[measure] =
+        rawJson.currentConditions[measure] + (units[measure] || '')),
   );
-  // current.conditions = rawJson.currentConditions.conditions;
-  // current.cloudcover = rawJson.currentConditions.cloudcover;
-  // current.datetime = rawJson.currentConditions.datetime;
+
+  current.date = format(rawJson.days[0].datetime, 'EEEE M/dd');
   current.description = rawJson.description;
-  // current.feelslike = rawJson.currentConditions.feelslike;
-  // current.humidity = rawJson.currentConditions.humidity;
+  current.feelslike = rawJson.currentConditions.feelslike + '°';
   current.icon = getVariableVisuals(rawJson.currentConditions.icon).iconSrc;
 
-  // current.precip = rawJson.currentConditions.precip;
-  // current.precipprob = rawJson.currentConditions.precipprob;
-  // current.preciptype = rawJson.currentConditions.preciptype; // array
+  let precipArray = rawJson.currentConditions.preciptype;
+  if (precipArray === null) {
+    current.precip = 'None';
+  } else {
+    let precipString = precipArray
+      .map((x) => x[0].toUpperCase() + x.slice(1, x.length))
+      .join(', ');
 
-  // current.temp = rawJson.currentConditions.temp;
+    current.precip = rawJson.currentConditions.precipprob + '% ';
+    current.precip += precipString;
+  }
+
+  current.temp = rawJson.currentConditions.temp;
+  current.tempmax = rawJson.days[0].tempmax + '°';
+  current.tempmin = rawJson.days[0].tempmin + '°';
   // current.tempave = rawJson.days[0].temp;
-  current.tempmax = rawJson.days[0].tempmax;
-  current.tempmin = rawJson.days[0].tempmin;
-
-  // current.pressure = rawJson.currentConditions.pressure;
-  // current.uvindex = rawJson.currentConditions.uvindex;
-  // current.visibility = rawJson.currentConditions.visibility;
-  // current.windspeed = rawJson.currentConditions.windspeed;
 
   let forecast = [];
   if (rawJson.days.length > 1) {
@@ -74,7 +78,7 @@ export function getDataFromJson(rawJson, unitGroup) {
         day: format(new Date(day.datetime), 'EEE'),
         date: format(new Date(day.datetime), 'do'),
         icon: getVariableVisuals(day.icon).iconSrc,
-        tempave: day.temp,
+        tempave: day.temp + '°',
         tempmax: day.tempmax,
         tempmin: day.tempmin,
       });
@@ -85,33 +89,32 @@ export function getDataFromJson(rawJson, unitGroup) {
 }
 
 function getUnits(unitGroup) {
-  // see VisualCrossing documentation
+  // measurement units, source: Visual Crossing docs
+  let baseUnits = {
+    cloudcover: '%',
+    humidity: '%',
+  };
   const usUnits = {
     temp: '°F',
     precipitation: 'in',
     snow: 'in',
-    wind: 'mph',
+    windspeed: 'mph',
     visibility: 'mi',
     pressure: 'mbar',
-    solarRadiation: 'W/m²',
-    solarEnergy: 'MJ/m²',
-    soilMoisture: 'in',
   };
   const metricUnits = {
     temp: '°C',
     precipitation: 'mm',
     snow: 'cm',
-    wind: 'kph',
+    windspeed: 'kph',
     visibility: 'km',
     pressure: 'mbar (hPa)',
-    solarRadiation: 'W/m²',
-    solarEnergy: 'MJ/m²',
-    soilMoisture: 'mm',
   };
 
-  return unitGroup === 'us' ? usUnits : metricUnits;
+  return Object.assign(unitGroup === 'us' ? usUnits : metricUnits, baseUnits);
 }
 
+// changes the icons and backgrounds based on weather conditions
 function getVariableVisuals(iconString) {
   let variableVisuals = {};
 

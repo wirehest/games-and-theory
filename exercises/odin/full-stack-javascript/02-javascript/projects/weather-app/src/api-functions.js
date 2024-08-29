@@ -1,30 +1,40 @@
-// import apiKey from './config.js';
+/**
+ * API Functions Module
+ *
+ * Functions and variables used with the Visual Crossing endpoint.
+ * Includes localStorage-related functions because some endpoint parameters
+ * are stored in localStorage.
+ */
 import dummyData from './dummy-data.js';
 import { format } from 'date-fns';
 
 let searchString = 'Tokyo';
-// let startDate = '2024-08-27'; //format(Date.now(), 'yyyy-MM-dd') + '';
-// let endDate = 'next5days';
 let apiKey = '';
-let unitGroup = '';
+let unitGroup = 'us';
 const fetchOptions = { mode: 'cors' };
-// let rawData = getRawData();
 
 function makeQuery() {
-  let endpoint =
-    'https://weather.visualcrossing.com/VisualCrossingWebServices/';
-  endpoint += `rest/services/timeline/${searchString}`;
+  let query = 'https://weather.visualcrossing.com/VisualCrossingWebServices/';
+  query += `rest/services/timeline/${searchString}`;
   // endpoint += `rest/services/timeline/${searchString}/${startDate}/${endDate}`;
-  endpoint += `?key=${apiKey}&unitGroup=${unitGroup}`;
-  endpoint += '&include=fcst,days,current';
-  return endpoint;
+  query += `?key=${apiKey}&unitGroup=${unitGroup}`;
+  query += '&include=fcst,days,current';
+  return query;
 }
 
 export function getRawData() {
   if (apiKey === '') {
     return Promise.resolve(dummyData);
   } else {
-    return fetch(makeQuery(), fetchOptions).then((response) => response.json());
+    return fetch(makeQuery(), fetchOptions)
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response;
+      })
+      .then((response) => response.json())
+      .catch((error) => {
+        throw error;
+      });
   }
 }
 
@@ -38,24 +48,16 @@ export function toggleUnits() {
 
 export function updateApiKey(newKey) {
   apiKey = newKey;
-  // console.log(`new key set: ${apiKey}`);
 }
 
 export function checkStorage() {
   if (storageAvailable('localStorage')) {
-    // apiKey = '';
     if (localStorage.length === 0) {
-      // return;
+      return;
     }
-    // console.log(localStorage.data);
-    // console.log(JSON.parse(localStorage.data));
     let localData = JSON.parse(localStorage.data);
-    console.log(localData);
-
     apiKey = localData.key;
     unitGroup = localData.units;
-    console.log(apiKey);
-    console.log(unitGroup);
   } else {
     console.log('localStorage not available');
   }
