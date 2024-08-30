@@ -37,10 +37,9 @@ body {
 .main-container,
 dialog {
   background: #403d3950;
-  border: 1px solid #00000010;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px #00000030;
-  backdrop-filter: blur(25px);
+  box-shadow: 0px 0px 10px #00000020;
+  backdrop-filter: blur(20px);
   padding: 10px 15px 15px;
 }
 
@@ -124,8 +123,7 @@ h2 {
 }
 
 #units-and-key-buttons-container {
-  justify-self: end;
-  padding-right: 29px;
+  justify-self: center;
 }
 
 #submit-search {
@@ -195,7 +193,7 @@ button:active {
   grid-template-rows: auto;
   grid-template-areas:
     'location location'
-    'section section'
+    'section icon'
     'conditions icon'
     'temperature icon'
     'description description';
@@ -214,7 +212,8 @@ button:active {
   filter: invert(100%);
   grid-area: icon;
   justify-self: end;
-  margin-right: 10px;
+  height: 110px;
+  width: 110px;
 }
 
 #conditions-desc {
@@ -299,6 +298,7 @@ button:active {
 
 #forecasts-grid {
   display: grid;
+  gap: 8px;
   grid-template-columns: repeat(5, 1fr);
   margin: 0 -8px;
 }
@@ -306,29 +306,72 @@ button:active {
 .forecast {
   align-items: center;
   display: flex;
-  flex-flow: column;
+  flex-flow: row wrap;
+  justify-content: center;
   min-height: 120px;
 }
 
-.forecast-day {
+.forecast-day,
+.forecast-date {
   font-family: 'Abel', sans-serif;
-  line-height: 1rem;
+  line-height: 1.1rem;
+  text-align: center;
+  width: 100%;
 }
 
 .forecast-img {
   filter: invert(100%);
   margin: 5px 0;
+  height: 60px;
+  width: 60px;
 }
 
 .forecast-temp {
   font-size: 1.2rem;
   font-weight: 900;
+  text-align: center;
+  width: 100%;
 }
 
 @media (min-width: 800px) {
   body {
     margin: auto;
     max-width: 800px;
+  }
+
+  #main-box {
+    grid-template-columns: 1fr 230px;
+    grid-template-areas:
+      'location icon'
+      'section icon'
+      'conditions icon'
+      'temperature icon'
+      'description description';
+  }
+
+  #conditions-icon {
+    height: 230px;
+    margin-top: 20px;
+    width: 230px;
+  }
+
+  .forecast-day {
+    margin-right: 5px;
+  }
+  .forecast-day,
+  .forecast-date {
+    font-size: 1.6rem;
+    width: auto;
+    text-align: center;
+  }
+
+  .forecast-img {
+    height: 90px;
+    width: 90px;
+  }
+
+  .forecast-temp {
+    font-size: 1.8rem;
   }
 
   #nav-box {
@@ -351,6 +394,7 @@ button:active {
   #units-and-key-buttons-container {
     order: 50;
     padding: 0;
+    justify-self: end;
   }
 
   #api-key-modal {

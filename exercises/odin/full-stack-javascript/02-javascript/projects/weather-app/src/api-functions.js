@@ -8,9 +8,7 @@
 import dummyData from './dummy-data.js';
 import { format } from 'date-fns';
 
-let searchString = 'Tokyo';
-let apiKey = '';
-let unitGroup = 'us';
+let apiKey, searchString, unitGroup;
 const fetchOptions = { mode: 'cors' };
 
 export { unitGroup, apiKey, searchString };
@@ -55,13 +53,18 @@ export function updateApiKey(newKey) {
 export function checkStorage() {
   if (storageAvailable('localStorage')) {
     if (localStorage.length === 0) {
+      apiKey = '';
+      searchString = 'Tokyo';
+      unitGroup = 'us';
       return;
     }
+
     let localData = JSON.parse(localStorage.data);
     apiKey = localData.key;
     unitGroup = localData.units;
     searchString = localData.lastSearch;
   } else {
+    apiKey = '';
     console.log('localStorage not available');
   }
 }
