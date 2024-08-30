@@ -37,6 +37,7 @@ body {
 .main-container,
 dialog {
   background: #403d3950;
+  border: none;
   border-radius: 5px;
   box-shadow: 0px 0px 10px #00000020;
   backdrop-filter: blur(20px);
