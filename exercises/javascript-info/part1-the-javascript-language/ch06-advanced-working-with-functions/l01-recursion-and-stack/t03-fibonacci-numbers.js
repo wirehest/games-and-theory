@@ -25,7 +25,7 @@ console.assert(memoFib(77) === 5527939700884757);
 /** A: Calculates Fib dynamically. */
 function dynamicFib(n) {
   let fib = [1, 1, 2];
-  if (n < 3) base[n - 1];
+  if (n < 3) fib[n - 1];
   for (let i = 3; i < n; i++) {
     fib[0] = fib[1];
     fib[1] = fib[2];
@@ -35,6 +35,7 @@ function dynamicFib(n) {
   return fib.at(-1);
 }
 
+console.assert(dynamicFib(2) === 1);
 console.assert(dynamicFib(3) === 2);
 console.assert(dynamicFib(7) === 13);
 console.assert(dynamicFib(77) === 5527939700884757);
