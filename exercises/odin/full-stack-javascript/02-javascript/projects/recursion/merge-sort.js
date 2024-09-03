@@ -1,37 +1,35 @@
-function mergeSort(arr) {
-  let originalLength = arr.length;
-  arr = divideIntoSubarrays(arr);
+function mergeSort(array) {
+  if (array.length < 0) throw new Error('invalid array');
+  if (array.length === 0) return [];
+  if (array.length === 1) return array;
 
-  while (arr[0].length !== originalLength) {
-    arr = merge(arr);
-  }
+  let midpoint =
+    array.length % 2 !== 0 ? (array.length - 1) / 2 : array.length / 2;
 
-  return arr[0];
+  let leftSubarray = array.slice(0, midpoint);
+  let rightSubarray = array.slice(midpoint);
+
+  return merge(mergeSort(leftSubarray), mergeSort(rightSubarray));
 }
 
-function divideIntoSubarrays(arr) {
-  if (arr.length <= 1) return [arr];
-  let popped = arr.pop();
-  return [...divideIntoSubarrays(arr), [popped]];
-}
+function merge(leftSubarray, rightSubarray) {
+  let mergedAndSorted = [];
 
-function merge([left, right, ...rest]) {
-  let sorted = [];
-
-  // base case
-  if (right === undefined) return [left];
-
-  // merges smaller number from left/right
-  while (left.length > 0 && right.length > 0) {
-    if (left.at(0) > right.at(0)) sorted.push(right.shift());
-    else sorted.push(left.shift());
+  while (leftSubarray.length > 0 && rightSubarray.length > 0) {
+    if (leftSubarray.at(0) > rightSubarray.at(0)) {
+      mergedAndSorted.push(rightSubarray.shift());
+    } else {
+      mergedAndSorted.push(leftSubarray.shift());
+    }
   }
 
-  // if one side empty, merges other side
-  if (left.length === 0) sorted.push(...right);
-  else sorted.push(...left);
+  if (leftSubarray.length === 0) {
+    mergedAndSorted.push(...rightSubarray);
+  } else {
+    mergedAndSorted.push(...leftSubarray);
+  }
 
-  return [sorted, ...merge(rest)];
+  return mergedAndSorted;
 }
 
 console.assert(
@@ -43,3 +41,5 @@ console.assert(
   JSON.stringify(mergeSort([105, 79, 100, 110]) === '[79,100,105,110]'),
   'check test 2',
 );
+
+console.assert(JSON.stringify(mergeSort([])) === '[]', 'check test 3');
