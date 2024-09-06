@@ -22,37 +22,29 @@ export default class LinkedList {
 
   // adds a new node containing value to the end of the list
   append(value) {
-    switch (this.#size) {
-      case 0:
-        this.#head = new Node(value);
-        this.#tail = this.#head;
-        break;
-      default:
-        let oldTail = this.#tail;
-        this.#tail = new Node(value);
-        oldTail.nextNode = this.#tail;
-    }
+    if (this.#size === 0) return this.#addToEmptyList(value);
+
+    let oldTail = this.#tail;
+    this.#tail = new Node(value);
+    oldTail.nextNode = this.#tail;
     return ++this.#size;
   }
 
   // adds a new node containing value to the start of the list
   prepend(value) {
-    switch (this.#size) {
-      case 0:
-        this.#head = new Node(value);
-        this.#tail = this.#head;
-        break;
-      default:
-        let oldHead = this.#head;
-        this.#head = new Node(value, oldHead);
-    }
+    if (this.#size === 0) return this.#addToEmptyList(value);
 
-    // returns list size to mimic built-in array methods
+    let oldHead = this.#head;
+    this.#head = new Node(value, oldHead);
     return ++this.#size;
   }
 
-  // TODO append/prepend refactor common instructions
-  #addToEmptyList() {}
+  // called by append()/prepend() when list size = 0
+  #addToEmptyList(value) {
+    this.#head = new Node(value);
+    this.#tail = this.#head;
+    return ++this.#size;
+  }
 
   // returns the node at the given index
   at(index) {
@@ -69,54 +61,59 @@ export default class LinkedList {
 
   // removes the last element from the list
   pop() {
-    // let i = 0;
     let currentNode = this.#head;
 
     while (true) {
       if (currentNode.nextNode.nextNode === null) {
         let tailValue = currentNode.nextNode.value;
+
         currentNode.nextNode = null;
         this.#tail = currentNode;
         this.#size--;
 
         return tailValue;
       }
+
       currentNode = currentNode.nextNode;
     }
   }
 
   // returns true if the passed in value is in the list and otherwise returns false.
   contains(value) {
-    let i = 0;
-    let currentNode = this.#head;
-
-    while (true) {
-      if (currentNode.value === value) return true;
-      if (currentNode.nextNode === null) return false;
-      currentNode = currentNode.nextNode;
-      i++;
-    }
+    return this.#search(value, 'contains');
   }
 
   // returns the index of the node containing value, or null if not found.
   find(value) {
+    return this.#search(value, 'find');
+  }
+
+  // refactor of common logic between contains() and find()
+  #search(value, searchType) {
+    if (this.#size === 0) return console.log('list is empty');
+
     let i = 0;
     let currentNode = this.#head;
 
     while (true) {
-      if (currentNode.value === value) return i;
-      if (currentNode.nextNode === null) return null;
+      if (currentNode.value === value) {
+        return searchType === 'find' ? i : true;
+      }
+
+      if (currentNode.nextNode === null) {
+        return searchType === 'find' ? null : false;
+      }
+
       currentNode = currentNode.nextNode;
       i++;
     }
   }
 
-  // TODO refactor contains and find common functionality
-  #search() {}
-
-  // returns a string representation of the list in the format:
+  // returns a string of the list's values in the format:
   // '( value ) -> ( value ) -> ( value ) -> null'
   toString() {
+    if (this.#size === 0) return console.log('list is empty');
+
     let currentNode = this.#head;
     let fullString = '';
 
@@ -134,7 +131,7 @@ export default class LinkedList {
     let i = 0;
     let currentNode = this.#head;
 
-    if (index >= this.#size) {
+    if (index > this.#size) {
       return console.log('index exceeds list size, try append()');
     }
 
@@ -156,11 +153,12 @@ export default class LinkedList {
 
   // removes the node at the given index
   removeAt(index) {
-    // TODO check if index = size - 1, then just use pop
     let i = 0;
     let currentNode = this.#head;
 
-    if (index >= this.#size) return console.log('index exceeds list size');
+    if (this.#size === 0) return console.log("can't remove from an empty list");
+
+    if (index > this.#size) return console.log('index exceeds list size');
 
     if (index === this.#size - 1) {
       this.pop();
