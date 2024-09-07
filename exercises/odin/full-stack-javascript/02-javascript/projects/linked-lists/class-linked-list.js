@@ -56,7 +56,7 @@ export default class LinkedList {
       i++;
     }
 
-    return targetNode.value;
+    return targetNode;
   }
 
   // removes the last element from the list

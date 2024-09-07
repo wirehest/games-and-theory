@@ -1,4 +1,5 @@
 import LinkedList from './class-linked-list.js';
+import Node from './class-node.js';
 
 let testLinkedList = new LinkedList();
 console.assert(
@@ -30,9 +31,21 @@ testLinkedList.prepend(3);
 console.assert(testLinkedList.size === 3, '#7');
 console.assert(testLinkedList.head.value === 3, '#8');
 console.assert(testLinkedList.tail.value === 2, '#9');
-console.assert(testLinkedList.at(0) === 3, '#10');
-console.assert(testLinkedList.at(1) === 1, '#11');
-console.assert(testLinkedList.at(2) === 2, '#12');
+console.assert(
+  JSON.stringify(testLinkedList.at(0), replacer) ===
+    '{"_value":3,"_nextNode":"Node"}',
+  '#10',
+);
+console.assert(
+  JSON.stringify(testLinkedList.at(1), replacer) ===
+    '{"_value":1,"_nextNode":"Node"}',
+  '#11',
+);
+console.assert(
+  JSON.stringify(testLinkedList.at(2), replacer) ===
+    '{"_value":2,"_nextNode":null}',
+  '#12',
+);
 
 console.assert(testLinkedList.find(3) === 0, '#13');
 console.assert(testLinkedList.contains(3) === true, '#13b');
@@ -61,3 +74,13 @@ console.assert(
   testLinkedList.toString() === '( 3 ) -> ( 1 ) -> ( Duck ) -> null',
   '#22',
 );
+
+// replacer to hide nested nextNodes
+function replacer(key, value) {
+  if (key !== '') {
+    if (value instanceof Node) {
+      return 'Node';
+    }
+  }
+  return value;
+}
