@@ -35,16 +35,45 @@ console.assert(
 
 const oldCapacity = test._capacity;
 test.set('moon', 'silver');
-
 console.assert(
-  test._capacity === oldCapcity * 2,
-  'buckets should have been increased',
+  test._capacity === oldCapacity * 2,
+  `test capacity should have doubled: ${oldCapacity} -> ${oldCapacity * 2}`,
 );
 
-// After that, populate your hash map with the last node below (doing this will make your hash map exceed your current load factor, hence expanding your buckets and growing your hash map):
+test.set('hat', 'fedora');
+test.set('dog', 'canine');
+test.set('elephant', 'pachyderm');
+console.assert(test.get('hat') === 'fedora', 'hat should retrieve fedora');
+console.assert(test.get('dog') === 'canine', 'dog should retrieve canine');
+console.assert(
+  test.get('elephant') === 'pachyderm',
+  'elephant should retrieve pachderm',
+);
 
-// If you have implemented your hash map correctly, the capacity of your new hash map will drop well below your load factor and you will notice that the nodes in your hash map are spread much evenly among your buckets.
+console.assert(test.has('loopy') === false, 'get(loopy) should return false');
+console.assert(
+  test.has('elephant') === true,
+  'get(elephant) should return true',
+);
+console.assert(
+  test.remove('dictionary') === false,
+  'remove(dictionary) should be false',
+);
+console.assert(test.remove('apple') === true, 'remove(apple) should be true');
+console.assert(test.length() === 10, 'length should return 10');
 
-// With your new hash map, try overwriting a few nodes using set(key, value). Again, this should only over-write existing values of your nodes.
-
-// Test the other methods of your hash maps such as get(key), has(key), remove(key), length(), clear(), keys(), values(), and entries() to check if they are still working as expected after expanding your hash map.
+console.assert(
+  JSON.stringify(test.keys()) ===
+    '["banana","carrot","kite","frog","grape","elephant","ice cream","moon","dog","hat"]',
+  'check keys() output)',
+);
+console.assert(
+  JSON.stringify(test.values()) ===
+    '["yellow","orange","pink","green","purple","pachyderm","white","silver","canine","fedora"]',
+  'check values() output',
+);
+console.assert(
+  JSON.stringify(test.entries()) ===
+    '[["banana","yellow"],["carrot","orange"],["kite","pink"],["frog","green"],["grape","purple"],["elephant","pachyderm"],["ice cream","white"],["moon","silver"],["dog","canine"],["hat","fedora"]]',
+  'check entries() output',
+);
