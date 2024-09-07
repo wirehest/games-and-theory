@@ -74,6 +74,16 @@ console.assert(
   testLinkedList.toString() === '( 3 ) -> ( 1 ) -> ( Duck ) -> null',
   '#22',
 );
+testLinkedList.removeAt(0);
+console.assert(
+  testLinkedList.toString() === '( 1 ) -> ( Duck ) -> null',
+  '#23',
+);
+testLinkedList.insertAt('Horse', 0);
+console.assert(
+  testLinkedList.toString() === '( Horse ) -> ( 1 ) -> ( Duck ) -> null',
+  '#24',
+);
 
 // replacer to hide nested nextNodes
 function replacer(key, value) {

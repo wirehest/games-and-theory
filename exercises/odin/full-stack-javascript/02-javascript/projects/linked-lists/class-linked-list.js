@@ -1,55 +1,55 @@
 import Node from './class-node.js';
 
 export default class LinkedList {
-  #size = 0;
-  #head = null;
-  #tail = null;
+  _size = 0;
+  _head = null;
+  _tail = null;
 
   // returns the total number of nodes in the list
   get size() {
-    return this.#size;
+    return this._size;
   }
 
   // returns the first node in the list
   get head() {
-    return this.#head;
+    return this._head;
   }
 
   // returns the last node in the list
   get tail() {
-    return this.#tail;
+    return this._tail;
   }
 
   // adds a new node containing value to the end of the list
   append(value) {
-    if (this.#size === 0) return this.#addToEmptyList(value);
+    if (this._size === 0) return this._addToEmptyList(value);
 
-    let oldTail = this.#tail;
-    this.#tail = new Node(value);
-    oldTail.nextNode = this.#tail;
-    return ++this.#size;
+    let oldTail = this._tail;
+    this._tail = new Node(value);
+    oldTail.nextNode = this._tail;
+    return ++this._size;
   }
 
   // adds a new node containing value to the start of the list
   prepend(value) {
-    if (this.#size === 0) return this.#addToEmptyList(value);
+    if (this._size === 0) return this._addToEmptyList(value);
 
-    let oldHead = this.#head;
-    this.#head = new Node(value, oldHead);
-    return ++this.#size;
+    let oldHead = this._head;
+    this._head = new Node(value, oldHead);
+    return ++this._size;
   }
 
   // called by append()/prepend() when list size = 0
-  #addToEmptyList(value) {
-    this.#head = new Node(value);
-    this.#tail = this.#head;
-    return ++this.#size;
+  _addToEmptyList(value) {
+    this._head = new Node(value);
+    this._tail = this._head;
+    return ++this._size;
   }
 
   // returns the node at the given index
   at(index) {
     let i = 0;
-    let targetNode = this.#head;
+    let targetNode = this._head;
 
     while (i < index) {
       targetNode = targetNode.nextNode;
@@ -61,15 +61,15 @@ export default class LinkedList {
 
   // removes the last element from the list
   pop() {
-    let currentNode = this.#head;
+    let currentNode = this._head;
 
     while (true) {
       if (currentNode.nextNode.nextNode === null) {
         let tailValue = currentNode.nextNode.value;
 
         currentNode.nextNode = null;
-        this.#tail = currentNode;
-        this.#size--;
+        this._tail = currentNode;
+        this._size--;
 
         return tailValue;
       }
@@ -80,20 +80,20 @@ export default class LinkedList {
 
   // returns true if the passed in value is in the list and otherwise returns false.
   contains(value) {
-    return this.#search(value, 'contains');
+    return this._search(value, 'contains');
   }
 
   // returns the index of the node containing value, or null if not found.
   find(value) {
-    return this.#search(value, 'find');
+    return this._search(value, 'find');
   }
 
   // refactor of common logic between contains() and find()
-  #search(value, searchType) {
-    if (this.#size === 0) return console.log('list is empty');
+  _search(value, searchType) {
+    if (this._size === 0) return console.log('list is empty');
 
     let i = 0;
-    let currentNode = this.#head;
+    let currentNode = this._head;
 
     while (true) {
       if (currentNode.value === value) {
@@ -112,9 +112,9 @@ export default class LinkedList {
   // returns a string of the list's values in the format:
   // '( value ) -> ( value ) -> ( value ) -> null'
   toString() {
-    if (this.#size === 0) return console.log('list is empty');
+    if (this._size === 0) return console.log('list is empty');
 
-    let currentNode = this.#head;
+    let currentNode = this._head;
     let fullString = '';
 
     while (currentNode.nextNode !== null) {
@@ -129,15 +129,15 @@ export default class LinkedList {
   // inserts a new node with the provided value at the given index
   insertAt(value, index) {
     let i = 0;
-    let currentNode = this.#head;
+    let currentNode = this._head;
 
-    if (index > this.#size) {
+    if (index >= this._size) {
       return console.log('index exceeds list size, try append()');
     }
 
     if (index === 0) {
       this.prepend(value);
-      return this.#size;
+      return this._size;
     }
 
     while (i < index - 1) {
@@ -148,21 +148,39 @@ export default class LinkedList {
     let newNode = new Node(value, currentNode.nextNode);
     currentNode.nextNode = newNode;
 
-    return ++this.#size;
+    return ++this._size;
   }
 
   // removes the node at the given index
   removeAt(index) {
     let i = 0;
-    let currentNode = this.#head;
+    let currentNode = this._head;
 
-    if (this.#size === 0) return console.log("can't remove from an empty list");
+    if (this._size === 0) {
+      return console.log("can't remove from an empty list");
+    }
 
-    if (index > this.#size) return console.log('index exceeds list size');
+    if (index >= this._size || index < 0) {
+      return console.log('invalid index');
+    }
 
-    if (index === this.#size - 1) {
+    // catch if index points to last Node
+    if (index === this._size - 1) {
       this.pop();
-      return this.#size;
+
+      // do not need to decrement because pop() does this
+      return this._this;
+    }
+
+    // catch if index points to first Node
+    if (index === 0) {
+      this._head = currentNode?.nextNode || null;
+    }
+
+    // catch if only one element remaining
+    if (this._size === 1) {
+      this._head = null;
+      this._tail = null;
     }
 
     while (i < index - 1) {
@@ -170,9 +188,9 @@ export default class LinkedList {
       i++;
     }
 
-    let newNextNode = currentNode.nextNode.nextNode;
+    let newNextNode = currentNode.nextNode.nextNode || null;
     currentNode.nextNode = newNextNode;
 
-    return --this.#size;
+    return --this._size;
   }
 }
