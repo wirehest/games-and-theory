@@ -15,13 +15,21 @@ export default class Node {
     return this._data;
   }
 
-  setLeft(node) {
+  set left(node) {
     this._left = node;
     return this;
   }
 
-  setRight(node) {
+  get left() {
+    return this._left;
+  }
+
+  set right(node) {
     this._right = node;
     return this;
+  }
+
+  get right() {
+    return this._right;
   }
 }
