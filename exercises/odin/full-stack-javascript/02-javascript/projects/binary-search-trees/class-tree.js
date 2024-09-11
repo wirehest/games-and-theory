@@ -1,4 +1,5 @@
 import Node from './class-node.js';
+import Queue from './class-queue.js';
 
 export default class BinarySearchTree {
   constructor(array) {
@@ -93,21 +94,57 @@ export default class BinarySearchTree {
     return this.deleteItem(value, node[nextNode], node);
   }
 
-  levelOrder(callback, mode = 'iterative') {
-    // TODO:
-    // need to create queue class to implement this
-    // - queue node, enqueue children, then queue child node #1 ...
-    switch (mode) {
-      case 'iterative':
-        break;
-      case 'recursive':
-        break;
-      default:
-        throw new Error(`Invalid mode: ${mode} called on levelOrder`);
+  levelOrder(callback, mode = 'recursive') {
+    if (callback === undefined) throw new Error('Callback required');
+    if (this._root === null) throw new Error('Cannot traverse empty tree.');
+
+    if (mode === 'iterative') {
+      this.#levelOrderIterative(callback);
+    } else if (mode === 'recursive') {
+      this.#levelOrderRecursive(callback);
+    } else {
+      throw new Error(`Invalid mode: ${mode} called on levelOrder`);
     }
   }
 
-  inOrder() {}
+  #levelOrderIterative(callback) {
+    let discovered = new Queue(this._root);
+
+    while (discovered.length > 0) {
+      let node = discovered.dequeue();
+
+      callback(node);
+
+      [node.left, node.right]
+        .filter((child) => child !== null)
+        .forEach((child) => discovered.enqueue(child));
+    }
+  }
+
+  #levelOrderRecursive() {
+    // TODO:
+  }
+
+  inOrder(callback, node = this._root) {
+    // if (callback === undefined) throw new Error('Callback required');
+    // if (this._root === null) throw new Error('Cannot traverse empty tree.');
+
+    if (node.left !== null) this.inOrder(callback, node.left);
+    callback(node);
+    if (node.right !== null) this.inOrder(callback, node.right);
+  }
+
+  preOrder(callback, node = this._root) {
+    callback(node);
+    if (node.left !== null) this.preOrder(callback, node.left);
+    if (node.right !== null) this.preOrder(callback, node.right);
+  }
+
+  postOrder(callback, node = this._root) {
+    if (node.left !== null) this.postOrder(callback, node.left);
+    if (node.right !== null) this.postOrder(callback, node.right);
+    callback(node);
+  }
 
   // Returns the number of edges in the longest path
   // from a given node to a leaf node.
@@ -136,6 +173,9 @@ export default class BinarySearchTree {
   isBalanced() {}
 
   buildTree(array) {
+    if (!(array instanceof Array)) throw new Error('Need to provide array');
+    if (array.length === 0) throw new Error('Need to provide non-empty array');
+
     array = this.#uniqueAndSort(array);
 
     let length = array.length;
@@ -193,13 +233,3 @@ export default class BinarySearchTree {
     }
   }
 }
-
-// Write a levelOrder(callback) function that accepts a callback function as its parameter. levelOrder should traverse the tree in breadth-first level order and call the callback on each node as it traverses, passing the whole node as an argument, similarly to how Array.prototype.forEach might work for arrays. levelOrder may be implemented using either iteration or recursion (try implementing both!). If no callback function is provided, throw an Error reporting that a callback is required. Tip: You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list (video on level order traversal).
-
-// Write inOrder(callback), preOrder(callback), and postOrder(callback) functions that also accept a callback as a parameter. Each of these functions should traverse the tree in their respective depth-first order and pass each node to the provided callback. The functions should throw an Error if no callback is given as an argument, like with levelOrder.
-
-// Write an isBalanced function that checks if the tree is balanced. A balanced tree is one where the difference between heights of the left subtree and the right subtree of every node is not more than 1.
-
-// Write a rebalance function that rebalances an unbalanced tree. Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
-
-// Tip: If you would like to visualize your binary search tree, here is a prettyPrint() function that will console.log your tree in a structured format. This function will expect to receive the root of your tree as the value for the node parameter.
