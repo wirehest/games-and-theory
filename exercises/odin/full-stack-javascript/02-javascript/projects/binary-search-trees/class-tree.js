@@ -6,22 +6,26 @@ export default class BinarySearchTree {
     this._root = this.buildTree(array);
   }
 
-  find(value, node = this._root) {
-    if (node.data === value) return node;
+  find(value) {
+    let node = this._root;
 
-    let nextNode = value < node.data ? 'left' : 'right';
-    if (node[nextNode] === null) return console.log(`${value} not in tree`);
-
-    return this.find(value, node[nextNode]);
+    while (true) {
+      if (node.data === value) return node;
+      let nextNode = value < node.data ? 'left' : 'right';
+      node = node[nextNode];
+      if (node === null) return `${value} not found.`;
+    }
   }
 
-  insert(value, node = this._root) {
-    if (node.data === value) return console.log(`${value} already in tree`);
+  insert(value) {
+    let node = this._root;
 
-    let nextNode = value < node.data ? 'left' : 'right';
-    if (node[nextNode] === null) return (node[nextNode] = new Node(value));
-
-    return this.insert(value, node[nextNode]);
+    while (true) {
+      if (node.data === value) return `${value} already in tree.`;
+      let nextNode = value < node.data ? 'left' : 'right';
+      if (node[nextNode] === null) return (node[nextNode] = new Node(value));
+      node = node[nextNode];
+    }
   }
 
   deleteItem(value, node = this._root, parent = null) {
@@ -82,14 +86,10 @@ export default class BinarySearchTree {
               parent.right = successor;
             }
           }
-
-          // console.log(successor);
           break;
       }
-
       return this._root;
     }
-
     let nextNode = value < node.data ? 'left' : 'right';
     return this.deleteItem(value, node[nextNode], node);
   }
@@ -125,35 +125,47 @@ export default class BinarySearchTree {
     // TODO:
   }
 
-  inOrder(callback, node = this._root) {
-    // if (callback === undefined) throw new Error('Callback required');
-    // if (this._root === null) throw new Error('Cannot traverse empty tree.');
-
-    if (node.left !== null) this.inOrder(callback, node.left);
-    callback(node);
-    if (node.right !== null) this.inOrder(callback, node.right);
+  preOrder(callback) {
+    this.#depthFirstTraversal(callback, 'preOrder');
   }
 
-  preOrder(callback, node = this._root) {
-    callback(node);
-    if (node.left !== null) this.preOrder(callback, node.left);
-    if (node.right !== null) this.preOrder(callback, node.right);
+  inOrder(callback) {
+    this.#depthFirstTraversal(callback, 'inOrder');
   }
 
-  postOrder(callback, node = this._root) {
-    if (node.left !== null) this.postOrder(callback, node.left);
-    if (node.right !== null) this.postOrder(callback, node.right);
-    callback(node);
+  postOrder(callback) {
+    this.#depthFirstTraversal(callback, 'postOrder');
+  }
+
+  #depthFirstTraversal(callback, caller, node = this._root) {
+    if (callback === undefined) throw new Error('Callback required');
+    if (this._root === null) throw new Error('Cannot traverse empty tree.');
+
+    if (caller === 'preOrder') callback(node);
+    if (node.left !== null) {
+      this.#depthFirstTraversal(callback, caller, node.left);
+    }
+    if (caller === 'inOrder') callback(node);
+    if (node.right !== null) {
+      this.#depthFirstTraversal(callback, caller, node.right);
+    }
+    if (caller === 'postOrder') callback(node);
   }
 
   // Returns the number of edges in the longest path
   // from a given node to a leaf node.
-  height(value, node = this.find(value), height = 0) {
-    if (node.left === null && node.right === null) return height;
+  height(value) {
+    let node = this.find(value);
 
-    let leftHeight, rightHeight;
-    if (node.left !== null) return this.height(value, node.left, ++height);
-    if (node.right !== null) return this.height(value, node.right, ++height);
+    if (node.left === null && node.right === null) return 0;
+
+    let [leftHeight, rightHeight] = [0, 0];
+    if (node.left !== null) {
+      leftHeight = 1 + this.height(node.left.data);
+    }
+    if (node.right !== null) {
+      rightHeight = 1 + this.height(node.right.data);
+    }
 
     return Math.max(leftHeight, rightHeight);
   }
@@ -170,28 +182,46 @@ export default class BinarySearchTree {
     return this.depth(value, node[nextNode], ++depth);
   }
 
-  isBalanced() {}
+  isBalanced(node = this._root) {
+    if (node === null) return 1;
+
+    let [leftHeight, rightHeight] = [0, 0];
+    if (node.left !== null) leftHeight = 1 + this.height(node.left.data);
+    if (node.right !== null) rightHeight = 1 + this.height(node.right.data);
+    let balanced = Math.abs(leftHeight - rightHeight) <= 1 ? 1 : 0;
+
+    // console.log(`node: ${node.data}, left-right: ${leftHeight}-${rightHeight}`);
+
+    return !!(
+      balanced *
+      this.isBalanced(node.left) *
+      this.isBalanced(node.right)
+    );
+  }
+
+  rebalance() {
+    let newArray = [];
+    this.inOrder((e) => newArray.push(e.data));
+    this._root = this.buildTree(newArray);
+  }
 
   buildTree(array) {
+    let length = array.length;
+
     if (!(array instanceof Array)) throw new Error('Need to provide array');
     if (array.length === 0) throw new Error('Need to provide non-empty array');
 
     array = this.#uniqueAndSort(array);
 
-    let length = array.length;
     let rootIndex = length % 2 === 0 ? length / 2 : --length / 2;
+    let rootNode = new Node(array[rootIndex]);
 
-    let rootNode = new Node(array?.[rootIndex] ?? null);
     if (length <= 1) return rootNode;
 
-    let leftSubarray = array.slice(0, rootIndex);
-    if (leftSubarray.length > 0) {
-      rootNode.left = this.buildTree(leftSubarray);
-    }
-
-    let rightSubarray = array.slice(rootIndex + 1);
-    if (rightSubarray.length > 0) {
-      rootNode.right = this.buildTree(rightSubarray);
+    let slices = { left: [0, rootIndex], right: [rootIndex + 1] };
+    for (let side in slices) {
+      let subarray = array.slice(...slices[side]);
+      if (subarray.length > 0) rootNode[side] = this.buildTree(subarray);
     }
 
     return rootNode;
