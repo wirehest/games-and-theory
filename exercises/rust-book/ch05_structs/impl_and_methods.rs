@@ -1,10 +1,5 @@
 use std::f64::consts::PI;
 
-// TODO:
-// [X] implement methods
-// [X] include associated function (non-method) (maybe a constructor)
-// [X] show how method calls are syntactic sugar over function calls
-
 #[derive(Debug)]
 struct Circle {
     radius: f64,
@@ -17,6 +12,8 @@ impl Circle {
     // Idiomatically, use &self most of the time because
     // it's rare for a method to take ownership—may be used
     // certain constructors.
+    // self (lowercase) is different from Self (uppercast),
+    // see new() below.
     fn diameter(&self) -> f64 {
         2.0 * PI * self.radius
     }
@@ -29,9 +26,14 @@ impl Circle {
     }
 
     // constructor, idiomatically named "new"
-    // Doesn't take self.
+    // Doesn't take self, because that refers to the instance.
+    // But, can optionally use "Self", which refers to the type
+    // referred to by the implementation block.
+    // new() here will return a fresh-instance, so it can
+    // optionally use Self:
     fn new(radius: f64) -> Circle {
-        Circle { radius }
+        // Circle { radius }
+        Self { radius } // works too
     }
 }
 

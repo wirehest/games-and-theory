@@ -26,8 +26,8 @@ fn main() {
     );
 }
 
-// using a tuple struct provides clarity from the variable
-// names: circle.radius
+// using a tuple struct provides clarity
+// via explicitly-named variables, e.g., "circle.radius"
 fn circle_area(circle: &Circle) -> f64 {
     // accessing fields of borrowed struct does not move the values
     (circle.radius * PI).powf(2_f64)
