@@ -3,12 +3,21 @@
 ### Games
 
 - #### Advent of Code
+
   [2023 (Python Solutions)](/challenges/advent-of-code/2023)
+
 - #### Codewars
+
   [JavaScript Solutions](/challenges/codewars/javascript)
   – [Python Solutions](/challenges/codewars/python)
+
 - #### Exercism
+
   [JavaScript Solutions](/challenges/exercism/javascript)
+
+- #### Project Euler
+
+  [JavaScript Solutions](/challenges/project-euler/javascript)
 
 ### Theory
 
@@ -35,6 +44,7 @@
     [(src)](/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard)
 
   - #### JavaScript
+
     [Library](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/)
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/library)
     – [Tic-Tac-Toe](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/)
@@ -45,4 +55,8 @@
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/todo-list)
     – [Weather App](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app/dist/)
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app)
-    
+
+    [Recursion (src only)]()
+    – [HashMap (src only)]()
+    – [Binary Search Trees (src only)]()
+    – [Knights Travails (src only)]()
