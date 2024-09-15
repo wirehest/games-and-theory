@@ -1,9 +1,15 @@
-import Node from './class-node.js';
-
+/**
+ * Linked List implementation for the Hash Map.
+ */
 export default class LinkedList {
   _size = 0;
   _head = null;
   _tail = null;
+  #nodeMode = null;
+
+  constructor(nodeMode) {
+    this.#nodeMode = nodeMode;
+  }
 
   // returns the total number of nodes in the list
   get size() {
@@ -22,26 +28,26 @@ export default class LinkedList {
 
   // adds a new node containing value to the end of the list
   append(key, value) {
-    if (this._size === 0) return this._addToEmptyList(key, value);
+    if (this._size === 0) return this.#addToEmptyList(key, value);
 
     let oldTail = this._tail;
-    this._tail = new Node(key, value);
+    this._tail = this.#newNode(key, value);
     oldTail.nextNode = this._tail;
     return ++this._size;
   }
 
   // adds a new node containing value to the start of the list
   prepend(key, value) {
-    if (this._size === 0) return this._addToEmptyList(key, value);
+    if (this._size === 0) return this.#addToEmptyList(key, value);
 
     let oldHead = this._head;
-    this._head = new Node(key, value, oldHead);
+    this._head = this.#newNode(key, value, oldHead);
     return ++this._size;
   }
 
   // called by append()/prepend() when list size = 0
-  _addToEmptyList(key, value) {
-    this._head = new Node(key, value);
+  #addToEmptyList(key, value) {
+    this._head = this.#newNode(key, value);
     this._tail = this._head;
     return ++this._size;
   }
@@ -57,36 +63,6 @@ export default class LinkedList {
     }
 
     return currentNode;
-  }
-
-  // removes the last element from the list
-  pop() {
-    let currentNode = this._head;
-
-    while (true) {
-      // console.log('YYYYY:', currentNode?.nextNode?.nextNode);
-      if (currentNode?.nextNode?.nextNode === null) {
-        let tailValue = currentNode.nextNode.value;
-
-        currentNode.nextNode = null;
-        this._tail = currentNode;
-        this._size--;
-
-        return tailValue;
-      }
-
-      currentNode = currentNode?.nextNode || null;
-    }
-  }
-
-  // returns true if the passed in value is in the list and otherwise returns false.
-  contains(value) {
-    return this._search(value, 'contains');
-  }
-
-  // returns the index of the node containing value, or null if not found.
-  find(value) {
-    return this._search(value, 'find');
   }
 
   // refactor of common logic between contains() and find()
@@ -162,7 +138,7 @@ export default class LinkedList {
       i++;
     }
 
-    let newNode = new Node(key, value, currentNode.nextNode);
+    let newNode = this.#newNode(key, value, currentNode.nextNode);
     currentNode.nextNode = newNode;
 
     return ++this._size;
@@ -212,6 +188,25 @@ export default class LinkedList {
     return --this._size;
   }
 
+  // removes the last element from the list
+  pop() {
+    let currentNode = this._head;
+
+    while (true) {
+      if (currentNode.nextNode.nextNode === null) {
+        let tailValue = currentNode.nextNode.value;
+
+        currentNode.nextNode = null;
+        this._tail = currentNode;
+        this._size--;
+
+        return tailValue;
+      }
+
+      currentNode = currentNode.nextNode;
+    }
+  }
+
   // methods for hashmap project
   containsKey(key) {
     return this._search(key, 'containsKey');
@@ -225,13 +220,34 @@ export default class LinkedList {
     if (this._size === 0) return;
     let currentNode = this._head;
 
-    let pairs = [];
+    let data = [];
     while (true) {
-      pairs.push([currentNode.key, currentNode.value]);
+      switch (this.#nodeMode) {
+        case 'key-only':
+          data.push([currentNode.key]);
+          break;
+        case 'key-value':
+          data.push([currentNode.key, currentNode.value]);
+          break;
+        default:
+          throw new Error('Invalid node mode.');
+      }
+
       if (currentNode.nextNode !== null) currentNode = currentNode.nextNode;
       else break;
     }
 
-    return pairs;
+    return data;
+  }
+
+  #newNode(key, value, nextNode = null) {
+    switch (this.#nodeMode) {
+      case 'key-only':
+        return { key: key, nextNode: nextNode };
+      case 'key-value':
+        return { key: key, value: value, nextNode: nextNode };
+      default:
+        throw new Error('Invalid node mode.');
+    }
   }
 }

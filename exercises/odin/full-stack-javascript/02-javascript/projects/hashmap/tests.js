@@ -1,5 +1,4 @@
 import HashMap from './class-hashmap.js';
-import LinkedList from './class-linked-list.js';
 
 let testHash = new HashMap();
 
@@ -23,13 +22,3 @@ console.assert(testHash.has('kagi 4') === false, '#9');
 
 console.assert(testHash.remove('key 1') === true, '#10');
 console.assert(testHash.length() === 4, '#11');
-
-// let testLL = new LinkedList();
-// testLL.append(1, 'A');
-// testLL.append(2, 'B');
-// testLL.append(3, 'C');
-// testLL.append(4, 'D');
-// testLL.append(5, 'E');
-// let dummy = [[0, 'Z']];
-// dummy = dummy.concat(testLL.entries());
-// console.log(dummy);
