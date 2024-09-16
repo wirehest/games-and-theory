@@ -56,7 +56,8 @@
     – [Weather App](https://multiplips.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app/dist/)
     [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app)
 
-    [Recursion (src only)]()
-    – [HashMap (src only)]()
-    – [Binary Search Trees (src only)]()
-    – [Knights Travails (src only)]()
+    Source Only: [Recursion](/exercises/odin/full-stack-javascript/02-javascript/projects/recursion)
+    – [Linked Lists](/exercises/odin/full-stack-javascript/02-javascript/projects/linked-lists)
+    – [HashMap](/exercises/odin/full-stack-javascript/02-javascript/projects/hashmap)
+    – [Binary Search Trees](/exercises/odin/full-stack-javascript/02-javascript/projects/binary-search-trees)
+    – [Knights Travails]()
