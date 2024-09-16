@@ -1,4 +1,4 @@
-export default class Node {
+export default class TreeNode {
   _left = null;
   _right = null;
 

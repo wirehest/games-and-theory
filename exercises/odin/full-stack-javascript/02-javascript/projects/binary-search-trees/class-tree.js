@@ -1,13 +1,13 @@
-import Node from './class-node.js';
+import TreeNode from './class-treenode.js';
 import Queue from './class-queue.js';
 
 export default class BinarySearchTree {
   constructor(array) {
-    this._root = this.buildTree(array);
+    this.root = this.buildTree(array);
   }
 
   find(value) {
-    let node = this._root;
+    let node = this.root;
 
     while (true) {
       if (node.data === value) return node;
@@ -18,17 +18,18 @@ export default class BinarySearchTree {
   }
 
   insert(value) {
-    let node = this._root;
+    let node = this.root;
 
     while (true) {
       if (node.data === value) return `${value} already in tree.`;
       let nextNode = value < node.data ? 'left' : 'right';
-      if (node[nextNode] === null) return (node[nextNode] = new Node(value));
+      if (node[nextNode] === null)
+        return (node[nextNode] = new TreeNode(value));
       node = node[nextNode];
     }
   }
 
-  deleteItem(value, node = this._root, parent = null) {
+  deleteItem(value, node = this.root, parent = null) {
     if (node.data === value) {
       let childCount = [node.left, node.right].filter(
         (child) => child !== null,
@@ -36,8 +37,8 @@ export default class BinarySearchTree {
 
       switch (childCount) {
         case 0:
-          if (node === this._root) {
-            this._root = null;
+          if (node === this.root) {
+            this.root = null;
           } else if (parent.left.data === value) {
             parent.left = null;
           } else {
@@ -45,11 +46,11 @@ export default class BinarySearchTree {
           }
           break;
         case 1:
-          if (node === this._root) {
+          if (node === this.root) {
             if (node.left === value) {
-              this._root = node.right;
+              this.root = node.right;
             } else {
-              this._root = node.left;
+              this.root = node.left;
             }
           } else if (parent.left.data === value) {
             if (node.left !== null) {
@@ -77,8 +78,8 @@ export default class BinarySearchTree {
           successor.left = node.left;
           successor.right = node.right;
 
-          if (node === this._root) {
-            this._root = successor;
+          if (node === this.root) {
+            this.root = successor;
           } else {
             if (parent.left === node) {
               parent.left = successor;
@@ -88,15 +89,15 @@ export default class BinarySearchTree {
           }
           break;
       }
-      return this._root;
+      return this.root;
     }
     let nextNode = value < node.data ? 'left' : 'right';
     return this.deleteItem(value, node[nextNode], node);
   }
 
-  levelOrder(callback, mode = 'recursive') {
+  levelOrder(callback, mode = 'iterative') {
     if (callback === undefined) throw new Error('Callback required');
-    if (this._root === null) throw new Error('Cannot traverse empty tree.');
+    if (this.root === null) throw new Error('Cannot traverse empty tree.');
 
     if (mode === 'iterative') {
       this.#levelOrderIterative(callback);
@@ -108,21 +109,28 @@ export default class BinarySearchTree {
   }
 
   #levelOrderIterative(callback) {
-    let discovered = new Queue(this._root);
+    let discovered = new Queue(this.root);
 
     while (discovered.length > 0) {
       let node = discovered.dequeue();
-
       callback(node);
-
       [node.left, node.right]
         .filter((child) => child !== null)
         .forEach((child) => discovered.enqueue(child));
     }
   }
 
-  #levelOrderRecursive() {
-    // TODO:
+  #levelOrderRecursive(callback, discovered = new Queue(this.root)) {
+    if (discovered.length === 0) return;
+
+    let node = discovered.dequeue();
+    callback(node);
+
+    [node.left, node.right]
+      .filter((child) => child !== null)
+      .forEach((child) => discovered.enqueue(child));
+
+    this.#levelOrderRecursive(callback, discovered);
   }
 
   preOrder(callback) {
@@ -137,9 +145,9 @@ export default class BinarySearchTree {
     this.#depthFirstTraversal(callback, 'postOrder');
   }
 
-  #depthFirstTraversal(callback, caller, node = this._root) {
+  #depthFirstTraversal(callback, caller, node = this.root) {
     if (callback === undefined) throw new Error('Callback required');
-    if (this._root === null) throw new Error('Cannot traverse empty tree.');
+    if (this.root === null) throw new Error('Cannot traverse empty tree.');
 
     if (caller === 'preOrder') callback(node);
     if (node.left !== null) {
@@ -172,7 +180,7 @@ export default class BinarySearchTree {
 
   // Returns the number of edges in the path from
   // a given node to the tree’s root node.
-  depth(value, node = this._root, depth = 0) {
+  depth(value, node = this.root, depth = 0) {
     // TODO: reuses find logic; refactor?
     if (node.data === value) return depth;
 
@@ -182,15 +190,13 @@ export default class BinarySearchTree {
     return this.depth(value, node[nextNode], ++depth);
   }
 
-  isBalanced(node = this._root) {
+  isBalanced(node = this.root) {
     if (node === null) return 1;
 
     let [leftHeight, rightHeight] = [0, 0];
     if (node.left !== null) leftHeight = 1 + this.height(node.left.data);
     if (node.right !== null) rightHeight = 1 + this.height(node.right.data);
     let balanced = Math.abs(leftHeight - rightHeight) <= 1 ? 1 : 0;
-
-    // console.log(`node: ${node.data}, left-right: ${leftHeight}-${rightHeight}`);
 
     return !!(
       balanced *
@@ -202,7 +208,7 @@ export default class BinarySearchTree {
   rebalance() {
     let newArray = [];
     this.inOrder((e) => newArray.push(e.data));
-    this._root = this.buildTree(newArray);
+    this.root = this.buildTree(newArray);
   }
 
   buildTree(array) {
@@ -214,7 +220,7 @@ export default class BinarySearchTree {
     array = this.#uniqueAndSort(array);
 
     let rootIndex = length % 2 === 0 ? length / 2 : --length / 2;
-    let rootNode = new Node(array[rootIndex]);
+    let rootNode = new TreeNode(array[rootIndex]);
 
     if (length <= 1) return rootNode;
 
@@ -227,9 +233,9 @@ export default class BinarySearchTree {
     return rootNode;
   }
 
-  /* utility methods */
+  // Utility Methods
 
-  // gets the replacement node when deleting a node with two children
+  /** Gets the replacement node when deleting a node with two children. */
   #getSuccessorNode(node, parent = null) {
     if (node.left === null) {
       return { successor: node, successorParent: parent };
@@ -242,7 +248,7 @@ export default class BinarySearchTree {
     return [...new Set(array)].sort((a, b) => a - b);
   }
 
-  prettyPrint(node = this._root, prefix = '', isLeft = true) {
+  prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) {
       return;
     }
