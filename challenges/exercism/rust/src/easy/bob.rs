@@ -1,13 +1,3 @@
-fn main() {
-    assert_eq!(reply("1, 2, 3"), "Whatever.");
-    assert_eq!(reply(":) ?"), "Sure.");
-    assert_eq!(reply("4?"), "Sure.");
-    assert_eq!(
-        reply("Does this cryogenic chamber make me look fat?"),
-        "Sure."
-    );
-}
-
 pub fn reply(message: &str) -> &str {
     let sure = "Sure.";
     let chill = "Whoa, chill out!";
@@ -34,5 +24,33 @@ pub fn reply(message: &str) -> &str {
         _ if is_yelling => chill,
         _ if is_question => sure,
         _ => whatever,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn numbers_only() {
+        assert_eq!(reply("1, 2, 3"), "Whatever.");
+    }
+
+    #[test]
+    fn no_words_question() {
+        assert_eq!(reply(":) ?"), "Sure.");
+    }
+
+    #[test]
+    fn number_question() {
+        assert_eq!(reply("4?"), "Sure.");
+    }
+
+    #[test]
+    fn standard_question() {
+        assert_eq!(
+            reply("Does this cryogenic chamber make me look fat?"),
+            "Sure."
+        );
     }
 }
