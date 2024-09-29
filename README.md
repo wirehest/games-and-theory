@@ -1,55 +1,67 @@
-<h2 align="center">🨂 Games & Theory</h2>
-<p align="center">A collection of coding challenge solutions and other exercises.</p>
+<h2 align="center">♣️<br>Games & Theory</h2>
+<p align="center"><em>Challenge solutions, practice problems, and projects for learning various languages and tooling.</em></p>
 
-## Challenge Solutions
+> [!NOTE]  
+> Some directories are organized as [git-subrepos](https://github.com/ingydotnet/git-subrepo).\
+> <sup>UPSTREAM</sup> links to standalone repos.
 
-**Advent of Code**\
-[2023 (Python)](/challenges/advent-of-code/2023)
+## Games
 
-**Codewars**\
-[JavaScript](/challenges/codewars/javascript) – [Python](/challenges/codewars/python)
+- **Advent of Code**\
+  [2023 (Python)](/challenges/advent-of-code/2023)
 
-**Exercism**\
-[JavaScript](/challenges/exercism/javascript) – [Python](/challenges/exercism/rust) – [Rust](/challenges/exercism/rust)
+- **Codewars**\
+  [JavaScript](/challenges/codewars/javascript) – [Python](/challenges/codewars/python)
 
-**Project Euler**\
-[JavaScript](/challenges/project-euler/javascript)
+- **Exercism** <sup>[UPSTREAM](https://github.com/wirehest/exercism-solutions)</sup>\
+  JavaScript
+  – TypeScript
+  – Python
+  – Rust
+
+- **Project Euler**\
+  [**JavaScript**](/challenges/project-euler/javascript)
 
 ## Projects
 
-**Odin**
+### Odin Project
 
 - **Foundations**\
-  [Recipe Page](https://wirehest.github.io/games-and-theory/exercises/odin/foundations/projects/recipes/)
-  [(src)](/exercises/odin/foundations/projects/recipes)
-  – [Landing Page](https://wirehest.github.io/games-and-theory/exercises/odin/foundations/projects/landing-page/)
-  [(src)](/exercises/odin/foundations/projects/landing-page)
-  – [Rock Paper Scissors](https://wirehest.github.io/games-and-theory/exercises/odin/foundations/projects/rock-paper-scissors/)
-  [(src)](/exercises/odin/foundations/projects/rock-paper-scissors)
-  – [Etch-a-Sketch](https://wirehest.github.io/games-and-theory/exercises/odin/foundations/projects/etch-a-sketch/)
-  [(src)](/exercises/odin/foundations/projects/etch-a-sketch)
-  – [Calculator](https://wirehest.github.io/games-and-theory/exercises/odin/foundations/projects/calculator/)
-  [(src)](/exercises/odin/foundations/projects/calculator)
+  [Recipe Page](https://wirehest.github.io/games-and-theory/exercises/odin-project/foundations/projects/recipes/)
+  <sup>[SRC](/exercises/odin-project/foundations/projects/recipes)</sup>
+  – [Landing Page](https://wirehest.github.io/games-and-theory/exercises/odin-project/foundations/projects/landing-page/)
+  <sup>[SRC](/exercises/odin-project/foundations/projects/landing-page)</sup>
+  – [Rock Paper Scissors](https://wirehest.github.io/games-and-theory/exercises/odin-project/foundations/projects/rock-paper-scissors/)
+  <sup>[SRC](/exercises/odin-project/foundations/projects/rock-paper-scissors)</sup>
+  – [Etch-a-Sketch](https://wirehest.github.io/games-and-theory/exercises/odin-project/foundations/projects/etch-a-sketch/)
+  <sup>[SRC](/exercises/odin-project/foundations/projects/etch-a-sketch)</sup>
+  – [Calculator](https://wirehest.github.io/games-and-theory/exercises/odin-project/foundations/projects/calculator/)
+  <sup>[SRC](/exercises/odin-project/foundations/projects/calculator)</sup>
 
-- **Intermediate HTML & CSS**\
-  [Sign-Up Form](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/sign-up-form/)
-  [(src)](/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/sign-up-form)
-  – [Admin Dashboard](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard/)
-  [(src)](/exercises/odin/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard)
+- **HTML & CSS**\
+  [Sign-Up Form](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/01-intermediate-html-css/projects/sign-up-form/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/01-intermediate-html-css/projects/sign-up-form)</sup>
+  – [Admin Dashboard](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/01-intermediate-html-css/projects/admin-dashboard)</sup>
+  – Homepage
+  <sup>SRC</sup>
 
 - **JavaScript**\
-  [Library](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/library/)
-  [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/library)
-  – [Tic-Tac-Toe](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe/)
-  [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/tic-tac-toe)
-  – [Restaurant Page](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page/dist/)
-  [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/restaurant-page)
-  – [Todo List](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/todo-list/dist/)
-  [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/todo-list)
-  – [Weather App](https://wirehest.github.io/games-and-theory/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app/dist/)
-  [(src)](/exercises/odin/full-stack-javascript/02-javascript/projects/weather-app)\
-  _Source Only_: [Recursion](/exercises/odin/full-stack-javascript/02-javascript/projects/recursion)
-  – [Linked Lists](/exercises/odin/full-stack-javascript/02-javascript/projects/linked-lists)
-  – [HashMap](/exercises/odin/full-stack-javascript/02-javascript/projects/hashmap)
-  – [Binary Search Trees](/exercises/odin/full-stack-javascript/02-javascript/projects/binary-search-trees)
-  – [Knights Travails](/exercises/odin/full-stack-javascript/02-javascript/projects/knights-travails)
+  [Library](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/02-javascript/projects/library/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/02-javascript/projects/library)</sup>
+  – [Tic-Tac-Toe](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/02-javascript/projects/tic-tac-toe/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/02-javascript/projects/tic-tac-toe)</sup>
+  – [Restaurant Page](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/02-javascript/projects/restaurant-page/dist/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/02-javascript/projects/restaurant-page)</sup>
+  – [Todo List](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/02-javascript/projects/todo-list/dist/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/02-javascript/projects/todo-list)</sup>
+  – [Weather App](https://wirehest.github.io/games-and-theory/exercises/odin-project/full-stack-javascript/02-javascript/projects/weather-app/dist/)
+  <sup>[SRC](/exercises/odin-project/full-stack-javascript/02-javascript/projects/weather-app)</sup>
+  – Battleship
+  <sup>SRC, [UPSTREAM](https://github.com/wirehest/odin-battleship)</sup>
+
+  _Source Only_ (DS&A): [**Recursion**](/exercises/odin-project/full-stack-javascript/02-javascript/projects/recursion)
+  – [Linked Lists](/exercises/odin-project/full-stack-javascript/02-javascript/projects/linked-lists)
+  – [HashMap](/exercises/odin-project/full-stack-javascript/02-javascript/projects/hashmap)
+  – [Binary Search Trees](/exercises/odin-project/full-stack-javascript/02-javascript/projects/binary-search-trees)
+  – [Knights Travails](/exercises/odin-project/full-stack-javascript/02-javascript/projects/knights-travails)
