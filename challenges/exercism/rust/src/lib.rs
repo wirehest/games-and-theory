@@ -12,3 +12,7 @@ mod easy {
     mod reverse_string;
     mod sum_of_multiples;
 }
+
+mod medium {
+    mod luhn;
+}
